@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Harp Shed — Learn Harmonica the Real Way</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bebas+Neue&family=Oswald:wght@700&family=Righteous&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&family=Special+Elite&display=swap');
+
+  :root {
+    --parchment: #f4ece0;
+    --parchment-dark: #e8dcc8;
+    --wood-dark: #3b2f20;
+    --wood-mid: #5c4a38;
+    --wood-light: #8b7355;
+    --rust: #a0522d;
+    --rust-light: #c4724a;
+    --delta-blue: #2c4a6e;
+    --delta-blue-light: #4a7199;
+    --cream: #faf6ee;
+    --ink: #2a2118;
+    --gold-dust: #c49b3c;
+    --worn-red: #8b3a3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--parchment);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── Worn paper / noise texture overlay ───────────────────────── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      /* Paper fiber grain */
+      repeating-linear-gradient(
+        2deg,
+        transparent,
+        transparent 3px,
+        rgba(139,115,85,0.025) 3px,
+        rgba(139,115,85,0.025) 4px
+      ),
+      /* Cross grain for woven texture */
+      repeating-linear-gradient(
+        92deg,
+        transparent,
+        transparent 5px,
+        rgba(120,95,60,0.018) 5px,
+        rgba(120,95,60,0.018) 6px
+      ),
+      /* Warm stain spots */
+      radial-gradient(ellipse at 15% 20%, rgba(160,82,45,0.06) 0%, transparent 40%),
+      radial-gradient(ellipse at 75% 60%, rgba(139,115,85,0.05) 0%, transparent 35%),
+      radial-gradient(ellipse at 40% 85%, rgba(196,155,60,0.04) 0%, transparent 30%),
+      radial-gradient(ellipse at 90% 15%, rgba(160,82,45,0.04) 0%, transparent 25%);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ─── Navigation ─────────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background:
+      linear-gradient(90deg, rgba(42,33,24,0.98), rgba(59,47,32,0.95), rgba(42,33,24,0.98));
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--rust);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: 'Special Elite', monospace;
+    color: var(--parchment);
+    font-size: 28px;
+    letter-spacing: 2px;
+    text-decoration: none;
+  }
+
+  .nav-logo span {
+    color: var(--rust-light);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--parchment-dark);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--rust-light);
+  }
+
+  .nav-cta {
+    background: var(--rust);
+    color: var(--cream) !important;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 700 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--rust-light) !important;
+  }
+
+  /* ─── Hero ───────────────────────────────────────────────────────── */
+  .hero {
+    margin-top: 64px;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    /* Photo sits behind everything, dark fallback if image not loaded */
+    background:
+      linear-gradient(170deg, #3d2e1c 0%, #2a1f14 35%, #1e160e 65%, #2a2118 100%);
+  }
+
+  /* Background photo layer */
+  .hero-bg-photo {
+    position: absolute;
+    inset: 0;
+    background-image: url('hero-photo.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    z-index: 0;
+  }
+
+  /* Dark overlay so text stays readable over the photo */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      /* Strong left-to-right gradient — text side darker */
+      linear-gradient(90deg, rgba(26,21,14,0.88) 0%, rgba(26,21,14,0.7) 45%, rgba(26,21,14,0.4) 100%),
+      /* Warm porch glow */
+      radial-gradient(ellipse at 10% 60%, rgba(196,155,60,0.1) 0%, transparent 50%),
+      /* Vignette edges */
+      radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.4) 100%);
+    pointer-events: none;
+  }
+
+  /* Layered wood plank texture */
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      /* Wide planks */
+      repeating-linear-gradient(
+        88deg,
+        transparent,
+        transparent 18px,
+        rgba(196,155,60,0.04) 18px,
+        rgba(196,155,60,0.04) 19px
+      ),
+      /* Fine grain */
+      repeating-linear-gradient(
+        89deg,
+        transparent,
+        transparent 3px,
+        rgba(160,120,60,0.025) 3px,
+        rgba(160,120,60,0.025) 4px
+      ),
+      /* Knot marks */
+      radial-gradient(circle at 30% 40%, rgba(100,70,30,0.08) 0%, transparent 8%),
+      radial-gradient(circle at 70% 65%, rgba(100,70,30,0.06) 0%, transparent 6%),
+      radial-gradient(circle at 55% 25%, rgba(100,70,30,0.05) 0%, transparent 10%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    padding: 0 60px;
+  }
+
+  .hero-brand {
+    font-family: 'Special Elite', monospace;
+    font-size: 52px;
+    color: var(--parchment);
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-brand span {
+    color: var(--rust-light);
+  }
+
+  /* Simple decorative lines either side */
+  .hero-brand::before,
+  .hero-brand::after {
+    content: '—';
+    color: var(--rust-light);
+    opacity: 0.4;
+    margin: 0 12px;
+    font-size: 36px;
+    vertical-align: middle;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Special Elite', monospace;
+    font-size: 20px;
+    color: var(--rust-light);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding: 10px 20px;
+    border: 1.5px solid rgba(196,114,74,0.4);
+    border-radius: 2px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 900;
+    color: var(--parchment);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--rust-light);
+  }
+
+  .hero-identity {
+    font-family: 'Special Elite', monospace;
+    font-size: 38px;
+    color: var(--rust-light);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .hero-sub {
+    font-size: 19px;
+    color: rgba(244,236,224,0.7);
+    line-height: 1.6;
+    max-width: 540px;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    background: var(--rust);
+    color: var(--cream);
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--rust-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(160,82,45,0.3);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    background: transparent;
+    color: var(--parchment);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1.5px solid rgba(244,236,224,0.25);
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--rust-light);
+    color: var(--rust-light);
+  }
+
+  /* Hero right side — decorative */
+  .hero-art {
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 500px;
+    height: 500px;
+    opacity: 0.12;
+    z-index: 1;
+  }
+
+  .hero-art svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ─── What You Get section ──────────────────────────────────────── */
+  .section {
+    padding: 80px 60px;
+  }
+
+  .section-dark {
+    background:
+      /* Worn leather / dark wood feel */
+      radial-gradient(ellipse at 20% 30%, rgba(92,74,56,0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(92,74,56,0.2) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 50%, rgba(59,47,32,1) 0%, rgba(42,33,24,1) 100%);
+    color: var(--parchment);
+    position: relative;
+  }
+
+  .section-dark::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--rust), var(--gold-dust), var(--rust), transparent);
+  }
+
+  /* Wood plank overlay on dark sections */
+  .section-dark::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        89deg,
+        transparent,
+        transparent 22px,
+        rgba(196,155,60,0.02) 22px,
+        rgba(196,155,60,0.02) 23px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 120px,
+        rgba(139,115,85,0.015) 120px,
+        rgba(139,115,85,0.015) 121px
+      );
+    pointer-events: none;
+  }
+
+  .section-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rust-light);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 900;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .section-subtitle {
+    font-size: 17px;
+    opacity: 0.7;
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  /* Feature cards */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+  }
+
+  .feature-card {
+    background: rgba(244,236,224,0.06);
+    border: 1px solid rgba(244,236,224,0.08);
+    border-radius: 8px;
+    padding: 28px;
+    transition: all 0.3s;
+  }
+
+  .feature-card:hover {
+    background: rgba(244,236,224,0.1);
+    border-color: rgba(160,82,45,0.3);
+    transform: translateY(-2px);
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(160,82,45,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .feature-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .feature-card p {
+    font-size: 14px;
+    opacity: 0.65;
+    line-height: 1.5;
+  }
+
+  /* ─── Content Preview ───────────────────────────────────────────── */
+  .content-preview {
+    background:
+      /* Coffee ring stain */
+      radial-gradient(ellipse at 85% 25%, rgba(160,82,45,0.06) 0%, transparent 20%),
+      /* Warm aged patches */
+      radial-gradient(ellipse at 15% 70%, rgba(196,155,60,0.05) 0%, transparent 30%),
+      radial-gradient(ellipse at 60% 90%, rgba(139,115,85,0.04) 0%, transparent 25%),
+      linear-gradient(180deg, var(--cream) 0%, var(--parchment) 100%);
+    border-top: 1px solid rgba(59,47,32,0.08);
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+    max-width: 1100px;
+  }
+
+  .content-card {
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 12px rgba(42,33,24,0.06);
+    border: 1px solid rgba(59,47,32,0.06);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .content-card:hover {
+    box-shadow: 0 8px 30px rgba(42,33,24,0.1);
+    transform: translateY(-3px);
+  }
+
+  .content-thumb {
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .content-thumb-lessons {
+    background: linear-gradient(135deg, var(--wood-dark), var(--wood-mid));
+  }
+
+  .content-thumb-tabs {
+    background: linear-gradient(135deg, var(--delta-blue), var(--delta-blue-light));
+  }
+
+  .content-thumb-jams {
+    background: linear-gradient(135deg, var(--rust), var(--rust-light));
+  }
+
+  .content-thumb-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    opacity: 0.5;
+  }
+
+  .content-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    backdrop-filter: blur(4px);
+  }
+
+  .content-badge.free {
+    background: rgba(160,82,45,0.85);
+  }
+
+  .content-body {
+    padding: 20px;
+  }
+
+  .content-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .content-body p {
+    font-size: 13px;
+    color: var(--wood-light);
+    line-height: 1.5;
+  }
+
+  .content-meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--wood-light);
+    opacity: 0.7;
+  }
+
+  /* ─── Community / Articles section ──────────────────────────────── */
+  .articles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 1100px;
+  }
+
+  .article-card {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(244,236,224,0.06);
+    border: 1px solid rgba(244,236,224,0.06);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .article-card:hover {
+    background: rgba(244,236,224,0.1);
+    border-color: rgba(160,82,45,0.2);
+  }
+
+  .article-icon {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    background: rgba(160,82,45,0.12);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .article-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .article-card p {
+    font-size: 13px;
+    opacity: 0.6;
+    line-height: 1.4;
+  }
+
+  /* ─── Pricing / CTA ─────────────────────────────────────────────── */
+  .pricing-section {
+    text-align: center;
+    background:
+      radial-gradient(ellipse at 50% 80%, rgba(160,82,45,0.04) 0%, transparent 30%),
+      radial-gradient(ellipse at 20% 20%, rgba(196,155,60,0.04) 0%, transparent 25%),
+      linear-gradient(180deg, var(--parchment) 0%, var(--cream) 50%, var(--parchment) 100%);
+    border-top: 1px solid rgba(59,47,32,0.08);
+  }
+
+  .pricing-section .section-label,
+  .pricing-section .section-title,
+  .pricing-section .section-subtitle {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pricing-card {
+    max-width: 480px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 24px rgba(42,33,24,0.08);
+    border: 2px solid var(--rust);
+    position: relative;
+  }
+
+  .pricing-popular {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--rust);
+    color: var(--cream);
+    padding: 4px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 20px;
+  }
+
+  .pricing-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--ink);
+    margin: 16px 0 4px;
+  }
+
+  .pricing-price span {
+    font-size: 18px;
+    font-weight: 400;
+    opacity: 0.5;
+  }
+
+  .pricing-period {
+    font-size: 14px;
+    color: var(--wood-light);
+    margin-bottom: 24px;
+  }
+
+  .pricing-features {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 28px;
+  }
+
+  .pricing-features li {
+    padding: 8px 0;
+    font-size: 15px;
+    color: var(--wood-mid);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(59,47,32,0.06);
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: var(--rust);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .pricing-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 17px;
+  }
+
+  /* ─── Footer ─────────────────────────────────────────────────────── */
+  footer {
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(59,47,32,0.4) 0%, transparent 60%),
+      linear-gradient(180deg, #1e160e, var(--ink));
+    color: rgba(244,236,224,0.5);
+    padding: 48px 60px 32px;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+
+  .footer-brand {
+    font-family: 'Special Elite', monospace;
+    font-size: 20px;
+    color: var(--parchment);
+    margin-bottom: 8px;
+  }
+
+  .footer-brand span {
+    color: var(--rust-light);
+  }
+
+  .footer-tagline {
+    font-size: 13px;
+    max-width: 300px;
+    line-height: 1.5;
+  }
+
+  .footer-links h4 {
+    color: var(--parchment);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .footer-links a {
+    display: block;
+    color: rgba(244,236,224,0.5);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 3px 0;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--rust-light);
+  }
+
+  .footer-bottom {
+    padding-top: 24px;
+    border-top: 1px solid rgba(244,236,224,0.08);
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* ─── Ornamental divider ─────────────────────────────────────────── */
+  .ornament {
+    text-align: center;
+    margin: 0 auto 32px;
+    color: var(--rust);
+    font-size: 14px;
+    opacity: 0.5;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    max-width: 400px;
+  }
+
+  .ornament::before,
+  .ornament::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rust), transparent);
+    opacity: 0.4;
+  }
+
+  .section-dark .ornament {
+    color: var(--rust-light);
+    opacity: 0.4;
+  }
+
+  .section-dark .ornament::before,
+  .section-dark .ornament::after {
+    background: linear-gradient(90deg, transparent, var(--rust-light), transparent);
+  }
+
+  /* ─── Fox Chasers Community ─────────────────────────────────────── */
+  .fox-chasers-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Fox Chaser painting as full section background */
+  .fox-chasers-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('fox-chaser.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+    opacity: 0.15;
+  }
+
+  .fox-chasers-section .section-label,
+  .fox-chasers-section .section-title,
+  .fox-chasers-section .section-subtitle,
+  .fox-chasers-section .ornament {
+    position: relative;
+    z-index: 2;
+  }
+
+  .fox-chasers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 800px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .fox-chasers-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .fox-chasers-text p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  .fox-chasers-perks {
+    list-style: none;
+    margin-top: 20px;
+  }
+
+  .fox-chasers-perks li {
+    padding: 6px 0;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .fox-chasers-perks li::before {
+    content: '~';
+    color: var(--rust-light);
+    font-family: 'Special Elite', monospace;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  /* ─── About / Instructor section ───────────────────────────────── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 56px;
+    max-width: 1100px;
+    align-items: start;
+  }
+
+  .about-photo {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--rust);
+    box-shadow: 0 6px 30px rgba(42,33,24,0.12);
+    background: linear-gradient(135deg, var(--wood-dark), var(--wood-mid));
+    position: relative;
+  }
+
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-photo .placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--parchment);
+    font-size: 64px;
+    opacity: 0.5;
+  }
+
+  .about-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+
+  .about-text p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--wood-mid);
+    margin-bottom: 18px;
+  }
+
+  /* ─── Responsive ─────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero-content { padding: 0 24px; }
+    .section { padding: 60px 24px; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .fox-chasers-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-photo { margin: 0 auto; }
+    footer { padding: 40px 24px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-logo">The Harp<span>Shed</span></a>
+  <ul class="nav-links">
+    <li><a href="#lessons">Lessons</a></li>
+    <li><a href="#tabs">Tabs</a></li>
+    <li><a href="#jams">Jam Tracks</a></li>
+    <li><a href="#articles">Articles</a></li>
+    <li><a href="#community">Fox Chasers</a></li>
+    <li><a href="#pricing" class="nav-cta">Join the Shed</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <!-- Drop your photo as 'hero-photo.jpg' in the same folder -->
+  <div class="hero-bg-photo"></div>
+  <div class="hero-content">
+    <div class="hero-brand">The Harp<span>Shed</span></div>
+    <div class="hero-badge">Traditional Roots, Boundless Creativity</div>
+    <h1>Harmonica to <em>grease the greens.</em></h1>
+    <p class="hero-identity">GT Harmonica</p>
+    <p class="hero-sub">
+      Whether you're picking it up for the first time or you've been playing for years.
+      From the back porch to the stage — Appalachian fiddle tunes, pre-war solo harp,
+      country blues, and everything the tradition has to offer.
+    </p>
+    <div class="hero-buttons">
+      <a href="#pricing" class="btn-primary">
+        &#9834; Join The Shed
+      </a>
+      <a href="#preview" class="btn-secondary">
+        &#9654; Watch Free Lesson
+      </a>
+    </div>
+  </div>
+
+  <!-- Decorative harmonica outline -->
+  <div class="hero-art">
+    <svg viewBox="0 0 400 400" fill="none" stroke="rgba(244,236,224,0.6)" stroke-width="0.5">
+      <!-- Harmonica body -->
+      <rect x="60" y="170" width="280" height="60" rx="6"/>
+      <!-- Holes -->
+      <circle cx="100" cy="200" r="8"/>
+      <circle cx="128" cy="200" r="8"/>
+      <circle cx="156" cy="200" r="8"/>
+      <circle cx="184" cy="200" r="8"/>
+      <circle cx="212" cy="200" r="8"/>
+      <circle cx="240" cy="200" r="8"/>
+      <circle cx="268" cy="200" r="8"/>
+      <circle cx="296" cy="200" r="8"/>
+      <circle cx="324" cy="200" r="8"/>
+      <circle cx="352" cy="200" r="8" opacity="0"/>
+      <!-- Cover plate lines -->
+      <line x1="60" y1="190" x2="340" y2="190"/>
+      <line x1="60" y1="210" x2="340" y2="210"/>
+      <!-- Sound waves -->
+      <path d="M 50 160 Q 30 150, 20 130" opacity="0.4"/>
+      <path d="M 50 155 Q 25 140, 10 115" opacity="0.3"/>
+      <path d="M 50 150 Q 20 130, 0 100" opacity="0.2"/>
+      <path d="M 350 160 Q 370 150, 380 130" opacity="0.4"/>
+      <path d="M 350 155 Q 375 140, 390 115" opacity="0.3"/>
+    </svg>
+  </div>
+</section>
+
+<!-- What You Get -->
+<section class="section section-dark" id="lessons">
+  <div class="section-label">What's Inside</div>
+  <h2 class="section-title">Rooted in tradition,<br>reaching into the blues.</h2>
+  <p class="section-subtitle">
+    Old time, Appalachian, pre-war solo harp, and the blues that grew from it all.
+    Structured lessons, real tabs, and a community that respects the tradition.
+  </p>
+
+  <div class="ornament">&#10022; &#10022; &#10022;</div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">&#127909;</div>
+      <h3>Video Lessons</h3>
+      <p>Old time fiddle tunes, pre-war solo harp, country blues, and beyond. Structured courses that start with the tradition and build from there.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#127932;</div>
+      <h3>Tablature</h3>
+      <p>Full harmonica tab — from Appalachian reels to DeFord Bailey solos to Chicago blues. Clean notation so you can focus on the playing.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#127928;</div>
+      <h3>Jam Tracks</h3>
+      <p>Old time string band grooves, country dance, slow blues shuffles, gospel. Play along at your pace and find the feel in the music.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128220;</div>
+      <h3>Articles & History</h3>
+      <p>The mountain roots, the delta, the medicine shows. Player profiles, instrument history, and what connects it all together.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#129418;</div>
+      <h3>The Fox Chasers</h3>
+      <p>Our members' community. Share recordings, swap tunes, ask questions, upload your own takes. A place for players who respect the tradition.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128241;</div>
+      <h3>Practice App</h3>
+      <p>Track your repertoire, log sessions, build to a gig. The HarpShed app works alongside the site to keep your playing on course.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Content Preview -->
+<section class="section content-preview" id="preview">
+  <div class="section-label">Free Tasters</div>
+  <h2 class="section-title">See what's inside.</h2>
+  <p class="section-subtitle">
+    Try a lesson, grab a tab, play along with a track. Then decide if you want the full run of the shed.
+  </p>
+
+  <div class="content-grid">
+    <div class="content-card">
+      <div class="content-thumb content-thumb-lessons">
+        <div class="content-thumb-inner">&#127909;</div>
+        <div class="content-badge free">Free Preview</div>
+      </div>
+      <div class="content-body">
+        <h3>Old Joe Clark — Your First Fiddle Tune on Harp</h3>
+        <p>A classic Appalachian reel and the perfect place to start. We'll get you playing the melody in first position and feeling the groove of old time music.</p>
+        <div class="content-meta">
+          <span>&#9202; 18 min</span>
+          <span>&#127932; Beginner</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-thumb content-thumb-tabs">
+        <div class="content-thumb-inner">&#127932;</div>
+        <div class="content-badge free">Free Preview</div>
+      </div>
+      <div class="content-body">
+        <h3>Fox Chase — DeFord Bailey</h3>
+        <p>Full tablature for one of the most iconic pre-war harmonica pieces ever recorded. Train sounds, fox calls, and pure showmanship.</p>
+        <div class="content-meta">
+          <span>&#127925; Key of C (1st pos)</span>
+          <span>&#127932; Intermediate</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-thumb content-thumb-jams">
+        <div class="content-thumb-inner">&#127928;</div>
+        <div class="content-badge free">Free Preview</div>
+      </div>
+      <div class="content-body">
+        <h3>Country Blues in E — Jam Track</h3>
+        <p>Fingerpicked acoustic guitar, upright bass, light shuffle. Perfect for working on your pre-war country blues phrasing. Three tempos.</p>
+        <div class="content-meta">
+          <span>&#9202; 6 min</span>
+          <span>&#127925; Key of E</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The Fox Chasers Community -->
+<section class="section section-dark fox-chasers-section" id="community">
+  <div class="fox-chasers-bg"></div>
+  <div class="section-label">The Community</div>
+  <h2 class="section-title">The Fox Chasers.</h2>
+  <p class="section-subtitle">
+    Named after the tradition, built for players who live it.
+    When you join The Shed, you become a Fox Chaser.
+  </p>
+
+  <div class="ornament">&#10022; &#10022; &#10022;</div>
+
+  <div class="fox-chasers-grid">
+    <div class="fox-chasers-text">
+      <h3>A community that respects the tradition.</h3>
+      <p>
+        The Fox Chasers is where members share recordings, swap tunes, post questions,
+        and upload their own takes. It's not a social media feed — it's a real forum
+        for people who take this music seriously and want to get better together.
+      </p>
+      <ul class="fox-chasers-perks">
+        <li>Share your recordings and get honest feedback</li>
+        <li>Upload your own arrangements and tabs</li>
+        <li>Monthly tune challenges and jam sessions</li>
+        <li>Direct access to post questions and get answers</li>
+        <li>Connect with players who share the same roots</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- About / Instructor -->
+<section class="section" id="about" style="background: var(--cream); border-top: 1px solid rgba(59,47,32,0.08);">
+  <div class="section-label">Your Instructor</div>
+  <h2 class="section-title" style="font-family: 'Special Elite', monospace; letter-spacing: 2px;">Meet the man in the shed.</h2>
+
+  <div class="ornament">&#10022; &#10022; &#10022;</div>
+
+  <div class="about-grid">
+    <div class="about-photo">
+      <!-- Replace src with your photo -->
+      <img src="gareth-harpshed.jpg" alt="Gareth Tucker" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="placeholder" style="display:none;">&#127925;</div>
+    </div>
+    <div class="about-text">
+      <h3>Gareth Tucker</h3>
+      <p>
+        Gareth Tucker is a Norwich-based harmonica player, teacher, and session musician whose work
+        is rooted in old-time music, Appalachian repertoire, and pre-war blues. His playing is shaped
+        by groove, tone, and feel first — drawing on the raw power of traditional music rather than
+        empty showmanship.
+      </p>
+      <p>
+        Alongside his solo work and teaching, Gareth performs with Dave Thomas and has shared bills
+        with and supported artists including Rick Estrin, Son of Dave, Chastity Brown, Dana Gillespie,
+        and Joe Filisko. He has also contributed to the Hootmatic Blues compilation alongside Joe Filisko,
+        Phil Wiggins, Aki Kumar, and Paul Oscher.
+      </p>
+      <p>
+        A serious student of the tradition as much as a performer, Gareth's musical world runs from
+        DeFord Bailey-inspired material and old fiddle tunes to country blues, string band music,
+        and stripped-back roots playing. The Harp Shed brings all of that together: teaching, session
+        work, live performance, and a deep commitment to music with character, history, and soul.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Articles / Stories -->
+<section class="section section-dark" id="articles">
+  <div class="section-label">From the Porch</div>
+  <h2 class="section-title">Stories, history, and insights.</h2>
+  <p class="section-subtitle">
+    The music doesn't exist in a vacuum. Understanding where it comes from makes you a better player.
+  </p>
+
+  <div class="articles-grid">
+    <div class="article-card">
+      <div class="article-icon">&#127963;</div>
+      <div>
+        <h4>The Appalachian Harp Tradition</h4>
+        <p>Before the blues, there was old time. The mountain roots of American harmonica playing.</p>
+      </div>
+    </div>
+    <div class="article-card">
+      <div class="article-icon">&#128214;</div>
+      <div>
+        <h4>DeFord Bailey: The Harmonica Wizard</h4>
+        <p>The first star of the Grand Ole Opry and the man who made the Fox Chase famous.</p>
+      </div>
+    </div>
+    <div class="article-card">
+      <div class="article-icon">&#127911;</div>
+      <div>
+        <h4>Medicine Shows and the Travelling Harp</h4>
+        <p>How the harmonica became America's pocket instrument, from wagon stages to front porches.</p>
+      </div>
+    </div>
+    <div class="article-card">
+      <div class="article-icon">&#127926;</div>
+      <div>
+        <h4>From the Mountains to the Delta</h4>
+        <p>Tracing the journey from Appalachian fiddle tunes to the blues that shook the world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="section pricing-section" id="pricing">
+  <div class="section-label">Membership</div>
+  <h2 class="section-title">Join The Shed.</h2>
+  <p class="section-subtitle">
+    Full access to every lesson, tab, jam track, article, and the community.
+    Cancel any time. No contracts.
+  </p>
+
+  <div class="pricing-card">
+    <div class="pricing-popular">Full Access</div>
+    <div class="pricing-price">$9<span>/mo</span></div>
+    <div class="pricing-period">or $89/year (save 18%)</div>
+    <ul class="pricing-features">
+      <li>All video lessons — beginner to advanced</li>
+      <li>Complete tablature library</li>
+      <li>Full jam track collection (all keys & tempos)</li>
+      <li>Articles, history, and player insights</li>
+      <li>The Fox Chasers community — share, ask, get feedback</li>
+      <li>HarpShed practice app (iOS & Android)</li>
+      <li>New content added weekly</li>
+    </ul>
+    <button class="btn-primary pricing-btn">Start Your Free Week</button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">The Harp<span>Shed</span></div>
+      <p class="footer-tagline">Traditional roots, boundless creativity. Old time, Appalachian, and pre-war harmonica — from the roots up.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Learn</h4>
+      <a href="#">Old Time Harp</a>
+      <a href="#">Pre-War Blues</a>
+      <a href="#">Beginner Course</a>
+      <a href="#">Tablature Library</a>
+    </div>
+    <div class="footer-links">
+      <h4>Play</h4>
+      <a href="#">Jam Tracks</a>
+      <a href="#">Tune Library</a>
+      <a href="#">Practice App</a>
+    </div>
+    <div class="footer-links">
+      <h4>Connect</h4>
+      <a href="#">The Fox Chasers</a>
+      <a href="#">YouTube</a>
+      <a href="#">Instagram</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 The HarpShed. All rights reserved.</span>
+    <span>
+      <a href="#" style="color: inherit;">Privacy</a> &middot;
+      <a href="#" style="color: inherit;">Terms</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
