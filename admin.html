@@ -448,10 +448,57 @@
 
   // ═══ Auth ════════════════════════════════════════
   async function sha256(text) {
-    var data = new TextEncoder().encode(text);
-    var hash = await crypto.subtle.digest('SHA-256', data);
-    return Array.from(new Uint8Array(hash)).map(function(b) {
-      return b.toString(16).padStart(2, '0');
+    // crypto.subtle requires HTTPS; fall back to pure JS on HTTP
+    if (window.crypto && window.crypto.subtle) {
+      var data = new TextEncoder().encode(text);
+      var hash = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(hash)).map(function(b) {
+        return b.toString(16).padStart(2, '0');
+      }).join('');
+    }
+    // Pure JS SHA-256 fallback
+    function rightRotate(value, amount) { return (value >>> amount) | (value << (32 - amount)); }
+    var mathPow = Math.pow, maxWord = mathPow(2, 32);
+    var k = [], hash = [], words = [];
+    var i, j, w, a, b, c, d, e, f, g, h, t1, t2;
+    var isComposite = {};
+    for (var candidate = 2, primeCount = 0; primeCount < 64; candidate++) {
+      if (!isComposite[candidate]) {
+        for (i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+        hash[primeCount] = (mathPow(candidate, 0.5) * maxWord) | 0;
+        k[primeCount++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+      }
+    }
+    var msg = unescape(encodeURI(text));
+    var msgLength = msg.length;
+    words = []; i = 0;
+    while (i < msgLength) {
+      j = 0; var codePt = 0;
+      while (j < 4) { codePt |= (msg.charCodeAt(i) & 0xff) << (24 - j * 8); i++; j++; }
+      words.push(codePt);
+    }
+    words.push(0x80 << (24 - ((msgLength % 4) * 8)));
+    while ((words.length % 16) !== 14) words.push(0);
+    words.push(0); words.push(msgLength * 8);
+    var hash0 = hash[0], hash1 = hash[1], hash2 = hash[2], hash3 = hash[3];
+    var hash4 = hash[4], hash5 = hash[5], hash6 = hash[6], hash7 = hash[7];
+    for (j = 0; j < words.length;) {
+      w = words.slice(j, j += 16);
+      a = hash0; b = hash1; c = hash2; d = hash3; e = hash4; f = hash5; g = hash6; h = hash7;
+      for (i = 0; i < 64; i++) {
+        if (i < 16) { /* already set */ } else {
+          var s0w = w[i - 15], s1w = w[i - 2];
+          w[i] = (w[i - 16] + (rightRotate(s0w, 7) ^ rightRotate(s0w, 18) ^ (s0w >>> 3)) + w[i - 7] + (rightRotate(s1w, 17) ^ rightRotate(s1w, 19) ^ (s1w >>> 10))) | 0;
+        }
+        t1 = h + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) + ((e & f) ^ (~e & g)) + k[i] + (w[i] | 0);
+        t2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) + ((a & b) ^ (a & c) ^ (b & c));
+        h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+      }
+      hash0 = (hash0 + a) | 0; hash1 = (hash1 + b) | 0; hash2 = (hash2 + c) | 0; hash3 = (hash3 + d) | 0;
+      hash4 = (hash4 + e) | 0; hash5 = (hash5 + f) | 0; hash6 = (hash6 + g) | 0; hash7 = (hash7 + h) | 0;
+    }
+    return [hash0, hash1, hash2, hash3, hash4, hash5, hash6, hash7].map(function(v) {
+      return ('00000000' + ((v < 0 ? v + maxWord : v).toString(16))).slice(-8);
     }).join('');
   }
 
