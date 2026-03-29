@@ -2781,22 +2781,74 @@
 </head>
 <body>
 
-<!-- ─── Password Gate ──────────────────────────────────────────────── -->
-<div id="password-gate" style="
+<!-- ─── Coming Soon / Admin Gate ──────────────────────────────────── -->
+<div id="coming-soon-gate" style="
   position: fixed; inset: 0; z-index: 9999;
   background: linear-gradient(170deg, #3b2f20 0%, #2a2118 50%, #1e160e 100%);
   display: flex; align-items: center; justify-content: center;
   font-family: 'Source Sans 3', sans-serif;
+  overflow-y: auto;
 ">
-  <div style="text-align: center; max-width: 380px; padding: 40px;">
-    <div style="font-family: 'Special Elite', monospace; color: #f4ece0; font-size: 32px; margin-bottom: 4px;">
+  <!-- Coming Soon (public view) -->
+  <div id="coming-soon-public" style="text-align: center; max-width: 520px; padding: 40px 24px;">
+    <div style="margin-bottom: 24px;">
+      <img src="harpshed-logo.png" alt="HarpShed" style="width: 80px; height: 80px; border-radius: 12px; opacity: 0.9;" onerror="this.style.display='none'">
+    </div>
+    <div style="font-family: 'Special Elite', monospace; color: #f4ece0; font-size: 36px; margin-bottom: 4px;">
       The Harp<span style="color: #c4724a;">Shed</span>
     </div>
-    <p style="color: rgba(244,236,224,0.5); font-size: 14px; margin-bottom: 32px; letter-spacing: 1px;">
-      PREVIEW &middot; NOT YET PUBLIC
+    <p style="color: #c4724a; font-family: 'Special Elite', monospace; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 28px;">
+      Traditional Roots, Boundless Creativity
+    </p>
+    <p style="color: rgba(244,236,224,0.7); font-size: 18px; line-height: 1.7; margin-bottom: 12px; font-weight: 300;">
+      Harmonica lessons rooted in old time, Appalachian, and pre-war traditions.
+    </p>
+    <p style="color: rgba(244,236,224,0.5); font-size: 16px; line-height: 1.6; margin-bottom: 36px;">
+      Video lessons, tablature, jam tracks, and a community of players called The Fox Chasers.
+      We're building something special &mdash; and it's nearly ready.
+    </p>
+
+    <p style="color: rgba(244,236,224,0.6); font-size: 14px; margin-bottom: 12px; font-weight: 600; letter-spacing: 0.5px;">
+      Be first to know when we open the doors:
+    </p>
+    <form id="gate-signup-form" style="display: flex; gap: 0; max-width: 400px; margin: 0 auto 28px;" onsubmit="return handleGateSignup(event)">
+      <input id="gate-signup-email" type="email" placeholder="Your email address" required style="
+        flex: 1; padding: 14px 16px; font-size: 15px;
+        background: rgba(244,236,224,0.08); border: 1px solid rgba(244,236,224,0.15);
+        border-right: none; border-radius: 6px 0 0 6px; color: #f4ece0; outline: none;
+        font-family: 'Source Sans 3', sans-serif;
+      ">
+      <button type="submit" style="
+        padding: 14px 20px; background: #a0522d; color: #faf6ee; border: 1px solid #a0522d;
+        border-radius: 0 6px 6px 0; font-size: 14px; font-weight: 700; cursor: pointer;
+        font-family: 'Source Sans 3', sans-serif; white-space: nowrap;
+      ">Notify Me</button>
+    </form>
+    <p id="gate-signup-success" style="color: #c49b3c; font-size: 15px; font-weight: 600; display: none; margin-bottom: 28px;">
+      You're on the list. We'll be in touch.
+    </p>
+
+    <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 32px;">
+      <a href="https://www.youtube.com/@GTHarmonica" target="_blank" rel="noopener" style="color: rgba(244,236,224,0.4); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='#c4724a'" onmouseout="this.style.color='rgba(244,236,224,0.4)'">YouTube</a>
+      <a href="https://www.instagram.com/gtharmonica" target="_blank" rel="noopener" style="color: rgba(244,236,224,0.4); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='#c4724a'" onmouseout="this.style.color='rgba(244,236,224,0.4)'">Instagram</a>
+      <a href="https://www.tiktok.com/@bluesharmonica" target="_blank" rel="noopener" style="color: rgba(244,236,224,0.4); text-decoration: none; font-size: 14px; transition: color 0.2s;" onmouseover="this.style.color='#c4724a'" onmouseout="this.style.color='rgba(244,236,224,0.4)'">TikTok</a>
+    </div>
+
+    <p style="margin-bottom: 0;">
+      <a href="#" id="admin-login-link" style="color: rgba(244,236,224,0.15); font-size: 11px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='rgba(244,236,224,0.3)'" onmouseout="this.style.color='rgba(244,236,224,0.15)'">Admin</a>
+    </p>
+  </div>
+
+  <!-- Admin Login (hidden by default) -->
+  <div id="admin-login" style="text-align: center; max-width: 380px; padding: 40px; display: none;">
+    <div style="font-family: 'Special Elite', monospace; color: #f4ece0; font-size: 28px; margin-bottom: 4px;">
+      The Harp<span style="color: #c4724a;">Shed</span>
+    </div>
+    <p style="color: rgba(244,236,224,0.5); font-size: 13px; margin-bottom: 28px; letter-spacing: 1px;">
+      ADMIN ACCESS
     </p>
     <input id="gate-input" type="password" placeholder="Enter password"
-      autocomplete="off" autofocus
+      autocomplete="off"
       style="
         width: 100%; padding: 14px 18px; font-size: 16px;
         background: rgba(244,236,224,0.08); border: 1px solid rgba(244,236,224,0.15);
@@ -2812,22 +2864,44 @@
       letter-spacing: 0.5px;
     ">Enter</button>
     <p id="gate-error" style="color: #8b3a3a; font-size: 13px; margin-top: 12px; opacity: 0;">&nbsp;</p>
+    <p style="margin-top: 16px;">
+      <a href="#" id="back-to-coming-soon" style="color: rgba(244,236,224,0.4); font-size: 13px; text-decoration: none;">&#8592; Back</a>
+    </p>
   </div>
 </div>
 <script>
 (function() {
   var PASS = 'foxchaser';
   var KEY = 'harpshed_access';
+
+  // If already authenticated, skip the gate entirely
   if (sessionStorage.getItem(KEY) === 'granted') {
-    document.getElementById('password-gate').style.display = 'none';
+    document.getElementById('coming-soon-gate').style.display = 'none';
     return;
   }
+
   document.body.style.overflow = 'hidden';
+
+  // Toggle between coming soon and admin login
+  document.getElementById('admin-login-link').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('coming-soon-public').style.display = 'none';
+    document.getElementById('admin-login').style.display = 'block';
+    document.getElementById('gate-input').focus();
+  });
+
+  document.getElementById('back-to-coming-soon').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('admin-login').style.display = 'none';
+    document.getElementById('coming-soon-public').style.display = 'block';
+  });
+
+  // Admin password check
   function tryAccess() {
     var val = document.getElementById('gate-input').value;
     if (val === PASS) {
       sessionStorage.setItem(KEY, 'granted');
-      document.getElementById('password-gate').style.display = 'none';
+      document.getElementById('coming-soon-gate').style.display = 'none';
       document.body.style.overflow = '';
     } else {
       var err = document.getElementById('gate-error');
@@ -2837,10 +2911,24 @@
       document.getElementById('gate-input').focus();
     }
   }
+
   document.getElementById('gate-btn').addEventListener('click', tryAccess);
   document.getElementById('gate-input').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') tryAccess();
   });
+
+  // Coming soon email signup
+  window.handleGateSignup = function(e) {
+    e.preventDefault();
+    var email = document.getElementById('gate-signup-email').value;
+    if (!email) return false;
+    var signups = JSON.parse(localStorage.getItem('harpshed_signups') || '[]');
+    signups.push({ email: email, date: new Date().toISOString() });
+    localStorage.setItem('harpshed_signups', JSON.stringify(signups));
+    document.getElementById('gate-signup-form').style.display = 'none';
+    document.getElementById('gate-signup-success').style.display = 'block';
+    return false;
+  };
 })();
 </script>
 
