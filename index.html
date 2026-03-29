@@ -1895,6 +1895,111 @@
     .community-post-type { margin-left: 0; }
   }
 
+  /* ─── Page-based navigation ─────────────────────────────────── */
+  .page-container {
+    min-height: 60vh;
+  }
+
+  .page {
+    display: none;
+    animation: pageIn 0.35s ease;
+  }
+
+  .page.active {
+    display: block;
+  }
+
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Active nav link indicator */
+  .nav-links a.active {
+    color: var(--rust-light) !important;
+    position: relative;
+  }
+
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--rust-light);
+    border-radius: 1px;
+  }
+
+  /* ─── Trails Carousel ─────────────────────────────────────────── */
+  .trails-carousel {
+    position: relative;
+    max-width: 1000px;
+    overflow: hidden;
+  }
+
+  .trails-carousel-track {
+    display: flex;
+    transition: transform 0.4s ease;
+    touch-action: pan-y;
+  }
+
+  .trails-carousel-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+    padding: 0 4px;
+  }
+
+  .trails-carousel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .trails-carousel-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(59,47,32,0.08);
+    border: 1px solid rgba(59,47,32,0.12);
+    color: var(--ink);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .trails-carousel-btn:hover {
+    background: var(--rust);
+    color: var(--cream);
+    border-color: var(--rust);
+  }
+
+  .trails-carousel-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .trails-carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(59,47,32,0.15);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0;
+  }
+
+  .trails-carousel-dot.active {
+    background: var(--rust);
+    transform: scale(1.2);
+  }
+
   /* ─── Scroll-triggered animations ────────────────────────────── */
   .fade-in-section {
     opacity: 0;
@@ -2028,196 +2133,208 @@
   </div>
 </section>
 
-<!-- What's Inside Overview -->
-<section class="section section-dark" id="whats-inside">
-  <div class="section-label">What's Inside</div>
-  <h2 class="section-title">Rooted in tradition,<br>reaching into the blues.</h2>
-  <p class="section-subtitle">
-    Old time, Appalachian, pre-war solo harp, and the blues that grew from it all.
-    Structured lessons, real tabs, and a community that respects the tradition.
-  </p>
-  <div class="ornament">&#10022; &#10022; &#10022;</div>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">&#127909;</div>
-      <h3>Video Lessons</h3>
-      <p>Old time fiddle tunes, pre-war solo harp, country blues, and beyond. Structured courses that start with the tradition and build from there.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">&#127932;</div>
-      <h3>Tablature</h3>
-      <p>Full harmonica tab &mdash; from Appalachian reels to DeFord Bailey solos to Chicago blues. Clean notation so you can focus on the playing.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">&#127928;</div>
-      <h3>Jam Tracks</h3>
-      <p>Old time string band grooves, country dance, slow blues shuffles, gospel. Play along at your pace and find the feel in the music.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">&#128220;</div>
-      <h3>Articles &amp; History</h3>
-      <p>The mountain roots, the delta, the medicine shows. Player profiles, instrument history, and what connects it all together.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">&#129418;</div>
-      <h3>The Fox Chasers</h3>
-      <p>Our members' community. Share recordings, swap tunes, ask questions, upload your own takes. A place for players who respect the tradition.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">&#128241;</div>
-      <h3>Practice App</h3>
-      <p>Track your repertoire, log sessions, build to a gig. The HarpShed app works alongside the site to keep your playing on course.</p>
-    </div>
-  </div>
-</section>
+<!-- ═══ PAGE CONTAINER ════════════════════════════════════════════════ -->
+<div class="page-container" id="page-container">
 
-<!-- ═══ VIDEO LESSONS ════════════════════════════════════════════════ -->
-<section class="section lessons-section fade-in-section" id="lessons">
-  <div class="section-label">Video Lessons</div>
-  <h2 class="section-title">Learn from the tradition.</h2>
-  <p class="section-subtitle">
-    Structured lessons from Appalachian reels to pre-war blues. Each one breaks down the technique, the history, and the feel.
-  </p>
-  <div class="ornament">&#10022; &#10022; &#10022;</div>
-  <div class="lessons-grid" id="lessons-grid">
-    <!-- Rendered from content.js -->
-  </div>
-</section>
-
-<!-- ═══ TABLATURE ════════════════════════════════════════════════════ -->
-<section class="section section-dark tabs-section fade-in-section" id="tabs">
-  <div class="section-label">Tablature Library</div>
-  <h2 class="section-title">The notes on the page.</h2>
-  <p class="section-subtitle">
-    Full harmonica notation with every bend, every tongue block, and every ornament marked out. Download, print, play.
-  </p>
-  <div class="ornament">&#10022; &#10022; &#10022;</div>
-  <div class="tabs-grid" id="tabs-grid">
-    <!-- Rendered from content.js -->
-  </div>
-</section>
-
-<!-- ═══ JAM TRACKS ═══════════════════════════════════════════════════ -->
-<section class="section jams-section fade-in-section" id="jams">
-  <div class="section-label">Jam Tracks</div>
-  <h2 class="section-title">Play along. Find the groove.</h2>
-  <p class="section-subtitle">
-    String band, country blues, delta, gospel. Real instruments, multiple tempos. Lock in and let the music breathe.
-  </p>
-  <div class="ornament">&#10022; &#10022; &#10022;</div>
-  <div class="jams-grid" id="jams-grid">
-    <!-- Rendered from content.js -->
-  </div>
-</section>
-
-<!-- ═══ FUNDAMENTALS ═════════════════════════════════════════════════ -->
-<section class="section section-dark fade-in-section" id="fundamentals">
-  <div class="section-label">The Foundation</div>
-  <h2 class="section-title">Fundamentals.</h2>
-  <p class="section-subtitle">
-    Five pillars of harmonica playing. Master these and everything else falls into place.
-  </p>
-  <div class="ornament">&#10022; &#10022; &#10022;</div>
-  <div class="fundamentals-pillars" id="fundamentals-pillars">
-    <!-- Rendered from content.js -->
-  </div>
-</section>
-
-<!-- ═══ THE HARPSHED TRAILS ═════════════════════════════════════════ -->
-<section class="section fade-in-section" id="trails" style="background: var(--cream); border-top: 1px solid rgba(59,47,32,0.08);">
-  <div class="section-label">The HarpShed Trails</div>
-  <h2 class="section-title">Choose your path.</h2>
-  <p class="section-subtitle">
-    Three traditions. One instrument. Each trail takes you from your first notes to playing your own way &mdash; with real tunes, real technique, and stages that mean something.
-  </p>
-  <div class="ornament">&#10022; &#10022; &#10022;</div>
-  <div class="trails-container" id="trails-container">
-    <!-- Rendered from content.js -->
-  </div>
-</section>
-
-<!-- ═══ FOX CHASERS COMMUNITY ════════════════════════════════════════ -->
-<section class="section section-dark fox-chasers-section fade-in-section" id="community">
-  <div class="fox-chasers-bg"></div>
-  <div class="section-label">The Community</div>
-  <h2 class="section-title">The Fox Chasers.</h2>
-  <p class="section-subtitle">
-    Named after the tradition, built for players who live it.
-    When you join The Shed, you become a Fox Chaser.
-  </p>
-  <div class="ornament">&#10022; &#10022; &#10022;</div>
-
-  <div class="fox-chasers-intro">
-    <h3>A community that respects the tradition.</h3>
-    <p>
-      The Fox Chasers is where members share recordings, swap tunes, post questions,
-      and upload their own takes. It's not a social media feed &mdash; it's a real forum
-      for people who take this music seriously and want to get better together.
-    </p>
-    <ul class="fox-chasers-perks">
-      <li>Share your recordings and get honest feedback</li>
-      <li>Upload your own arrangements and tabs</li>
-      <li>Monthly tune challenges and jam sessions</li>
-      <li>Direct access to post questions and get answers</li>
-      <li>Connect with players who share the same roots</li>
-    </ul>
-  </div>
-
-  <div class="community-posts" id="community-posts">
-    <!-- Rendered from content.js -->
-  </div>
-
-  <div class="community-join-prompt">
-    <p>Join The Shed to become a Fox Chaser &mdash; post your recordings, ask questions, and connect with the community.</p>
-    <a href="#pricing" class="btn-primary">&#9834; Join The Fox Chasers</a>
-  </div>
-</section>
-
-<!-- About / Instructor -->
-<section class="section fade-in-section" id="about" style="background: var(--cream); border-top: 1px solid rgba(59,47,32,0.08);">
-  <div class="section-label">Your Instructor</div>
-  <h2 class="section-title" style="font-family: 'Special Elite', monospace; letter-spacing: 2px;">Meet the man in the shed.</h2>
-  <div class="ornament">&#10022; &#10022; &#10022;</div>
-  <div class="about-grid">
-    <div class="about-photo">
-      <img src="gareth-harpshed.jpg" alt="Gareth Tucker" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="placeholder" style="display:none;">&#127925;</div>
-    </div>
-    <div class="about-text">
-      <h3>Gareth Tucker</h3>
-      <p>
-        Gareth Tucker is a Norwich-based harmonica player, teacher, and session musician whose work
-        is rooted in old-time music, Appalachian repertoire, and pre-war blues. His playing is shaped
-        by groove, tone, and feel first &mdash; drawing on the raw power of traditional music rather than
-        empty showmanship.
+  <!-- PAGE: What's Inside (default landing) -->
+  <div class="page active" id="page-home">
+    <section class="section section-dark">
+      <div class="section-label">What's Inside</div>
+      <h2 class="section-title">Rooted in tradition,<br>reaching into the blues.</h2>
+      <p class="section-subtitle">
+        Old time, Appalachian, pre-war solo harp, and the blues that grew from it all.
+        Structured lessons, real tabs, and a community that respects the tradition.
       </p>
-      <p>
-        Alongside his solo work and teaching, Gareth performs with Dave Thomas and has shared bills
-        with and supported artists including Rick Estrin, Son of Dave, Chastity Brown, Dana Gillespie,
-        and Joe Filisko. He has also contributed to the Hootmatic Blues compilation alongside Joe Filisko,
-        Phil Wiggins, Aki Kumar, and Paul Oscher.
-      </p>
-      <p>
-        A serious student of the tradition as much as a performer, Gareth's musical world runs from
-        DeFord Bailey-inspired material and old fiddle tunes to country blues, string band music,
-        and stripped-back roots playing. The Harp Shed brings all of that together: teaching, session
-        work, live performance, and a deep commitment to music with character, history, and soul.
-      </p>
-    </div>
-  </div>
-</section>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="features-grid">
+        <div class="feature-card" onclick="showPage('lessons')" style="cursor:pointer;">
+          <div class="feature-icon">&#127909;</div>
+          <h3>Video Lessons</h3>
+          <p>Old time fiddle tunes, pre-war solo harp, country blues, and beyond. Structured courses that start with the tradition and build from there.</p>
+        </div>
+        <div class="feature-card" onclick="showPage('tabs')" style="cursor:pointer;">
+          <div class="feature-icon">&#127932;</div>
+          <h3>Tablature</h3>
+          <p>Full harmonica tab &mdash; from Appalachian reels to DeFord Bailey solos to Chicago blues. Clean notation so you can focus on the playing.</p>
+        </div>
+        <div class="feature-card" onclick="showPage('jams')" style="cursor:pointer;">
+          <div class="feature-icon">&#127928;</div>
+          <h3>Jam Tracks</h3>
+          <p>Old time string band grooves, country dance, slow blues shuffles, gospel. Play along at your pace and find the feel in the music.</p>
+        </div>
+        <div class="feature-card" onclick="showPage('fundamentals')" style="cursor:pointer;">
+          <div class="feature-icon">&#128170;</div>
+          <h3>Fundamentals</h3>
+          <p>Five pillars of harmonica playing. Breathing, bending, scales, rhythm, and greasing the greens. Master these and everything else falls into place.</p>
+        </div>
+        <div class="feature-card" onclick="showPage('trails')" style="cursor:pointer;">
+          <div class="feature-icon">&#127956;</div>
+          <h3>The Trails</h3>
+          <p>Three traditions, six stages each. Choose your path through old-time, solo harp, or early blues &mdash; and track your progress along the way.</p>
+        </div>
+        <div class="feature-card" onclick="showPage('community')" style="cursor:pointer;">
+          <div class="feature-icon">&#129418;</div>
+          <h3>The Fox Chasers</h3>
+          <p>Our members' community. Share recordings, swap tunes, ask questions, upload your own takes. A place for players who respect the tradition.</p>
+        </div>
+      </div>
+    </section>
 
-<!-- ═══ ARTICLES ═════════════════════════════════════════════════════ -->
-<section class="section section-dark fade-in-section" id="articles">
-  <div class="section-label">From the Porch</div>
-  <h2 class="section-title">Stories, history, and insights.</h2>
-  <p class="section-subtitle">
-    The music doesn't exist in a vacuum. Understanding where it comes from makes you a better player.
-  </p>
-  <div class="articles-grid" id="articles-grid">
-    <!-- Rendered from content.js -->
+    <!-- About / Instructor (on home page) -->
+    <section class="section" style="background: var(--cream); border-top: 1px solid rgba(59,47,32,0.08);">
+      <div class="section-label">Your Instructor</div>
+      <h2 class="section-title" style="font-family: 'Special Elite', monospace; letter-spacing: 2px;">Meet the man in the shed.</h2>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="about-grid">
+        <div class="about-photo">
+          <img src="gareth-harpshed.jpg" alt="Gareth Tucker" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="placeholder" style="display:none;">&#127925;</div>
+        </div>
+        <div class="about-text">
+          <h3>Gareth Tucker</h3>
+          <p>
+            Gareth Tucker is a Norwich-based harmonica player, teacher, and session musician whose work
+            is rooted in old-time music, Appalachian repertoire, and pre-war blues. His playing is shaped
+            by groove, tone, and feel first &mdash; drawing on the raw power of traditional music rather than
+            empty showmanship.
+          </p>
+          <p>
+            Alongside his solo work and teaching, Gareth performs with Dave Thomas and has shared bills
+            with and supported artists including Rick Estrin, Son of Dave, Chastity Brown, Dana Gillespie,
+            and Joe Filisko. He has also contributed to the Hootmatic Blues compilation alongside Joe Filisko,
+            Phil Wiggins, Aki Kumar, and Paul Oscher.
+          </p>
+          <p>
+            A serious student of the tradition as much as a performer, Gareth's musical world runs from
+            DeFord Bailey-inspired material and old fiddle tunes to country blues, string band music,
+            and stripped-back roots playing. The Harp Shed brings all of that together: teaching, session
+            work, live performance, and a deep commitment to music with character, history, and soul.
+          </p>
+        </div>
+      </div>
+    </section>
   </div>
-</section>
+
+  <!-- PAGE: Video Lessons -->
+  <div class="page" id="page-lessons">
+    <section class="section lessons-section">
+      <div class="section-label">Video Lessons</div>
+      <h2 class="section-title">Learn from the tradition.</h2>
+      <p class="section-subtitle">
+        Structured lessons from Appalachian reels to pre-war blues. Each one breaks down the technique, the history, and the feel.
+      </p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="lessons-grid" id="lessons-grid"></div>
+    </section>
+  </div>
+
+  <!-- PAGE: Tablature -->
+  <div class="page" id="page-tabs">
+    <section class="section section-dark tabs-section">
+      <div class="section-label">Tablature Library</div>
+      <h2 class="section-title">The notes on the page.</h2>
+      <p class="section-subtitle">
+        Full harmonica notation with every bend, every tongue block, and every ornament marked out. Download, print, play.
+      </p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="tabs-grid" id="tabs-grid"></div>
+    </section>
+  </div>
+
+  <!-- PAGE: Jam Tracks -->
+  <div class="page" id="page-jams">
+    <section class="section jams-section">
+      <div class="section-label">Jam Tracks</div>
+      <h2 class="section-title">Play along. Find the groove.</h2>
+      <p class="section-subtitle">
+        String band, country blues, delta, gospel. Real instruments, multiple tempos. Lock in and let the music breathe.
+      </p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="jams-grid" id="jams-grid"></div>
+    </section>
+  </div>
+
+  <!-- PAGE: Fundamentals -->
+  <div class="page" id="page-fundamentals">
+    <section class="section section-dark">
+      <div class="section-label">The Foundation</div>
+      <h2 class="section-title">Fundamentals.</h2>
+      <p class="section-subtitle">
+        Five pillars of harmonica playing. Master these and everything else falls into place.
+      </p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="fundamentals-pillars" id="fundamentals-pillars"></div>
+    </section>
+  </div>
+
+  <!-- PAGE: Trails -->
+  <div class="page" id="page-trails">
+    <section class="section" style="background: var(--cream); border-top: 1px solid rgba(59,47,32,0.08);">
+      <div class="section-label">The HarpShed Trails</div>
+      <h2 class="section-title">Choose your path.</h2>
+      <p class="section-subtitle">
+        Three traditions. One instrument. Each trail takes you from your first notes to playing your own way &mdash; with real tunes, real technique, and stages that mean something.
+      </p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="trails-carousel" id="trails-carousel">
+        <div class="trails-carousel-track" id="trails-track"></div>
+        <div class="trails-carousel-nav">
+          <button class="trails-carousel-btn" onclick="moveTrail(-1)">&#8592;</button>
+          <div class="trails-carousel-dots" id="trails-dots"></div>
+          <button class="trails-carousel-btn" onclick="moveTrail(1)">&#8594;</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PAGE: Fox Chasers Community -->
+  <div class="page" id="page-community">
+    <section class="section section-dark fox-chasers-section">
+      <div class="fox-chasers-bg"></div>
+      <div class="section-label">The Community</div>
+      <h2 class="section-title">The Fox Chasers.</h2>
+      <p class="section-subtitle">
+        Named after the tradition, built for players who live it.
+        When you join The Shed, you become a Fox Chaser.
+      </p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="fox-chasers-intro">
+        <h3>A community that respects the tradition.</h3>
+        <p>
+          The Fox Chasers is where members share recordings, swap tunes, post questions,
+          and upload their own takes. It's not a social media feed &mdash; it's a real forum
+          for people who take this music seriously and want to get better together.
+        </p>
+        <ul class="fox-chasers-perks">
+          <li>Share your recordings and get honest feedback</li>
+          <li>Upload your own arrangements and tabs</li>
+          <li>Monthly tune challenges and jam sessions</li>
+          <li>Direct access to post questions and get answers</li>
+          <li>Connect with players who share the same roots</li>
+        </ul>
+      </div>
+      <div class="community-posts" id="community-posts"></div>
+      <div class="community-join-prompt">
+        <p>Join The Shed to become a Fox Chaser &mdash; post your recordings, ask questions, and connect with the community.</p>
+        <a href="#pricing" class="btn-primary" onclick="showPage('pricing')">&#9834; Join The Fox Chasers</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- PAGE: Articles -->
+  <div class="page" id="page-articles">
+    <section class="section section-dark">
+      <div class="section-label">From the Porch</div>
+      <h2 class="section-title">Stories, history, and insights.</h2>
+      <p class="section-subtitle">
+        The music doesn't exist in a vacuum. Understanding where it comes from makes you a better player.
+      </p>
+      <div class="articles-grid" id="articles-grid"></div>
+    </section>
+  </div>
+
+</div>
+<!-- ═══ END PAGE CONTAINER ═══════════════════════════════════════════ -->
 
 <!-- Pricing -->
 <section class="section pricing-section fade-in-section" id="pricing">
@@ -2481,12 +2598,15 @@
     pillar.classList.toggle('open');
   };
 
-  // ─── Render Trails ────────────────────────────────────────────
-  function renderTrails() {
-    var container = document.getElementById('trails-container');
-    if (!container || !SITE_CONTENT.trails) return;
+  // ─── Render Trails (Carousel) ───────────────────────────────────
+  var currentTrail = 0;
 
-    container.innerHTML = SITE_CONTENT.trails.map(function(trail) {
+  function renderTrails() {
+    var track = document.getElementById('trails-track');
+    var dots = document.getElementById('trails-dots');
+    if (!track || !SITE_CONTENT.trails) return;
+
+    track.innerHTML = SITE_CONTENT.trails.map(function(trail) {
       var stages = trail.stages.map(function(stage, i) {
         return '<div class="trail-stage">' +
           '<div class="trail-stage-number">' + (i + 1) + '</div>' +
@@ -2500,17 +2620,65 @@
         ? '<div class="trail-coming-soon-badge">Coming Soon</div>'
         : '';
 
-      return '<div class="trail-card' + (trail.comingSoon ? ' coming-soon' : '') + '">' +
-        '<div class="trail-card-header">' +
-          '<div class="trail-card-header-bg" style="background:' + trail.color + ';"></div>' +
-          '<span class="trail-tradition-badge" style="background:' + trail.color + ';">' + trail.tradition + '</span>' +
-          comingSoonBadge +
-          '<h3><span class="trail-icon">' + trail.icon + '</span> ' + trail.title + '</h3>' +
-          '<p>' + trail.description + '</p>' +
+      return '<div class="trails-carousel-slide">' +
+        '<div class="trail-card' + (trail.comingSoon ? ' coming-soon' : '') + '">' +
+          '<div class="trail-card-header">' +
+            '<div class="trail-card-header-bg" style="background:' + trail.color + ';"></div>' +
+            '<span class="trail-tradition-badge" style="background:' + trail.color + ';">' + trail.tradition + '</span>' +
+            comingSoonBadge +
+            '<h3><span class="trail-icon">' + trail.icon + '</span> ' + trail.title + '</h3>' +
+            '<p>' + trail.description + '</p>' +
+          '</div>' +
+          '<div class="trail-stages">' + stages + '</div>' +
         '</div>' +
-        '<div class="trail-stages">' + stages + '</div>' +
       '</div>';
     }).join('');
+
+    // Render dots
+    if (dots) {
+      dots.innerHTML = SITE_CONTENT.trails.map(function(t, i) {
+        return '<button class="trails-carousel-dot' + (i === 0 ? ' active' : '') + '" onclick="goToTrail(' + i + ')"></button>';
+      }).join('');
+    }
+
+    // Touch/swipe support
+    initTrailSwipe();
+  }
+
+  window.goToTrail = function(index) {
+    var track = document.getElementById('trails-track');
+    var dots = document.querySelectorAll('.trails-carousel-dot');
+    var total = SITE_CONTENT.trails.length;
+    currentTrail = Math.max(0, Math.min(index, total - 1));
+    track.style.transform = 'translateX(-' + (currentTrail * 100) + '%)';
+    dots.forEach(function(d, i) {
+      d.classList.toggle('active', i === currentTrail);
+    });
+  };
+
+  window.moveTrail = function(dir) {
+    goToTrail(currentTrail + dir);
+  };
+
+  function initTrailSwipe() {
+    var carousel = document.getElementById('trails-carousel');
+    if (!carousel) return;
+    var startX = 0, diffX = 0;
+
+    carousel.addEventListener('touchstart', function(e) {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    carousel.addEventListener('touchmove', function(e) {
+      diffX = e.touches[0].clientX - startX;
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', function() {
+      if (Math.abs(diffX) > 50) {
+        moveTrail(diffX > 0 ? -1 : 1);
+      }
+      diffX = 0;
+    });
   }
 
   // ─── Render Articles ───────────────────────────────────────────
@@ -2632,26 +2800,105 @@
     if (e.key === 'Escape') closeVideoModal();
   });
 
-  // ─── Scroll Animations ────────────────────────────────────────
-  function initScrollAnimations() {
-    var sections = document.querySelectorAll('.fade-in-section');
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.08 });
+  // ─── Page Navigation ─────────────────────────────────────────
+  var pageMap = {
+    'lessons': 'page-lessons',
+    'tabs': 'page-tabs',
+    'jams': 'page-jams',
+    'fundamentals': 'page-fundamentals',
+    'trails': 'page-trails',
+    'articles': 'page-articles',
+    'community': 'page-community',
+    'home': 'page-home',
+    'pricing': null  // pricing scrolls, not a page
+  };
 
-    sections.forEach(function(s) { observer.observe(s); });
-  }
+  window.showPage = function(key) {
+    if (key === 'pricing') {
+      // Show home page then scroll to pricing
+      showPage('home');
+      setTimeout(function() {
+        document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return;
+    }
 
-  // ─── Smooth nav scroll + close mobile menu ────────────────────
+    var targetId = pageMap[key];
+    if (!targetId) return;
+
+    // Hide all pages, show target
+    document.querySelectorAll('.page').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    var target = document.getElementById(targetId);
+    if (target) target.classList.add('active');
+
+    // Update active nav link
+    document.querySelectorAll('.nav-links a').forEach(function(a) {
+      a.classList.remove('active');
+      var href = a.getAttribute('href');
+      if (href === '#' + key) a.classList.add('active');
+    });
+
+    // Scroll to top of page container
+    var container = document.getElementById('page-container');
+    if (container) {
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Close mobile menu
+    document.querySelector('.nav-links').classList.remove('open');
+
+    // Update hash without scroll
+    if (key !== 'home') {
+      history.replaceState(null, '', '#' + key);
+    } else {
+      history.replaceState(null, '', window.location.pathname);
+    }
+  };
+
+  // ─── Nav click handling ────────────────────────────────────────
   document.querySelectorAll('.nav-links a').forEach(function(a) {
-    a.addEventListener('click', function() {
+    a.addEventListener('click', function(e) {
+      var href = this.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        var key = href.slice(1);
+        if (pageMap.hasOwnProperty(key)) {
+          e.preventDefault();
+          showPage(key);
+        }
+      }
       document.querySelector('.nav-links').classList.remove('open');
     });
   });
+
+  // Logo click goes home
+  document.querySelector('.nav-logo').addEventListener('click', function(e) {
+    e.preventDefault();
+    showPage('home');
+  });
+
+  // Footer link handling
+  document.querySelectorAll('.footer-links a').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var href = this.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        var key = href.slice(1);
+        if (pageMap.hasOwnProperty(key)) {
+          e.preventDefault();
+          showPage(key);
+        }
+      }
+    });
+  });
+
+  // Handle initial hash on page load
+  function handleInitialHash() {
+    var hash = window.location.hash.slice(1);
+    if (hash && pageMap.hasOwnProperty(hash)) {
+      showPage(hash);
+    }
+  }
 
   // ─── Init ──────────────────────────────────────────────────────
   if (typeof SITE_CONTENT !== 'undefined') {
@@ -2663,7 +2910,7 @@
     renderArticles();
     renderCommunityPosts();
   }
-  initScrollAnimations();
+  handleInitialHash();
 
 })();
 </script>
