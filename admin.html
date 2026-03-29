@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HarpShed Admin</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1612;
+    --surface: #231e18;
+    --surface-hover: #2c2520;
+    --border: #3b2f20;
+    --rust: #a0522d;
+    --rust-light: #c4724a;
+    --cream: #f4ece0;
+    --text: #e8dcc8;
+    --text-dim: rgba(232,220,200,0.5);
+    --gold: #c49b3c;
+    --green: #4a9e6e;
+    --red: #c44a4a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ─── Login Gate ─────────────────────────────────── */
+  #admin-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  #admin-gate .login-box {
+    text-align: center; max-width: 360px; padding: 40px;
+  }
+
+  #admin-gate h1 {
+    font-family: 'Special Elite', monospace;
+    font-size: 24px; margin-bottom: 4px;
+  }
+
+  #admin-gate h1 span { color: var(--rust-light); }
+
+  #admin-gate .sub {
+    color: var(--text-dim); font-size: 13px;
+    letter-spacing: 1px; margin-bottom: 28px;
+  }
+
+  #admin-gate input {
+    width: 100%; padding: 14px 16px; font-size: 15px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text); outline: none;
+    font-family: inherit;
+  }
+
+  #admin-gate input:focus { border-color: var(--rust); }
+
+  #admin-gate button {
+    width: 100%; margin-top: 10px; padding: 14px;
+    background: var(--rust); color: var(--cream); border: none;
+    border-radius: 6px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+  }
+
+  #admin-gate button:hover { background: var(--rust-light); }
+
+  #admin-gate .error {
+    color: var(--red); font-size: 13px;
+    margin-top: 10px; min-height: 20px;
+  }
+
+  /* ─── Layout ──────────────────────────────────────── */
+  .admin-header {
+    background: var(--surface);
+    border-bottom: 2px solid var(--rust);
+    padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .admin-header h1 {
+    font-family: 'Special Elite', monospace;
+    font-size: 20px;
+  }
+
+  .admin-header h1 span { color: var(--rust-light); }
+
+  .admin-header .actions { display: flex; gap: 10px; }
+
+  .admin-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; gap: 0; overflow-x: auto;
+  }
+
+  .admin-nav button {
+    padding: 14px 20px;
+    background: none; border: none;
+    color: var(--text-dim); font-size: 14px;
+    font-weight: 600; cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-family: inherit; white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .admin-nav button:hover { color: var(--text); }
+
+  .admin-nav button.active {
+    color: var(--rust-light);
+    border-bottom-color: var(--rust-light);
+  }
+
+  .admin-body {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* ─── Cards ─────────────────────────────────────── */
+  .content-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .content-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 16px;
+    transition: background 0.2s;
+  }
+
+  .content-card:hover { background: var(--surface-hover); }
+
+  .content-card-info h3 {
+    font-size: 16px; font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .content-card-info p {
+    font-size: 13px; color: var(--text-dim);
+    line-height: 1.5;
+    max-width: 600px;
+    display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  .content-card-badges {
+    display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;
+  }
+
+  .badge {
+    padding: 2px 8px; border-radius: 3px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  .badge-rust { background: rgba(160,82,45,0.2); color: var(--rust-light); }
+  .badge-blue { background: rgba(74,113,153,0.2); color: #7ab0e0; }
+  .badge-gold { background: rgba(196,155,60,0.2); color: var(--gold); }
+  .badge-green { background: rgba(74,158,110,0.2); color: var(--green); }
+
+  .content-card-actions {
+    display: flex; gap: 8px; flex-shrink: 0;
+  }
+
+  /* ─── Buttons ───────────────────────────────────── */
+  .btn {
+    padding: 8px 16px; border-radius: 5px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; border: none;
+    font-family: inherit; transition: all 0.2s;
+  }
+
+  .btn-primary { background: var(--rust); color: var(--cream); }
+  .btn-primary:hover { background: var(--rust-light); }
+
+  .btn-outline {
+    background: transparent; color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--text-dim); color: var(--text); }
+
+  .btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); }
+  .btn-danger:hover { background: var(--red); color: white; }
+
+  .btn-save { background: var(--green); color: white; }
+  .btn-save:hover { background: #3d8a5e; }
+
+  .add-btn {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; width: 100%; padding: 16px;
+    background: var(--surface); border: 2px dashed var(--border);
+    border-radius: 8px; color: var(--text-dim);
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .add-btn:hover {
+    border-color: var(--rust); color: var(--rust-light);
+  }
+
+  /* ─── Modal / Editor ────────────────────────────── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(0,0,0,0.7);
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: 100%; max-width: 600px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-header h2 { font-size: 18px; }
+
+  .modal-close {
+    width: 32px; height: 32px;
+    background: none; border: 1px solid var(--border);
+    border-radius: 50%; color: var(--text-dim);
+    font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .modal-body { padding: 24px; }
+
+  .form-group { margin-bottom: 16px; }
+
+  .form-group label {
+    display: block; font-size: 13px; font-weight: 600;
+    color: var(--text-dim); margin-bottom: 6px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%; padding: 12px 14px; font-size: 14px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text);
+    font-family: inherit; outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--rust);
+  }
+
+  .form-group textarea { min-height: 80px; resize: vertical; }
+
+  .form-group select { cursor: pointer; }
+
+  .form-group .hint {
+    font-size: 12px; color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  .form-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+
+  .form-check {
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer;
+  }
+
+  .form-check input[type="checkbox"] {
+    width: 18px; height: 18px; cursor: pointer;
+    accent-color: var(--rust);
+  }
+
+  .form-check span { font-size: 14px; }
+
+  .modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: flex-end; gap: 10px;
+  }
+
+  /* ─── Status bar ────────────────────────────────── */
+  .status-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    padding: 10px 24px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between;
+    align-items: center; z-index: 50;
+  }
+
+  .status-bar .status {
+    font-size: 13px; color: var(--text-dim);
+  }
+
+  .status-bar .status.saved { color: var(--green); }
+  .status-bar .status.unsaved { color: var(--gold); }
+
+  /* ─── Setup Guide ───────────────────────────────── */
+  .setup-guide {
+    background: rgba(196,155,60,0.08);
+    border: 1px solid rgba(196,155,60,0.2);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .setup-guide h3 {
+    color: var(--gold); font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .setup-guide p {
+    font-size: 14px; color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .setup-guide code {
+    background: rgba(0,0,0,0.3); padding: 2px 6px;
+    border-radius: 3px; font-size: 13px;
+    color: var(--rust-light);
+  }
+
+  .setup-guide ol {
+    margin: 8px 0 0 20px; font-size: 14px;
+    color: var(--text-dim); line-height: 2;
+  }
+
+  /* ─── Responsive ────────────────────────────────── */
+  @media (max-width: 768px) {
+    .admin-body { padding: 16px; }
+    .content-card { flex-direction: column; }
+    .content-card-actions { width: 100%; }
+    .form-row { grid-template-columns: 1fr; }
+    .modal { margin: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Login Gate ──────────────────────────────────── -->
+<div id="admin-gate">
+  <div class="login-box">
+    <h1>Harp<span>Shed</span> Admin</h1>
+    <p class="sub">CONTENT MANAGEMENT</p>
+    <input id="admin-pass" type="password" placeholder="Admin password" autocomplete="off" autofocus>
+    <button id="admin-login-btn">Log In</button>
+    <div class="error" id="admin-error"></div>
+  </div>
+</div>
+
+<!-- ─── Admin UI (hidden until login) ──────────────── -->
+<div id="admin-app" style="display:none; padding-bottom: 60px;">
+
+  <div class="admin-header">
+    <h1>Harp<span>Shed</span> Admin</h1>
+    <div class="actions">
+      <button class="btn btn-save" id="save-btn" onclick="saveToGitHub()">Save &amp; Publish</button>
+      <a href="/" class="btn btn-outline" target="_blank">View Site</a>
+    </div>
+  </div>
+
+  <div class="admin-nav" id="admin-nav">
+    <button class="active" onclick="showSection('lessons')">Lessons</button>
+    <button onclick="showSection('tabs')">Tabs</button>
+    <button onclick="showSection('jams')">Jam Tracks</button>
+    <button onclick="showSection('articles')">Articles</button>
+    <button onclick="showSection('gallery')">Gallery</button>
+    <button onclick="showSection('community')">Community</button>
+    <button onclick="showSection('settings')">Settings</button>
+  </div>
+
+  <div class="admin-body">
+    <div id="setup-guide" class="setup-guide" style="display:none;">
+      <h3>Setup Required: GitHub Token</h3>
+      <p>To save content directly from this panel, you need a GitHub Personal Access Token:</p>
+      <ol>
+        <li>Go to <a href="https://github.com/settings/tokens/new" target="_blank" style="color:var(--rust-light);">github.com/settings/tokens/new</a></li>
+        <li>Name it <code>HarpShed Admin</code></li>
+        <li>Set expiration to 90 days (or no expiration)</li>
+        <li>Under "Repository access" select "Only select repositories" and choose <code>harpshed-site</code></li>
+        <li>Under Permissions > Repository permissions, set <strong>Contents</strong> to "Read and write"</li>
+        <li>Click "Generate token" and paste it in Settings below</li>
+      </ol>
+      <p style="margin-top:8px;">Until then, you can still edit content and download the file manually.</p>
+    </div>
+
+    <div id="section-content"></div>
+  </div>
+
+  <div class="status-bar">
+    <span class="status" id="status-text">Ready</span>
+    <span style="font-size:12px;color:var(--text-dim);" id="item-count"></span>
+  </div>
+</div>
+
+<!-- ─── Modal ──────────────────────────────────────── -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Edit Item</h2>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="modal-save-btn">Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="content.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // ═══ State ═══════════════════════════════════════
+  var content = JSON.parse(JSON.stringify(SITE_CONTENT)); // Deep clone
+  var currentSection = 'lessons';
+  var hasUnsaved = false;
+  var GITHUB_TOKEN_KEY = 'harpshed_github_token';
+  var GITHUB_REPO = 'Gtharmonica/harpshed-site';
+  var PASS_HASH = 'd6736921872967d7b09b4abdd0ad48275b0a48ce80a07d009706dbba33dbc8cb';
+
+  // ═══ Auth ════════════════════════════════════════
+  async function sha256(text) {
+    var data = new TextEncoder().encode(text);
+    var hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(function(b) {
+      return b.toString(16).padStart(2, '0');
+    }).join('');
+  }
+
+  if (sessionStorage.getItem('harpshed_admin') === 'granted') {
+    document.getElementById('admin-gate').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'block';
+    init();
+  }
+
+  document.getElementById('admin-login-btn').addEventListener('click', doLogin);
+  document.getElementById('admin-pass').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  async function doLogin() {
+    var val = document.getElementById('admin-pass').value;
+    var hash = await sha256(val);
+    if (hash === PASS_HASH) {
+      sessionStorage.setItem('harpshed_admin', 'granted');
+      document.getElementById('admin-gate').style.display = 'none';
+      document.getElementById('admin-app').style.display = 'block';
+      init();
+    } else {
+      document.getElementById('admin-error').textContent = 'Wrong password';
+    }
+  }
+
+  // ═══ Init ════════════════════════════════════════
+  function init() {
+    checkGitHubToken();
+    renderSection();
+  }
+
+  function checkGitHubToken() {
+    var token = localStorage.getItem(GITHUB_TOKEN_KEY);
+    document.getElementById('setup-guide').style.display = token ? 'none' : 'block';
+  }
+
+  // ═══ Section Navigation ══════════════════════════
+  window.showSection = function(section) {
+    currentSection = section;
+    document.querySelectorAll('.admin-nav button').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    renderSection();
+  };
+
+  function renderSection() {
+    var container = document.getElementById('section-content');
+    if (currentSection === 'settings') {
+      renderSettings(container);
+      return;
+    }
+    var items = getItems();
+    var sectionLabels = {
+      lessons: 'Lesson', tabs: 'Tab', jams: 'Jam Track',
+      articles: 'Article', gallery: 'Photo', community: 'Post'
+    };
+    var label = sectionLabels[currentSection] || 'Item';
+
+    var html = '<div class="content-list">';
+    items.forEach(function(item, i) {
+      html += renderCard(item, i, currentSection);
+    });
+    html += '</div>';
+    html += '<button class="add-btn" onclick="addItem()" style="margin-top:12px;">+ Add ' + label + '</button>';
+
+    container.innerHTML = html;
+    document.getElementById('item-count').textContent = items.length + ' ' + label.toLowerCase() + (items.length !== 1 ? 's' : '');
+  }
+
+  function getItems() {
+    var map = {
+      lessons: content.lessons,
+      tabs: content.tabs,
+      jams: content.jamTracks,
+      articles: content.articles,
+      gallery: content.gallery,
+      community: content.communityPosts
+    };
+    return map[currentSection] || [];
+  }
+
+  function setItems(items) {
+    var map = {
+      lessons: 'lessons', tabs: 'tabs', jams: 'jamTracks',
+      articles: 'articles', gallery: 'gallery', community: 'communityPosts'
+    };
+    content[map[currentSection]] = items;
+  }
+
+  // ═══ Card Rendering ══════════════════════════════
+  function renderCard(item, index, section) {
+    var title = item.title || item.name || item.src || 'Untitled';
+    var desc = item.description || item.excerpt || item.text || item.caption || '';
+    var badges = '';
+
+    if (section === 'lessons') {
+      badges = '<span class="badge badge-blue">' + (item.level || '') + '</span>' +
+               '<span class="badge badge-rust">' + (item.category || '') + '</span>' +
+               (item.free ? '<span class="badge badge-green">Free</span>' : '<span class="badge badge-gold">Members</span>');
+    } else if (section === 'tabs') {
+      badges = '<span class="badge badge-blue">Key of ' + (item.key || '') + '</span>' +
+               '<span class="badge badge-rust">' + (item.difficulty || '') + '</span>';
+    } else if (section === 'jams') {
+      badges = '<span class="badge badge-blue">' + (item.bpm || '') + ' BPM</span>' +
+               '<span class="badge badge-rust">' + (item.genre || '') + '</span>';
+    } else if (section === 'articles') {
+      badges = '<span class="badge badge-rust">' + (item.category || '') + '</span>' +
+               '<span class="badge badge-blue">' + (item.readTime || '') + '</span>';
+    } else if (section === 'gallery') {
+      badges = '<span class="badge badge-blue">' + (item.src || '') + '</span>';
+    }
+
+    return '<div class="content-card">' +
+      '<div class="content-card-info">' +
+        '<h3>' + escHtml(title) + '</h3>' +
+        '<p>' + escHtml(desc) + '</p>' +
+        '<div class="content-card-badges">' + badges + '</div>' +
+      '</div>' +
+      '<div class="content-card-actions">' +
+        '<button class="btn btn-outline" onclick="editItem(' + index + ')">Edit</button>' +
+        '<button class="btn btn-danger" onclick="deleteItem(' + index + ')">Delete</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // ═══ Form Definitions ════════════════════════════
+  function getFormFields() {
+    var forms = {
+      lessons: [
+        { key: 'title', label: 'Title', type: 'text', required: true },
+        { key: 'description', label: 'Description', type: 'textarea', required: true },
+        { key: 'youtubeUrl', label: 'YouTube URL', type: 'text', hint: 'Paste full YouTube URL' },
+        { key: 'duration', label: 'Duration', type: 'text', hint: 'e.g. "18 min"', half: true },
+        { key: 'level', label: 'Level', type: 'select', options: ['Beginner', 'Intermediate', 'Advanced'], half: true },
+        { key: 'category', label: 'Category', type: 'select', options: ['old-time', 'pre-war', 'blues', 'technique', 'theory'] },
+        { key: 'free', label: 'Free preview?', type: 'checkbox' }
+      ],
+      tabs: [
+        { key: 'title', label: 'Title', type: 'text', required: true },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'key', label: 'Key', type: 'text', hint: 'e.g. "C", "G"', half: true },
+        { key: 'position', label: 'Position', type: 'text', hint: 'e.g. "1st", "2nd"', half: true },
+        { key: 'difficulty', label: 'Difficulty', type: 'select', options: ['Beginner', 'Intermediate', 'Advanced'] },
+        { key: 'method', label: 'Method', type: 'text', hint: 'Usually "standard"' },
+        { key: 'downloadUrl', label: 'Download URL', type: 'text', hint: 'PDF link or Google Drive share' },
+        { key: 'image', label: 'Image filename', type: 'text', hint: 'e.g. "gareth-harpshed.jpg"' },
+        { key: 'free', label: 'Free?', type: 'checkbox' }
+      ],
+      jams: [
+        { key: 'title', label: 'Title', type: 'text', required: true },
+        { key: 'description', label: 'Description', type: 'textarea' },
+        { key: 'genre', label: 'Genre', type: 'text', hint: 'e.g. "Old Time", "Delta Blues"' },
+        { key: 'key', label: 'Key', type: 'text', half: true },
+        { key: 'bpm', label: 'BPM', type: 'number', half: true },
+        { key: 'youtubeUrl', label: 'YouTube URL', type: 'text' },
+        { key: 'free', label: 'Free?', type: 'checkbox' }
+      ],
+      articles: [
+        { key: 'title', label: 'Title', type: 'text', required: true },
+        { key: 'excerpt', label: 'Excerpt', type: 'textarea' },
+        { key: 'category', label: 'Category', type: 'text' },
+        { key: 'date', label: 'Date', type: 'date' },
+        { key: 'readTime', label: 'Read time', type: 'text', hint: 'e.g. "5 min"' }
+      ],
+      gallery: [
+        { key: 'src', label: 'Image filename', type: 'text', required: true, hint: 'Must be uploaded to the site folder' },
+        { key: 'caption', label: 'Caption', type: 'text' },
+        { key: 'alt', label: 'Alt text', type: 'text', hint: 'Description for accessibility' }
+      ],
+      community: [
+        { key: 'author', label: 'Author', type: 'text', required: true },
+        { key: 'date', label: 'Date', type: 'date' },
+        { key: 'type', label: 'Type', type: 'select', options: ['recording', 'question', 'discussion', 'tab'] },
+        { key: 'title', label: 'Title', type: 'text' },
+        { key: 'text', label: 'Content', type: 'textarea' },
+        { key: 'youtubeUrl', label: 'YouTube URL', type: 'text' },
+        { key: 'audioUrl', label: 'Audio URL', type: 'text' },
+        { key: 'pinned', label: 'Pinned?', type: 'checkbox' }
+      ]
+    };
+    return forms[currentSection] || [];
+  }
+
+  // ═══ Modal / Edit ════════════════════════════════
+  var editingIndex = -1;
+
+  window.editItem = function(index) {
+    editingIndex = index;
+    var items = getItems();
+    var item = items[index];
+    openModal('Edit ' + (item.title || item.src || 'Item'), item);
+  };
+
+  window.addItem = function() {
+    editingIndex = -1;
+    var defaults = {};
+    getFormFields().forEach(function(f) {
+      if (f.type === 'checkbox') defaults[f.key] = false;
+      else if (f.type === 'number') defaults[f.key] = 0;
+      else defaults[f.key] = '';
+    });
+    var labels = { lessons: 'Lesson', tabs: 'Tab', jams: 'Jam Track', articles: 'Article', gallery: 'Photo', community: 'Post' };
+    openModal('Add ' + (labels[currentSection] || 'Item'), defaults);
+  };
+
+  function openModal(title, data) {
+    document.getElementById('modal-title').textContent = title;
+    var fields = getFormFields();
+    var html = '';
+    var inRow = false;
+
+    fields.forEach(function(f, i) {
+      var val = data[f.key] !== undefined ? data[f.key] : '';
+
+      if (f.half && !inRow) {
+        html += '<div class="form-row">';
+        inRow = true;
+      }
+
+      html += '<div class="form-group">';
+      html += '<label>' + f.label + (f.required ? ' *' : '') + '</label>';
+
+      if (f.type === 'textarea') {
+        html += '<textarea id="field-' + f.key + '">' + escHtml(val) + '</textarea>';
+      } else if (f.type === 'select') {
+        html += '<select id="field-' + f.key + '">';
+        (f.options || []).forEach(function(opt) {
+          html += '<option value="' + opt + '"' + (val === opt ? ' selected' : '') + '>' + opt + '</option>';
+        });
+        html += '</select>';
+      } else if (f.type === 'checkbox') {
+        html += '<label class="form-check"><input type="checkbox" id="field-' + f.key + '"' + (val ? ' checked' : '') + '><span>' + f.label + '</span></label>';
+      } else {
+        html += '<input type="' + f.type + '" id="field-' + f.key + '" value="' + escAttr(val) + '">';
+      }
+
+      if (f.hint) html += '<div class="hint">' + f.hint + '</div>';
+      html += '</div>';
+
+      if (f.half) {
+        var next = fields[i + 1];
+        if (!next || !next.half) {
+          html += '</div>';
+          inRow = false;
+        }
+      }
+    });
+
+    document.getElementById('modal-body').innerHTML = html;
+    document.getElementById('modal-save-btn').onclick = saveModalItem;
+    document.getElementById('modal-overlay').classList.add('active');
+  }
+
+  function saveModalItem() {
+    var fields = getFormFields();
+    var item = {};
+    fields.forEach(function(f) {
+      var el = document.getElementById('field-' + f.key);
+      if (!el) return;
+      if (f.type === 'checkbox') item[f.key] = el.checked;
+      else if (f.type === 'number') item[f.key] = parseInt(el.value) || 0;
+      else item[f.key] = el.value;
+    });
+
+    // Preserve fields not in the form (like comments, tempos, etc.)
+    var items = getItems();
+    if (editingIndex >= 0 && items[editingIndex]) {
+      var existing = items[editingIndex];
+      Object.keys(existing).forEach(function(k) {
+        if (item[k] === undefined) item[k] = existing[k];
+      });
+      items[editingIndex] = item;
+    } else {
+      // Preserve extra fields with defaults for new items
+      if (currentSection === 'community') {
+        item.comments = item.comments || [];
+      }
+      if (currentSection === 'jams') {
+        item.tempos = item.tempos || [];
+      }
+      items.push(item);
+    }
+
+    setItems(items);
+    markUnsaved();
+    closeModal();
+    renderSection();
+  }
+
+  window.closeModal = function() {
+    document.getElementById('modal-overlay').classList.remove('active');
+  };
+
+  window.deleteItem = function(index) {
+    if (!confirm('Delete this item?')) return;
+    var items = getItems();
+    items.splice(index, 1);
+    setItems(items);
+    markUnsaved();
+    renderSection();
+  };
+
+  // ═══ Settings Section ════════════════════════════
+  function renderSettings(container) {
+    var token = localStorage.getItem(GITHUB_TOKEN_KEY) || '';
+    var masked = token ? token.substring(0, 8) + '...' + token.substring(token.length - 4) : 'Not set';
+
+    container.innerHTML =
+      '<div style="max-width:500px;">' +
+        '<h2 style="margin-bottom:20px;">Settings</h2>' +
+        '<div class="form-group">' +
+          '<label>GitHub Personal Access Token</label>' +
+          '<input type="password" id="settings-token" value="' + escAttr(token) + '" placeholder="ghp_...">' +
+          '<div class="hint">Current: ' + escHtml(masked) + '</div>' +
+        '</div>' +
+        '<button class="btn btn-primary" onclick="saveSettings()">Save Token</button>' +
+        '<button class="btn btn-outline" onclick="downloadContentJs()" style="margin-left:10px;">Download content.js</button>' +
+      '</div>';
+  }
+
+  window.saveSettings = function() {
+    var token = document.getElementById('settings-token').value.trim();
+    if (token) {
+      localStorage.setItem(GITHUB_TOKEN_KEY, token);
+      setStatus('Token saved', 'saved');
+      checkGitHubToken();
+    }
+  };
+
+  // ═══ Save to GitHub ══════════════════════════════
+  window.saveToGitHub = async function() {
+    var token = localStorage.getItem(GITHUB_TOKEN_KEY);
+    var fileContent = generateContentJs();
+
+    if (!token) {
+      // No token — download file instead
+      downloadContentJs();
+      return;
+    }
+
+    setStatus('Saving...', '');
+    var btn = document.getElementById('save-btn');
+    btn.textContent = 'Saving...';
+    btn.disabled = true;
+
+    try {
+      // Get current file SHA
+      var resp = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/content.js', {
+        headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      var data = await resp.json();
+      var sha = data.sha;
+
+      // Update file
+      var updateResp = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/content.js', {
+        method: 'PUT',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({
+          message: 'Update content via admin panel',
+          content: btoa(unescape(encodeURIComponent(fileContent))),
+          sha: sha
+        })
+      });
+
+      if (updateResp.ok) {
+        hasUnsaved = false;
+        setStatus('Published! Changes will be live in ~1 minute.', 'saved');
+      } else {
+        var err = await updateResp.json();
+        setStatus('Error: ' + (err.message || 'Failed to save'), '');
+      }
+    } catch (e) {
+      setStatus('Error: ' + e.message, '');
+    }
+
+    btn.textContent = 'Save & Publish';
+    btn.disabled = false;
+  };
+
+  // ═══ Generate content.js ═════════════════════════
+  function generateContentJs() {
+    var lines = [];
+    lines.push('var SITE_CONTENT = ' + JSON.stringify(content, null, 2) + ';');
+    return lines.join('\n') + '\n';
+  }
+
+  window.downloadContentJs = function() {
+    var blob = new Blob([generateContentJs()], { type: 'application/javascript' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'content.js';
+    a.click();
+    URL.revokeObjectURL(url);
+    setStatus('Downloaded content.js — commit and push to publish', 'saved');
+  };
+
+  // ═══ Helpers ═════════════════════════════════════
+  function escHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function escAttr(s) {
+    return String(s).replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  }
+
+  function markUnsaved() {
+    hasUnsaved = true;
+    setStatus('Unsaved changes', 'unsaved');
+  }
+
+  function setStatus(text, cls) {
+    var el = document.getElementById('status-text');
+    el.textContent = text;
+    el.className = 'status' + (cls ? ' ' + cls : '');
+  }
+
+  // Warn on page leave with unsaved changes
+  window.addEventListener('beforeunload', function(e) {
+    if (hasUnsaved) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+
+  // Close modal on overlay click
+  document.getElementById('modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // Close modal on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+})();
+</script>
+</body>
+</html>
