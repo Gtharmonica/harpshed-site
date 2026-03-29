@@ -509,6 +509,8 @@ function doLogin() {
   var val = document.getElementById('admin-pass').value;
   if (!val) return;
   var hash = sha256(val);
+  // TEMP DEBUG: show the generated hash so we can update PASS_HASH
+  console.log('YOUR_HASH: ' + hash);
   if (hash === PASS_HASH) {
     sessionStorage.setItem('harpshed_admin', 'granted');
     document.getElementById('admin-gate').style.display = 'none';
