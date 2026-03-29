@@ -739,11 +739,6 @@
     backdrop-filter: blur(4px);
   }
 
-  .tab-method-badge.filisko {
-    background: rgba(196,155,60,0.9);
-    color: #2a2118;
-  }
-
   .tab-method-badge.standard {
     background: rgba(44,74,110,0.85);
     color: white;
@@ -2094,7 +2089,7 @@
   <div class="section-label">Tablature Library</div>
   <h2 class="section-title">The notes on the page.</h2>
   <p class="section-subtitle">
-    Full harmonica notation &mdash; standard tab and Filisko method. Every bend, every tongue block, every ornament marked out. Download, print, play.
+    Full harmonica notation with every bend, every tongue block, and every ornament marked out. Download, print, play.
   </p>
   <div class="ornament">&#10022; &#10022; &#10022;</div>
   <div class="tabs-grid" id="tabs-grid">
@@ -2381,7 +2376,7 @@
           '<img src="' + imgSrc + '" alt="' + tab.title + '" loading="lazy">' +
           '<div class="tab-card-photo-overlay"></div>' +
           '<span class="tab-method-badge ' + tab.method + '">' +
-            (tab.method === 'filisko' ? 'Filisko Method' : 'Standard Tab') +
+            'Standard Tab' +
           '</span>' +
           '<span class="tab-free-badge ' + (tab.free ? 'free' : 'members') + '">' +
             (tab.free ? 'Free' : 'Members') +

@@ -41,7 +41,7 @@ var SITE_CONTENT = {
     },
     {
       title: "Tongue Blocking Fundamentals",
-      description: "The foundation of real harmonica tone. Chords, octaves, slaps — the Joe Filisko method that separates folk players from everyone else.",
+      description: "The foundation of real harmonica tone. Chords, octaves, slaps — the techniques that separate folk players from everyone else.",
       youtubeUrl: "",
       duration: "32 min",
       level: "Beginner",
@@ -62,16 +62,16 @@ var SITE_CONTENT = {
   // ─── TABLATURE ──────────────────────────────────────────────────
   // Each tab needs: title, description, key, position, difficulty,
   // downloadUrl (PDF link or Google Drive share link), image (optional photo)
-  // Method: "filisko" for Filisko notation, "standard" for regular tab
+  // Method: "standard" for standard tab notation
 
   tabs: [
     {
       title: "Fox Chase — DeFord Bailey",
-      description: "Full Filisko-method notation for the original Fox Chase. Every bend, every tongue block, every train whistle marked precisely.",
+      description: "Full notation for the original Fox Chase. Every bend, every tongue block, every train whistle marked precisely.",
       key: "C",
       position: "1st",
       difficulty: "Intermediate",
-      method: "filisko",
+      method: "standard",
       downloadUrl: "",  // ← Paste PDF download URL here
       image: "gareth-harpshed.jpg",  // ← Use your own photos here
       free: true
@@ -93,7 +93,7 @@ var SITE_CONTENT = {
       key: "G",
       position: "2nd",
       difficulty: "Intermediate",
-      method: "filisko",
+      method: "standard",
       downloadUrl: "",
       image: "gareth-harpshed.jpg",
       free: false
@@ -191,8 +191,8 @@ var SITE_CONTENT = {
       image: ""
     },
     {
-      title: "The Filisko Method: Why Notation Matters",
-      excerpt: "Joe Filisko's approach to harmonica notation and why it changed how we teach the instrument.",
+      title: "Notation in Harmonica Teaching",
+      excerpt: "How clear notation helps students learn the instrument faster and more effectively.",
       category: "Technique",
       date: "2026-03-15",
       readTime: "6 min",
@@ -233,7 +233,7 @@ var SITE_CONTENT = {
       items: [
         { title: "Your First Draw Bend", description: "Starting on hole 4 — finding the bend and learning to control it.", level: "Start Here", youtubeUrl: "" },
         { title: "All the Draw Bends", description: "Holes 1-6 — half steps, whole steps, and the deep bends on 2 and 3.", level: "Building", youtubeUrl: "" },
-        { title: "Tongue Blocking Essentials", description: "The Filisko method — chords, octaves, slaps, pulls, and shimmer.", level: "Building", youtubeUrl: "" },
+        { title: "Tongue Blocking Essentials", description: "Chords, octaves, slaps, pulls, and shimmer — the full toolkit of tongue blocking.", level: "Building", youtubeUrl: "" },
         { title: "Blow Bends & Overblows", description: "Opening up the top end of the harp. Holes 7-10 and beyond.", level: "Developing", youtubeUrl: "" }
       ]
     },
