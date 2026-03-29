@@ -316,10 +316,10 @@ var SITE_CONTENT = {
       ]
     },
     {
-      id: "early-blues",
-      title: "The Front Room Trail",
+      id: "juke-joint",
+      title: "The Juke Joint Trail",
       tradition: "Early Blues",
-      description: "Pre-war phrasing, Delta feel, country blues, and the raw sound that came before amplification. Where the tradition meets the blues.",
+      description: "Pre-war phrasing, Delta feel, country blues, and the raw sound that came before amplification. The music that filled juke joints, front porches, and Saturday night fish fries.",
       color: "#8b3a3a",
       icon: "&#127928;",
       comingSoon: true,
