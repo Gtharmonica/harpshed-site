@@ -1942,6 +1942,11 @@
     display: flex;
     transition: transform 0.4s ease;
     touch-action: pan-y;
+    cursor: grab;
+  }
+  .trails-carousel-track.dragging {
+    transition: none;
+    cursor: grabbing;
   }
 
   .trails-carousel-slide {
@@ -2650,6 +2655,7 @@
     var dots = document.querySelectorAll('.trails-carousel-dot');
     var total = SITE_CONTENT.trails.length;
     currentTrail = Math.max(0, Math.min(index, total - 1));
+    track.classList.remove('dragging');
     track.style.transform = 'translateX(-' + (currentTrail * 100) + '%)';
     dots.forEach(function(d, i) {
       d.classList.toggle('active', i === currentTrail);
@@ -2663,21 +2669,75 @@
   function initTrailSwipe() {
     var carousel = document.getElementById('trails-carousel');
     if (!carousel) return;
-    var startX = 0, diffX = 0;
+    var track = document.getElementById('trails-track');
+    var isDragging = false;
+    var startX = 0;
+    var startTime = 0;
+    var currentX = 0;
 
+    function getCarouselWidth() {
+      return carousel.offsetWidth;
+    }
+
+    function onDragStart(x) {
+      isDragging = true;
+      startX = x;
+      startTime = Date.now();
+      currentX = 0;
+      track.classList.add('dragging');
+    }
+
+    function onDragMove(x) {
+      if (!isDragging) return;
+      currentX = x - startX;
+      var baseOffset = -(currentTrail * 100);
+      var dragPercent = (currentX / getCarouselWidth()) * 100;
+      track.style.transform = 'translateX(' + (baseOffset + dragPercent) + '%)';
+    }
+
+    function onDragEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+      var elapsed = Date.now() - startTime;
+      var velocity = currentX / (elapsed || 1);
+      var threshold = getCarouselWidth() * 0.2;
+      var flick = Math.abs(velocity) > 0.4;
+
+      if (Math.abs(currentX) > threshold || flick) {
+        goToTrail(currentTrail + (currentX > 0 ? -1 : 1));
+      } else {
+        goToTrail(currentTrail);
+      }
+    }
+
+    // Touch events
     carousel.addEventListener('touchstart', function(e) {
-      startX = e.touches[0].clientX;
+      onDragStart(e.touches[0].clientX);
     }, { passive: true });
 
     carousel.addEventListener('touchmove', function(e) {
-      diffX = e.touches[0].clientX - startX;
+      onDragMove(e.touches[0].clientX);
     }, { passive: true });
 
-    carousel.addEventListener('touchend', function() {
-      if (Math.abs(diffX) > 50) {
-        moveTrail(diffX > 0 ? -1 : 1);
-      }
-      diffX = 0;
+    carousel.addEventListener('touchend', onDragEnd);
+
+    // Mouse events for desktop drag
+    carousel.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      onDragStart(e.clientX);
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (isDragging) onDragMove(e.clientX);
+    });
+
+    document.addEventListener('mouseup', function() {
+      if (isDragging) onDragEnd();
+    });
+
+    // Prevent drag on links/images inside carousel
+    carousel.addEventListener('dragstart', function(e) {
+      e.preventDefault();
     });
   }
 
