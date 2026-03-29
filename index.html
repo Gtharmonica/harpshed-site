@@ -46,23 +46,8 @@
     position: fixed;
     inset: 0;
     background:
-      /* Paper fiber grain */
-      repeating-linear-gradient(
-        2deg,
-        transparent,
-        transparent 3px,
-        rgba(139,115,85,0.025) 3px,
-        rgba(139,115,85,0.025) 4px
-      ),
-      /* Cross grain for woven texture */
-      repeating-linear-gradient(
-        92deg,
-        transparent,
-        transparent 5px,
-        rgba(120,95,60,0.018) 5px,
-        rgba(120,95,60,0.018) 6px
-      ),
-      /* Warm stain spots */
+      repeating-linear-gradient(2deg, transparent, transparent 3px, rgba(139,115,85,0.025) 3px, rgba(139,115,85,0.025) 4px),
+      repeating-linear-gradient(92deg, transparent, transparent 5px, rgba(120,95,60,0.018) 5px, rgba(120,95,60,0.018) 6px),
       radial-gradient(ellipse at 15% 20%, rgba(160,82,45,0.06) 0%, transparent 40%),
       radial-gradient(ellipse at 75% 60%, rgba(139,115,85,0.05) 0%, transparent 35%),
       radial-gradient(ellipse at 40% 85%, rgba(196,155,60,0.04) 0%, transparent 30%),
@@ -77,8 +62,7 @@
     top: 0;
     width: 100%;
     z-index: 100;
-    background:
-      linear-gradient(90deg, rgba(42,33,24,0.98), rgba(59,47,32,0.95), rgba(42,33,24,0.98));
+    background: linear-gradient(90deg, rgba(42,33,24,0.98), rgba(59,47,32,0.95), rgba(42,33,24,0.98));
     backdrop-filter: blur(10px);
     border-bottom: 2px solid var(--rust);
     box-shadow: 0 2px 12px rgba(0,0,0,0.3);
@@ -97,9 +81,7 @@
     text-decoration: none;
   }
 
-  .nav-logo span {
-    color: var(--rust-light);
-  }
+  .nav-logo span { color: var(--rust-light); }
 
   .nav-links {
     display: flex;
@@ -117,9 +99,7 @@
     transition: color 0.2s;
   }
 
-  .nav-links a:hover {
-    color: var(--rust-light);
-  }
+  .nav-links a:hover { color: var(--rust-light); }
 
   .nav-cta {
     background: var(--rust);
@@ -130,8 +110,24 @@
     transition: background 0.2s !important;
   }
 
-  .nav-cta:hover {
-    background: var(--rust-light) !important;
+  .nav-cta:hover { background: var(--rust-light) !important; }
+
+  /* Mobile menu toggle */
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--parchment);
+    margin: 5px 0;
+    transition: 0.3s;
   }
 
   /* ─── Hero ───────────────────────────────────────────────────────── */
@@ -142,12 +138,9 @@
     align-items: center;
     position: relative;
     overflow: hidden;
-    /* Photo sits behind everything, dark fallback if image not loaded */
-    background:
-      linear-gradient(170deg, #3d2e1c 0%, #2a1f14 35%, #1e160e 65%, #2a2118 100%);
+    background: linear-gradient(170deg, #3d2e1c 0%, #2a1f14 35%, #1e160e 65%, #2a2118 100%);
   }
 
-  /* Background photo layer */
   .hero-bg-photo {
     position: absolute;
     inset: 0;
@@ -157,45 +150,25 @@
     z-index: 0;
   }
 
-  /* Dark overlay so text stays readable over the photo */
   .hero::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
     background:
-      /* Strong left-to-right gradient — text side darker */
       linear-gradient(90deg, rgba(26,21,14,0.88) 0%, rgba(26,21,14,0.7) 45%, rgba(26,21,14,0.4) 100%),
-      /* Warm porch glow */
       radial-gradient(ellipse at 10% 60%, rgba(196,155,60,0.1) 0%, transparent 50%),
-      /* Vignette edges */
       radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.4) 100%);
     pointer-events: none;
   }
 
-  /* Layered wood plank texture */
   .hero::after {
     content: '';
     position: absolute;
     inset: 0;
     background:
-      /* Wide planks */
-      repeating-linear-gradient(
-        88deg,
-        transparent,
-        transparent 18px,
-        rgba(196,155,60,0.04) 18px,
-        rgba(196,155,60,0.04) 19px
-      ),
-      /* Fine grain */
-      repeating-linear-gradient(
-        89deg,
-        transparent,
-        transparent 3px,
-        rgba(160,120,60,0.025) 3px,
-        rgba(160,120,60,0.025) 4px
-      ),
-      /* Knot marks */
+      repeating-linear-gradient(88deg, transparent, transparent 18px, rgba(196,155,60,0.04) 18px, rgba(196,155,60,0.04) 19px),
+      repeating-linear-gradient(89deg, transparent, transparent 3px, rgba(160,120,60,0.025) 3px, rgba(160,120,60,0.025) 4px),
       radial-gradient(circle at 30% 40%, rgba(100,70,30,0.08) 0%, transparent 8%),
       radial-gradient(circle at 70% 65%, rgba(100,70,30,0.06) 0%, transparent 6%),
       radial-gradient(circle at 55% 25%, rgba(100,70,30,0.05) 0%, transparent 10%);
@@ -220,14 +193,11 @@
     display: inline-block;
   }
 
-  .hero-brand span {
-    color: var(--rust-light);
-  }
+  .hero-brand span { color: var(--rust-light); }
 
-  /* Simple decorative lines either side */
   .hero-brand::before,
   .hero-brand::after {
-    content: '—';
+    content: '\2014';
     color: var(--rust-light);
     opacity: 0.4;
     margin: 0 12px;
@@ -329,7 +299,6 @@
     color: var(--rust-light);
   }
 
-  /* Hero right side — decorative */
   .hero-art {
     position: absolute;
     right: -40px;
@@ -341,19 +310,15 @@
     z-index: 1;
   }
 
-  .hero-art svg {
-    width: 100%;
-    height: 100%;
-  }
+  .hero-art svg { width: 100%; height: 100%; }
 
-  /* ─── What You Get section ──────────────────────────────────────── */
+  /* ─── Shared section styles ──────────────────────────────────────── */
   .section {
     padding: 80px 60px;
   }
 
   .section-dark {
     background:
-      /* Worn leather / dark wood feel */
       radial-gradient(ellipse at 20% 30%, rgba(92,74,56,0.3) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 70%, rgba(92,74,56,0.2) 0%, transparent 40%),
       radial-gradient(ellipse at 50% 50%, rgba(59,47,32,1) 0%, rgba(42,33,24,1) 100%);
@@ -371,26 +336,13 @@
     background: linear-gradient(90deg, transparent, var(--rust), var(--gold-dust), var(--rust), transparent);
   }
 
-  /* Wood plank overlay on dark sections */
   .section-dark::after {
     content: '';
     position: absolute;
     inset: 0;
     background:
-      repeating-linear-gradient(
-        89deg,
-        transparent,
-        transparent 22px,
-        rgba(196,155,60,0.02) 22px,
-        rgba(196,155,60,0.02) 23px
-      ),
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 120px,
-        rgba(139,115,85,0.015) 120px,
-        rgba(139,115,85,0.015) 121px
-      );
+      repeating-linear-gradient(89deg, transparent, transparent 22px, rgba(196,155,60,0.02) 22px, rgba(196,155,60,0.02) 23px),
+      repeating-linear-gradient(0deg, transparent, transparent 120px, rgba(139,115,85,0.015) 120px, rgba(139,115,85,0.015) 121px);
     pointer-events: none;
   }
 
@@ -420,7 +372,40 @@
     font-weight: 300;
   }
 
-  /* Feature cards */
+  .ornament {
+    text-align: center;
+    margin: 0 auto 32px;
+    color: var(--rust);
+    font-size: 14px;
+    opacity: 0.5;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    max-width: 400px;
+  }
+
+  .ornament::before,
+  .ornament::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rust), transparent);
+    opacity: 0.4;
+  }
+
+  .section-dark .ornament {
+    color: var(--rust-light);
+    opacity: 0.4;
+  }
+
+  .section-dark .ornament::before,
+  .section-dark .ornament::after {
+    background: linear-gradient(90deg, transparent, var(--rust-light), transparent);
+  }
+
+  /* ─── What's Inside feature grid ──────────────────────────────────── */
   .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -467,75 +452,87 @@
     line-height: 1.5;
   }
 
-  /* ─── Content Preview ───────────────────────────────────────────── */
-  .content-preview {
+  /* ─── Video Lessons Section ────────────────────────────────────── */
+  .lessons-section {
     background:
-      /* Coffee ring stain */
       radial-gradient(ellipse at 85% 25%, rgba(160,82,45,0.06) 0%, transparent 20%),
-      /* Warm aged patches */
       radial-gradient(ellipse at 15% 70%, rgba(196,155,60,0.05) 0%, transparent 30%),
-      radial-gradient(ellipse at 60% 90%, rgba(139,115,85,0.04) 0%, transparent 25%),
       linear-gradient(180deg, var(--cream) 0%, var(--parchment) 100%);
     border-top: 1px solid rgba(59,47,32,0.08);
   }
 
-  .content-grid {
+  .lessons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 28px;
     max-width: 1100px;
   }
 
-  .content-card {
-    border-radius: 8px;
+  .lesson-card {
+    border-radius: 10px;
     overflow: hidden;
     background: white;
-    box-shadow: 0 2px 12px rgba(42,33,24,0.06);
+    box-shadow: 0 2px 16px rgba(42,33,24,0.07);
     border: 1px solid rgba(59,47,32,0.06);
     transition: all 0.3s;
     cursor: pointer;
   }
 
-  .content-card:hover {
-    box-shadow: 0 8px 30px rgba(42,33,24,0.1);
-    transform: translateY(-3px);
+  .lesson-card:hover {
+    box-shadow: 0 8px 36px rgba(42,33,24,0.12);
+    transform: translateY(-4px);
   }
 
-  .content-thumb {
-    height: 180px;
+  .lesson-thumb {
+    height: 200px;
     position: relative;
     overflow: hidden;
-  }
-
-  .content-thumb-lessons {
     background: linear-gradient(135deg, var(--wood-dark), var(--wood-mid));
   }
 
-  .content-thumb-tabs {
-    background: linear-gradient(135deg, var(--delta-blue), var(--delta-blue-light));
+  .lesson-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
-  .content-thumb-jams {
-    background: linear-gradient(135deg, var(--rust), var(--rust-light));
-  }
-
-  .content-thumb-inner {
+  .lesson-play-btn {
     position: absolute;
-    inset: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    background: rgba(160,82,45,0.9);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 48px;
-    opacity: 0.5;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   }
 
-  .content-badge {
+  .lesson-play-btn::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 18px;
+    border-color: transparent transparent transparent var(--cream);
+    margin-left: 3px;
+  }
+
+  .lesson-card:hover .lesson-play-btn {
+    background: var(--rust-light);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .lesson-badge {
     position: absolute;
     top: 12px;
     left: 12px;
     padding: 4px 10px;
-    background: rgba(0,0,0,0.5);
-    color: white;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -544,43 +541,809 @@
     backdrop-filter: blur(4px);
   }
 
-  .content-badge.free {
-    background: rgba(160,82,45,0.85);
+  .lesson-badge.free {
+    background: rgba(160,82,45,0.9);
+    color: white;
   }
 
-  .content-body {
+  .lesson-badge.members {
+    background: rgba(0,0,0,0.6);
+    color: var(--gold-dust);
+  }
+
+  .lesson-level {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 10px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 3px;
+    backdrop-filter: blur(4px);
+  }
+
+  .lesson-body {
     padding: 20px;
   }
 
-  .content-body h3 {
+  .lesson-body h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 700;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     color: var(--ink);
   }
 
-  .content-body p {
-    font-size: 13px;
+  .lesson-body p {
+    font-size: 14px;
+    color: var(--wood-mid);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .lesson-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
     color: var(--wood-light);
+  }
+
+  .lesson-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .lesson-category {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(160,82,45,0.1);
+    color: var(--rust);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    margin-top: 8px;
+  }
+
+  /* YouTube embed modal */
+  .video-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .video-modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .video-modal {
+    width: 90%;
+    max-width: 900px;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .video-modal iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .video-modal-close:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* ─── Tablature Section ─────────────────────────────────────────── */
+  .tabs-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tabs-section .section-dark-inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .tabs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .tab-card {
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(244,236,224,0.06);
+    border: 1px solid rgba(244,236,224,0.08);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .tab-card:hover {
+    background: rgba(244,236,224,0.1);
+    border-color: rgba(160,82,45,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+
+  .tab-card-photo {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tab-card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6) contrast(1.1);
+    transition: all 0.4s;
+  }
+
+  .tab-card:hover .tab-card-photo img {
+    filter: brightness(0.7) contrast(1.1);
+    transform: scale(1.03);
+  }
+
+  .tab-card-photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
+  }
+
+  .tab-method-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    backdrop-filter: blur(4px);
+  }
+
+  .tab-method-badge.filisko {
+    background: rgba(196,155,60,0.9);
+    color: #2a2118;
+  }
+
+  .tab-method-badge.standard {
+    background: rgba(44,74,110,0.85);
+    color: white;
+  }
+
+  .tab-free-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    backdrop-filter: blur(4px);
+  }
+
+  .tab-free-badge.free {
+    background: rgba(160,82,45,0.9);
+    color: white;
+  }
+
+  .tab-free-badge.members {
+    background: rgba(0,0,0,0.5);
+    color: var(--gold-dust);
+  }
+
+  .tab-card-key {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    font-family: 'Special Elite', monospace;
+    font-size: 32px;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    letter-spacing: 2px;
+  }
+
+  .tab-card-body {
+    padding: 20px;
+  }
+
+  .tab-card-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--parchment);
+  }
+
+  .tab-card-body p {
+    font-size: 13px;
+    opacity: 0.65;
+    line-height: 1.5;
+    margin-bottom: 14px;
+    color: var(--parchment);
+  }
+
+  .tab-card-info {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    opacity: 0.55;
+    color: var(--parchment);
+    margin-bottom: 14px;
+  }
+
+  .tab-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: var(--rust);
+    color: var(--cream);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab-download-btn:hover {
+    background: var(--rust-light);
+  }
+
+  .tab-download-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* ─── Jam Tracks Section ────────────────────────────────────────── */
+  .jams-section {
+    background:
+      radial-gradient(ellipse at 85% 25%, rgba(160,82,45,0.06) 0%, transparent 20%),
+      radial-gradient(ellipse at 15% 70%, rgba(196,155,60,0.05) 0%, transparent 30%),
+      linear-gradient(180deg, var(--cream) 0%, var(--parchment) 100%);
+    border-top: 1px solid rgba(59,47,32,0.08);
+  }
+
+  .jams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+  }
+
+  .jam-card {
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 16px rgba(42,33,24,0.07);
+    border: 1px solid rgba(59,47,32,0.06);
+    transition: all 0.3s;
+  }
+
+  .jam-card:hover {
+    box-shadow: 0 8px 30px rgba(42,33,24,0.12);
+    transform: translateY(-3px);
+  }
+
+  .jam-card-header {
+    padding: 24px 24px 16px;
+    position: relative;
+  }
+
+  .jam-card-genre {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 6px;
+  }
+
+  .jam-card-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .jam-card-header p {
+    font-size: 13px;
+    color: var(--wood-mid);
     line-height: 1.5;
   }
 
-  .content-meta {
-    display: flex;
-    gap: 12px;
-    margin-top: 12px;
-    font-size: 12px;
-    color: var(--wood-light);
-    opacity: 0.7;
+  .jam-card-bpm {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: center;
   }
 
-  /* ─── Community / Articles section ──────────────────────────────── */
+  .jam-card-bpm-number {
+    font-family: 'Special Elite', monospace;
+    font-size: 28px;
+    color: var(--rust);
+    line-height: 1;
+  }
+
+  .jam-card-bpm-label {
+    font-size: 10px;
+    color: var(--wood-light);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .jam-card-key-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    background: rgba(160,82,45,0.1);
+    color: var(--rust);
+    font-family: 'Special Elite', monospace;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  .jam-card-footer {
+    padding: 16px 24px;
+    border-top: 1px solid rgba(59,47,32,0.06);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .jam-tempos {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .jam-tempo-chip {
+    padding: 4px 10px;
+    background: var(--parchment);
+    border: 1px solid rgba(59,47,32,0.1);
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--wood-mid);
+    font-weight: 600;
+  }
+
+  .jam-access-badge {
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-radius: 3px;
+  }
+
+  .jam-access-badge.free {
+    background: rgba(160,82,45,0.15);
+    color: var(--rust);
+  }
+
+  .jam-access-badge.members {
+    background: rgba(196,155,60,0.15);
+    color: var(--gold-dust);
+  }
+
+  .jam-play-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 20px;
+    background: var(--rust);
+    color: var(--cream);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 12px;
+  }
+
+  .jam-play-btn:hover {
+    background: var(--rust-light);
+  }
+
+  /* ─── Fox Chasers Community ─────────────────────────────────────── */
+  .fox-chasers-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fox-chasers-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('fox-chaser.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+    opacity: 0.15;
+  }
+
+  .fox-chasers-section .section-label,
+  .fox-chasers-section .section-title,
+  .fox-chasers-section .section-subtitle,
+  .fox-chasers-section .ornament {
+    position: relative;
+    z-index: 2;
+  }
+
+  .fox-chasers-intro {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin-bottom: 48px;
+  }
+
+  .fox-chasers-intro h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: var(--parchment);
+  }
+
+  .fox-chasers-intro p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    opacity: 0.8;
+    color: var(--parchment);
+  }
+
+  .fox-chasers-perks {
+    list-style: none;
+    margin-top: 20px;
+  }
+
+  .fox-chasers-perks li {
+    padding: 6px 0;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--parchment);
+  }
+
+  .fox-chasers-perks li::before {
+    content: '~';
+    color: var(--rust-light);
+    font-family: 'Special Elite', monospace;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  /* Forum posts */
+  .community-posts {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .community-post {
+    background: rgba(244,236,224,0.06);
+    border: 1px solid rgba(244,236,224,0.08);
+    border-radius: 10px;
+    padding: 24px;
+    transition: all 0.2s;
+  }
+
+  .community-post:hover {
+    background: rgba(244,236,224,0.09);
+    border-color: rgba(160,82,45,0.2);
+  }
+
+  .community-post.pinned {
+    border-color: rgba(196,155,60,0.3);
+    background: rgba(196,155,60,0.06);
+  }
+
+  .community-post-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .community-post-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(160,82,45,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    color: var(--parchment);
+    font-weight: 700;
+  }
+
+  .community-post-author {
+    font-weight: 700;
+    color: var(--parchment);
+    font-size: 15px;
+  }
+
+  .community-post-date {
+    font-size: 12px;
+    opacity: 0.45;
+    color: var(--parchment);
+  }
+
+  .community-post-type {
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    margin-left: auto;
+  }
+
+  .community-post-type.challenge {
+    background: rgba(196,155,60,0.2);
+    color: var(--gold-dust);
+  }
+
+  .community-post-type.discussion {
+    background: rgba(44,74,110,0.3);
+    color: var(--delta-blue-light);
+  }
+
+  .community-post-type.recording {
+    background: rgba(160,82,45,0.2);
+    color: var(--rust-light);
+  }
+
+  .community-post-type.question {
+    background: rgba(139,58,58,0.2);
+    color: #c97272;
+  }
+
+  .community-post-pin {
+    font-size: 11px;
+    color: var(--gold-dust);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .community-post h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--parchment);
+    margin-bottom: 8px;
+  }
+
+  .community-post-text {
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.75;
+    color: var(--parchment);
+    margin-bottom: 16px;
+  }
+
+  .community-post-media {
+    margin-bottom: 16px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .community-post-media iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
+    border-radius: 6px;
+  }
+
+  .community-post-media audio {
+    width: 100%;
+  }
+
+  .community-post-comments {
+    border-top: 1px solid rgba(244,236,224,0.08);
+    padding-top: 14px;
+    margin-top: 4px;
+  }
+
+  .community-comment {
+    padding: 10px 0;
+    display: flex;
+    gap: 10px;
+  }
+
+  .community-comment-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(160,82,45,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    color: var(--parchment);
+    font-weight: 700;
+  }
+
+  .community-comment-content {
+    flex: 1;
+  }
+
+  .community-comment-author {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--parchment);
+  }
+
+  .community-comment-date {
+    font-size: 11px;
+    opacity: 0.4;
+    color: var(--parchment);
+    margin-left: 8px;
+  }
+
+  .community-comment-text {
+    font-size: 13px;
+    opacity: 0.65;
+    line-height: 1.5;
+    color: var(--parchment);
+    margin-top: 2px;
+  }
+
+  .community-reply-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 14px;
+    background: rgba(244,236,224,0.06);
+    border: 1px solid rgba(244,236,224,0.1);
+    border-radius: 4px;
+    color: var(--parchment);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+    opacity: 0.5;
+  }
+
+  .community-reply-btn:hover {
+    background: rgba(244,236,224,0.1);
+    opacity: 0.8;
+  }
+
+  .community-join-prompt {
+    position: relative;
+    z-index: 2;
+    margin-top: 32px;
+    padding: 24px;
+    background: rgba(160,82,45,0.1);
+    border: 1px solid rgba(160,82,45,0.2);
+    border-radius: 8px;
+    max-width: 800px;
+    text-align: center;
+  }
+
+  .community-join-prompt p {
+    color: var(--parchment);
+    font-size: 15px;
+    opacity: 0.8;
+    margin-bottom: 16px;
+  }
+
+  /* ─── About / Instructor ───────────────────────────────────────── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 56px;
+    max-width: 1100px;
+    align-items: start;
+  }
+
+  .about-photo {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--rust);
+    box-shadow: 0 6px 30px rgba(42,33,24,0.12);
+    background: linear-gradient(135deg, var(--wood-dark), var(--wood-mid));
+    position: relative;
+  }
+
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-photo .placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--parchment);
+    font-size: 64px;
+    opacity: 0.5;
+  }
+
+  .about-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+
+  .about-text p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--wood-mid);
+    margin-bottom: 18px;
+  }
+
+  /* ─── Articles Section ─────────────────────────────────────────── */
   .articles-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
     max-width: 1100px;
+    position: relative;
+    z-index: 2;
   }
 
   .article-card {
@@ -615,12 +1378,21 @@
     font-family: 'Playfair Display', serif;
     font-size: 16px;
     margin-bottom: 4px;
+    color: var(--parchment);
   }
 
   .article-card p {
     font-size: 13px;
     opacity: 0.6;
     line-height: 1.4;
+    color: var(--parchment);
+  }
+
+  .article-card-meta {
+    font-size: 11px;
+    opacity: 0.4;
+    margin-top: 6px;
+    color: var(--parchment);
   }
 
   /* ─── Pricing / CTA ─────────────────────────────────────────────── */
@@ -704,7 +1476,7 @@
   }
 
   .pricing-features li::before {
-    content: '✓';
+    content: '\2713';
     color: var(--rust);
     font-weight: 700;
     font-size: 16px;
@@ -741,9 +1513,7 @@
     margin-bottom: 8px;
   }
 
-  .footer-brand span {
-    color: var(--rust-light);
-  }
+  .footer-brand span { color: var(--rust-light); }
 
   .footer-tagline {
     font-size: 13px;
@@ -769,9 +1539,7 @@
     transition: color 0.2s;
   }
 
-  .footer-links a:hover {
-    color: var(--rust-light);
-  }
+  .footer-links a:hover { color: var(--rust-light); }
 
   .footer-bottom {
     padding-top: 24px;
@@ -783,170 +1551,53 @@
     gap: 12px;
   }
 
-  /* ─── Ornamental divider ─────────────────────────────────────────── */
-  .ornament {
-    text-align: center;
-    margin: 0 auto 32px;
-    color: var(--rust);
-    font-size: 14px;
-    opacity: 0.5;
-    letter-spacing: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    max-width: 400px;
-  }
-
-  .ornament::before,
-  .ornament::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--rust), transparent);
-    opacity: 0.4;
-  }
-
-  .section-dark .ornament {
-    color: var(--rust-light);
-    opacity: 0.4;
-  }
-
-  .section-dark .ornament::before,
-  .section-dark .ornament::after {
-    background: linear-gradient(90deg, transparent, var(--rust-light), transparent);
-  }
-
-  /* ─── Fox Chasers Community ─────────────────────────────────────── */
-  .fox-chasers-section {
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Fox Chaser painting as full section background */
-  .fox-chasers-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('fox-chaser.jpg');
-    background-size: cover;
-    background-position: center;
-    z-index: 0;
-    opacity: 0.15;
-  }
-
-  .fox-chasers-section .section-label,
-  .fox-chasers-section .section-title,
-  .fox-chasers-section .section-subtitle,
-  .fox-chasers-section .ornament {
-    position: relative;
-    z-index: 2;
-  }
-
-  .fox-chasers-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
-    max-width: 800px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .fox-chasers-text h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    margin-bottom: 16px;
-  }
-
-  .fox-chasers-text p {
-    font-size: 16px;
-    line-height: 1.7;
-    margin-bottom: 16px;
-    opacity: 0.8;
-  }
-
-  .fox-chasers-perks {
-    list-style: none;
-    margin-top: 20px;
-  }
-
-  .fox-chasers-perks li {
-    padding: 6px 0;
-    font-size: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .fox-chasers-perks li::before {
-    content: '~';
-    color: var(--rust-light);
-    font-family: 'Special Elite', monospace;
-    font-size: 18px;
-    font-weight: 700;
-  }
-
-  /* ─── About / Instructor section ───────────────────────────────── */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 56px;
-    max-width: 1100px;
-    align-items: start;
-  }
-
-  .about-photo {
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid var(--rust);
-    box-shadow: 0 6px 30px rgba(42,33,24,0.12);
-    background: linear-gradient(135deg, var(--wood-dark), var(--wood-mid));
-    position: relative;
-  }
-
-  .about-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .about-photo .placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--parchment);
-    font-size: 64px;
-    opacity: 0.5;
-  }
-
-  .about-text h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    margin-bottom: 16px;
-    color: var(--ink);
-  }
-
-  .about-text p {
-    font-size: 16px;
-    line-height: 1.8;
-    color: var(--wood-mid);
-    margin-bottom: 18px;
-  }
+  /* ─── Smooth scrolling ────────────────────────────────────────── */
+  html { scroll-behavior: smooth; }
 
   /* ─── Responsive ─────────────────────────────────────────────────── */
-  @media (max-width: 768px) {
-    nav { padding: 0 20px; }
-    .nav-links { display: none; }
-    .hero-content { padding: 0 24px; }
-    .section { padding: 60px 24px; }
+  @media (max-width: 900px) {
     .articles-grid { grid-template-columns: 1fr; }
-    .fox-chasers-grid { grid-template-columns: 1fr; }
     .about-grid { grid-template-columns: 1fr; }
     .about-photo { margin: 0 auto; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: rgba(42,33,24,0.98);
+      flex-direction: column;
+      padding: 20px;
+      gap: 16px;
+      border-bottom: 2px solid var(--rust);
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    .hero-content { padding: 0 24px; }
+    .section { padding: 60px 24px; }
+    .lessons-grid { grid-template-columns: 1fr; }
+    .tabs-grid { grid-template-columns: 1fr; }
+    .jams-grid { grid-template-columns: 1fr; }
     footer { padding: 40px 24px 24px; }
+    .hero-brand { font-size: 36px; }
+    .hero-brand::before, .hero-brand::after { display: none; }
+    .community-post-type { margin-left: 0; }
+  }
+
+  /* ─── Scroll-triggered animations ────────────────────────────── */
+  .fade-in-section {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 </style>
 </head>
@@ -1018,6 +1669,9 @@
 <!-- Navigation -->
 <nav>
   <a href="#" class="nav-logo">The Harp<span>Shed</span></a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="#lessons">Lessons</a></li>
     <li><a href="#tabs">Tabs</a></li>
@@ -1030,7 +1684,6 @@
 
 <!-- Hero -->
 <section class="hero">
-  <!-- Drop your photo as 'hero-photo.jpg' in the same folder -->
   <div class="hero-bg-photo"></div>
   <div class="hero-content">
     <div class="hero-brand">The Harp<span>Shed</span></div>
@@ -1039,39 +1692,24 @@
     <p class="hero-identity">GT Harmonica</p>
     <p class="hero-sub">
       Whether you're picking it up for the first time or you've been playing for years.
-      From the back porch to the stage — Appalachian fiddle tunes, pre-war solo harp,
+      From the back porch to the stage &mdash; Appalachian fiddle tunes, pre-war solo harp,
       country blues, and everything the tradition has to offer.
     </p>
     <div class="hero-buttons">
-      <a href="#pricing" class="btn-primary">
-        &#9834; Join The Shed
-      </a>
-      <a href="#preview" class="btn-secondary">
-        &#9654; Watch Free Lesson
-      </a>
+      <a href="#pricing" class="btn-primary">&#9834; Join The Shed</a>
+      <a href="#lessons" class="btn-secondary">&#9654; Browse Lessons</a>
     </div>
   </div>
-
-  <!-- Decorative harmonica outline -->
   <div class="hero-art">
     <svg viewBox="0 0 400 400" fill="none" stroke="rgba(244,236,224,0.6)" stroke-width="0.5">
-      <!-- Harmonica body -->
       <rect x="60" y="170" width="280" height="60" rx="6"/>
-      <!-- Holes -->
-      <circle cx="100" cy="200" r="8"/>
-      <circle cx="128" cy="200" r="8"/>
-      <circle cx="156" cy="200" r="8"/>
-      <circle cx="184" cy="200" r="8"/>
-      <circle cx="212" cy="200" r="8"/>
-      <circle cx="240" cy="200" r="8"/>
-      <circle cx="268" cy="200" r="8"/>
-      <circle cx="296" cy="200" r="8"/>
+      <circle cx="100" cy="200" r="8"/><circle cx="128" cy="200" r="8"/>
+      <circle cx="156" cy="200" r="8"/><circle cx="184" cy="200" r="8"/>
+      <circle cx="212" cy="200" r="8"/><circle cx="240" cy="200" r="8"/>
+      <circle cx="268" cy="200" r="8"/><circle cx="296" cy="200" r="8"/>
       <circle cx="324" cy="200" r="8"/>
-      <circle cx="352" cy="200" r="8" opacity="0"/>
-      <!-- Cover plate lines -->
       <line x1="60" y1="190" x2="340" y2="190"/>
       <line x1="60" y1="210" x2="340" y2="210"/>
-      <!-- Sound waves -->
       <path d="M 50 160 Q 30 150, 20 130" opacity="0.4"/>
       <path d="M 50 155 Q 25 140, 10 115" opacity="0.3"/>
       <path d="M 50 150 Q 20 130, 0 100" opacity="0.2"/>
@@ -1081,17 +1719,15 @@
   </div>
 </section>
 
-<!-- What You Get -->
-<section class="section section-dark" id="lessons">
+<!-- What's Inside Overview -->
+<section class="section section-dark" id="whats-inside">
   <div class="section-label">What's Inside</div>
   <h2 class="section-title">Rooted in tradition,<br>reaching into the blues.</h2>
   <p class="section-subtitle">
     Old time, Appalachian, pre-war solo harp, and the blues that grew from it all.
     Structured lessons, real tabs, and a community that respects the tradition.
   </p>
-
   <div class="ornament">&#10022; &#10022; &#10022;</div>
-
   <div class="features-grid">
     <div class="feature-card">
       <div class="feature-icon">&#127909;</div>
@@ -1101,7 +1737,7 @@
     <div class="feature-card">
       <div class="feature-icon">&#127932;</div>
       <h3>Tablature</h3>
-      <p>Full harmonica tab — from Appalachian reels to DeFord Bailey solos to Chicago blues. Clean notation so you can focus on the playing.</p>
+      <p>Full harmonica tab &mdash; from Appalachian reels to DeFord Bailey solos to Chicago blues. Clean notation so you can focus on the playing.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">&#127928;</div>
@@ -1110,7 +1746,7 @@
     </div>
     <div class="feature-card">
       <div class="feature-icon">&#128220;</div>
-      <h3>Articles & History</h3>
+      <h3>Articles &amp; History</h3>
       <p>The mountain roots, the delta, the medicine shows. Player profiles, instrument history, and what connects it all together.</p>
     </div>
     <div class="feature-card">
@@ -1126,64 +1762,47 @@
   </div>
 </section>
 
-<!-- Content Preview -->
-<section class="section content-preview" id="preview">
-  <div class="section-label">Free Tasters</div>
-  <h2 class="section-title">See what's inside.</h2>
+<!-- ═══ VIDEO LESSONS ════════════════════════════════════════════════ -->
+<section class="section lessons-section fade-in-section" id="lessons">
+  <div class="section-label">Video Lessons</div>
+  <h2 class="section-title">Learn from the tradition.</h2>
   <p class="section-subtitle">
-    Try a lesson, grab a tab, play along with a track. Then decide if you want the full run of the shed.
+    Structured lessons from Appalachian reels to pre-war blues. Each one breaks down the technique, the history, and the feel.
   </p>
-
-  <div class="content-grid">
-    <div class="content-card">
-      <div class="content-thumb content-thumb-lessons">
-        <div class="content-thumb-inner">&#127909;</div>
-        <div class="content-badge free">Free Preview</div>
-      </div>
-      <div class="content-body">
-        <h3>Old Joe Clark — Your First Fiddle Tune on Harp</h3>
-        <p>A classic Appalachian reel and the perfect place to start. We'll get you playing the melody in first position and feeling the groove of old time music.</p>
-        <div class="content-meta">
-          <span>&#9202; 18 min</span>
-          <span>&#127932; Beginner</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="content-card">
-      <div class="content-thumb content-thumb-tabs">
-        <div class="content-thumb-inner">&#127932;</div>
-        <div class="content-badge free">Free Preview</div>
-      </div>
-      <div class="content-body">
-        <h3>Fox Chase — DeFord Bailey</h3>
-        <p>Full tablature for one of the most iconic pre-war harmonica pieces ever recorded. Train sounds, fox calls, and pure showmanship.</p>
-        <div class="content-meta">
-          <span>&#127925; Key of C (1st pos)</span>
-          <span>&#127932; Intermediate</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="content-card">
-      <div class="content-thumb content-thumb-jams">
-        <div class="content-thumb-inner">&#127928;</div>
-        <div class="content-badge free">Free Preview</div>
-      </div>
-      <div class="content-body">
-        <h3>Country Blues in E — Jam Track</h3>
-        <p>Fingerpicked acoustic guitar, upright bass, light shuffle. Perfect for working on your pre-war country blues phrasing. Three tempos.</p>
-        <div class="content-meta">
-          <span>&#9202; 6 min</span>
-          <span>&#127925; Key of E</span>
-        </div>
-      </div>
-    </div>
+  <div class="ornament">&#10022; &#10022; &#10022;</div>
+  <div class="lessons-grid" id="lessons-grid">
+    <!-- Rendered from content.js -->
   </div>
 </section>
 
-<!-- The Fox Chasers Community -->
-<section class="section section-dark fox-chasers-section" id="community">
+<!-- ═══ TABLATURE ════════════════════════════════════════════════════ -->
+<section class="section section-dark tabs-section fade-in-section" id="tabs">
+  <div class="section-label">Tablature Library</div>
+  <h2 class="section-title">The notes on the page.</h2>
+  <p class="section-subtitle">
+    Full harmonica notation &mdash; standard tab and Filisko method. Every bend, every tongue block, every ornament marked out. Download, print, play.
+  </p>
+  <div class="ornament">&#10022; &#10022; &#10022;</div>
+  <div class="tabs-grid" id="tabs-grid">
+    <!-- Rendered from content.js -->
+  </div>
+</section>
+
+<!-- ═══ JAM TRACKS ═══════════════════════════════════════════════════ -->
+<section class="section jams-section fade-in-section" id="jams">
+  <div class="section-label">Jam Tracks</div>
+  <h2 class="section-title">Play along. Find the groove.</h2>
+  <p class="section-subtitle">
+    String band, country blues, delta, gospel. Real instruments, multiple tempos. Lock in and let the music breathe.
+  </p>
+  <div class="ornament">&#10022; &#10022; &#10022;</div>
+  <div class="jams-grid" id="jams-grid">
+    <!-- Rendered from content.js -->
+  </div>
+</section>
+
+<!-- ═══ FOX CHASERS COMMUNITY ════════════════════════════════════════ -->
+<section class="section section-dark fox-chasers-section fade-in-section" id="community">
   <div class="fox-chasers-bg"></div>
   <div class="section-label">The Community</div>
   <h2 class="section-title">The Fox Chasers.</h2>
@@ -1191,38 +1810,41 @@
     Named after the tradition, built for players who live it.
     When you join The Shed, you become a Fox Chaser.
   </p>
-
   <div class="ornament">&#10022; &#10022; &#10022;</div>
 
-  <div class="fox-chasers-grid">
-    <div class="fox-chasers-text">
-      <h3>A community that respects the tradition.</h3>
-      <p>
-        The Fox Chasers is where members share recordings, swap tunes, post questions,
-        and upload their own takes. It's not a social media feed — it's a real forum
-        for people who take this music seriously and want to get better together.
-      </p>
-      <ul class="fox-chasers-perks">
-        <li>Share your recordings and get honest feedback</li>
-        <li>Upload your own arrangements and tabs</li>
-        <li>Monthly tune challenges and jam sessions</li>
-        <li>Direct access to post questions and get answers</li>
-        <li>Connect with players who share the same roots</li>
-      </ul>
-    </div>
+  <div class="fox-chasers-intro">
+    <h3>A community that respects the tradition.</h3>
+    <p>
+      The Fox Chasers is where members share recordings, swap tunes, post questions,
+      and upload their own takes. It's not a social media feed &mdash; it's a real forum
+      for people who take this music seriously and want to get better together.
+    </p>
+    <ul class="fox-chasers-perks">
+      <li>Share your recordings and get honest feedback</li>
+      <li>Upload your own arrangements and tabs</li>
+      <li>Monthly tune challenges and jam sessions</li>
+      <li>Direct access to post questions and get answers</li>
+      <li>Connect with players who share the same roots</li>
+    </ul>
+  </div>
+
+  <div class="community-posts" id="community-posts">
+    <!-- Rendered from content.js -->
+  </div>
+
+  <div class="community-join-prompt">
+    <p>Join The Shed to become a Fox Chaser &mdash; post your recordings, ask questions, and connect with the community.</p>
+    <a href="#pricing" class="btn-primary">&#9834; Join The Fox Chasers</a>
   </div>
 </section>
 
 <!-- About / Instructor -->
-<section class="section" id="about" style="background: var(--cream); border-top: 1px solid rgba(59,47,32,0.08);">
+<section class="section fade-in-section" id="about" style="background: var(--cream); border-top: 1px solid rgba(59,47,32,0.08);">
   <div class="section-label">Your Instructor</div>
   <h2 class="section-title" style="font-family: 'Special Elite', monospace; letter-spacing: 2px;">Meet the man in the shed.</h2>
-
   <div class="ornament">&#10022; &#10022; &#10022;</div>
-
   <div class="about-grid">
     <div class="about-photo">
-      <!-- Replace src with your photo -->
       <img src="gareth-harpshed.jpg" alt="Gareth Tucker" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
       <div class="placeholder" style="display:none;">&#127925;</div>
     </div>
@@ -1231,7 +1853,7 @@
       <p>
         Gareth Tucker is a Norwich-based harmonica player, teacher, and session musician whose work
         is rooted in old-time music, Appalachian repertoire, and pre-war blues. His playing is shaped
-        by groove, tone, and feel first — drawing on the raw power of traditional music rather than
+        by groove, tone, and feel first &mdash; drawing on the raw power of traditional music rather than
         empty showmanship.
       </p>
       <p>
@@ -1250,66 +1872,37 @@
   </div>
 </section>
 
-<!-- Articles / Stories -->
-<section class="section section-dark" id="articles">
+<!-- ═══ ARTICLES ═════════════════════════════════════════════════════ -->
+<section class="section section-dark fade-in-section" id="articles">
   <div class="section-label">From the Porch</div>
   <h2 class="section-title">Stories, history, and insights.</h2>
   <p class="section-subtitle">
     The music doesn't exist in a vacuum. Understanding where it comes from makes you a better player.
   </p>
-
-  <div class="articles-grid">
-    <div class="article-card">
-      <div class="article-icon">&#127963;</div>
-      <div>
-        <h4>The Appalachian Harp Tradition</h4>
-        <p>Before the blues, there was old time. The mountain roots of American harmonica playing.</p>
-      </div>
-    </div>
-    <div class="article-card">
-      <div class="article-icon">&#128214;</div>
-      <div>
-        <h4>DeFord Bailey: The Harmonica Wizard</h4>
-        <p>The first star of the Grand Ole Opry and the man who made the Fox Chase famous.</p>
-      </div>
-    </div>
-    <div class="article-card">
-      <div class="article-icon">&#127911;</div>
-      <div>
-        <h4>Medicine Shows and the Travelling Harp</h4>
-        <p>How the harmonica became America's pocket instrument, from wagon stages to front porches.</p>
-      </div>
-    </div>
-    <div class="article-card">
-      <div class="article-icon">&#127926;</div>
-      <div>
-        <h4>From the Mountains to the Delta</h4>
-        <p>Tracing the journey from Appalachian fiddle tunes to the blues that shook the world.</p>
-      </div>
-    </div>
+  <div class="articles-grid" id="articles-grid">
+    <!-- Rendered from content.js -->
   </div>
 </section>
 
 <!-- Pricing -->
-<section class="section pricing-section" id="pricing">
+<section class="section pricing-section fade-in-section" id="pricing">
   <div class="section-label">Membership</div>
   <h2 class="section-title">Join The Shed.</h2>
   <p class="section-subtitle">
     Full access to every lesson, tab, jam track, article, and the community.
     Cancel any time. No contracts.
   </p>
-
   <div class="pricing-card">
     <div class="pricing-popular">Full Access</div>
     <div class="pricing-price">$9<span>/mo</span></div>
     <div class="pricing-period">or $89/year (save 18%)</div>
     <ul class="pricing-features">
-      <li>All video lessons — beginner to advanced</li>
+      <li>All video lessons &mdash; beginner to advanced</li>
       <li>Complete tablature library</li>
-      <li>Full jam track collection (all keys & tempos)</li>
+      <li>Full jam track collection (all keys &amp; tempos)</li>
       <li>Articles, history, and player insights</li>
-      <li>The Fox Chasers community — share, ask, get feedback</li>
-      <li>HarpShed practice app (iOS & Android)</li>
+      <li>The Fox Chasers community &mdash; share, ask, get feedback</li>
+      <li>HarpShed practice app (iOS &amp; Android)</li>
       <li>New content added weekly</li>
     </ul>
     <button class="btn-primary pricing-btn">Start Your Free Week</button>
@@ -1321,26 +1914,26 @@
   <div class="footer-top">
     <div>
       <div class="footer-brand">The Harp<span>Shed</span></div>
-      <p class="footer-tagline">Traditional roots, boundless creativity. Old time, Appalachian, and pre-war harmonica — from the roots up.</p>
+      <p class="footer-tagline">Traditional roots, boundless creativity. Old time, Appalachian, and pre-war harmonica &mdash; from the roots up.</p>
     </div>
     <div class="footer-links">
       <h4>Learn</h4>
-      <a href="#">Old Time Harp</a>
-      <a href="#">Pre-War Blues</a>
-      <a href="#">Beginner Course</a>
-      <a href="#">Tablature Library</a>
+      <a href="#lessons">Video Lessons</a>
+      <a href="#tabs">Tablature</a>
+      <a href="#jams">Jam Tracks</a>
+      <a href="#articles">Articles</a>
     </div>
     <div class="footer-links">
-      <h4>Play</h4>
-      <a href="#">Jam Tracks</a>
-      <a href="#">Tune Library</a>
-      <a href="#">Practice App</a>
-    </div>
-    <div class="footer-links">
-      <h4>Connect</h4>
-      <a href="#">The Fox Chasers</a>
+      <h4>Community</h4>
+      <a href="#community">The Fox Chasers</a>
+      <a href="#about">About GT</a>
       <a href="#">YouTube</a>
       <a href="#">Instagram</a>
+    </div>
+    <div class="footer-links">
+      <h4>Membership</h4>
+      <a href="#pricing">Join The Shed</a>
+      <a href="#">Practice App</a>
       <a href="#">Contact</a>
     </div>
   </div>
@@ -1352,6 +1945,311 @@
     </span>
   </div>
 </footer>
+
+<!-- Video Modal -->
+<div class="video-modal-overlay" id="video-modal">
+  <button class="video-modal-close" onclick="closeVideoModal()">&times;</button>
+  <div class="video-modal" id="video-modal-inner"></div>
+</div>
+
+<!-- ═══ CONTENT ENGINE ═══════════════════════════════════════════════ -->
+<script src="content.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // ─── Utilities ──────────────────────────────────────────────────
+  function getYouTubeId(url) {
+    if (!url) return null;
+    var match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?\s]+)/);
+    return match ? match[1] : null;
+  }
+
+  function getYouTubeThumbnail(url) {
+    var id = getYouTubeId(url);
+    return id ? 'https://img.youtube.com/vi/' + id + '/hqdefault.jpg' : null;
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '';
+    var d = new Date(dateStr + 'T00:00:00');
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+
+  function getInitials(name) {
+    return name.split(' ').map(function(w) { return w[0]; }).join('').toUpperCase().slice(0,2);
+  }
+
+  var articleIcons = ['&#127963;', '&#128214;', '&#127911;', '&#127926;', '&#128220;', '&#127932;'];
+
+  // ─── Render Video Lessons ───────────────────────────────────────
+  function renderLessons() {
+    var grid = document.getElementById('lessons-grid');
+    if (!grid || !SITE_CONTENT.lessons) return;
+
+    grid.innerHTML = SITE_CONTENT.lessons.map(function(lesson) {
+      var thumb = getYouTubeThumbnail(lesson.youtubeUrl);
+      var thumbStyle = thumb
+        ? '<img src="' + thumb + '" alt="' + lesson.title + '" loading="lazy">'
+        : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;opacity:0.4;">&#127909;</div>';
+
+      var hasVideo = !!getYouTubeId(lesson.youtubeUrl);
+      var clickAttr = hasVideo
+        ? ' onclick="openVideoModal(\'' + lesson.youtubeUrl + '\')"'
+        : '';
+
+      return '<div class="lesson-card"' + clickAttr + '>' +
+        '<div class="lesson-thumb">' +
+          thumbStyle +
+          (hasVideo ? '<div class="lesson-play-btn"></div>' : '') +
+          '<span class="lesson-badge ' + (lesson.free ? 'free' : 'members') + '">' +
+            (lesson.free ? 'Free Preview' : 'Members') +
+          '</span>' +
+          '<span class="lesson-level">' + lesson.level + '</span>' +
+        '</div>' +
+        '<div class="lesson-body">' +
+          '<h3>' + lesson.title + '</h3>' +
+          '<p>' + lesson.description + '</p>' +
+          '<div class="lesson-meta">' +
+            '<span>&#9202; ' + lesson.duration + '</span>' +
+            '<span>&#127932; ' + lesson.level + '</span>' +
+          '</div>' +
+          '<span class="lesson-category">' + lesson.category.replace('-', ' ') + '</span>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ─── Render Tablature ──────────────────────────────────────────
+  function renderTabs() {
+    var grid = document.getElementById('tabs-grid');
+    if (!grid || !SITE_CONTENT.tabs) return;
+
+    grid.innerHTML = SITE_CONTENT.tabs.map(function(tab) {
+      var imgSrc = tab.image || 'gareth-harpshed.jpg';
+      var hasDownload = !!tab.downloadUrl;
+      var btnClass = hasDownload ? '' : ' disabled';
+      var btnAttr = hasDownload
+        ? ' onclick="window.open(\'' + tab.downloadUrl + '\', \'_blank\')"'
+        : '';
+
+      return '<div class="tab-card">' +
+        '<div class="tab-card-photo">' +
+          '<img src="' + imgSrc + '" alt="' + tab.title + '" loading="lazy">' +
+          '<div class="tab-card-photo-overlay"></div>' +
+          '<span class="tab-method-badge ' + tab.method + '">' +
+            (tab.method === 'filisko' ? 'Filisko Method' : 'Standard Tab') +
+          '</span>' +
+          '<span class="tab-free-badge ' + (tab.free ? 'free' : 'members') + '">' +
+            (tab.free ? 'Free' : 'Members') +
+          '</span>' +
+          '<div class="tab-card-key">Key of ' + tab.key + '</div>' +
+        '</div>' +
+        '<div class="tab-card-body">' +
+          '<h3>' + tab.title + '</h3>' +
+          '<p>' + tab.description + '</p>' +
+          '<div class="tab-card-info">' +
+            '<span>' + tab.position + ' position</span>' +
+            '<span>' + tab.difficulty + '</span>' +
+          '</div>' +
+          '<button class="tab-download-btn' + btnClass + '"' + btnAttr + '>' +
+            '&#8615; ' + (hasDownload ? 'Download PDF' : 'Coming Soon') +
+          '</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ─── Render Jam Tracks ─────────────────────────────────────────
+  function renderJamTracks() {
+    var grid = document.getElementById('jams-grid');
+    if (!grid || !SITE_CONTENT.jamTracks) return;
+
+    grid.innerHTML = SITE_CONTENT.jamTracks.map(function(jam) {
+      var hasVideo = !!getYouTubeId(jam.youtubeUrl);
+      var playBtn = hasVideo
+        ? '<button class="jam-play-btn" onclick="openVideoModal(\'' + jam.youtubeUrl + '\')">&#9654; Play Track</button>'
+        : '<button class="jam-play-btn disabled" style="opacity:0.4;cursor:default;">&#9654; Coming Soon</button>';
+
+      var tempoChips = (jam.tempos || []).map(function(t) {
+        return '<span class="jam-tempo-chip">' + t + '</span>';
+      }).join('');
+
+      return '<div class="jam-card">' +
+        '<div class="jam-card-header">' +
+          '<div class="jam-card-genre">' + jam.genre + '</div>' +
+          '<h3>' + jam.title + '</h3>' +
+          '<p>' + jam.description + '</p>' +
+          '<div class="jam-card-bpm">' +
+            '<div class="jam-card-bpm-number">' + jam.bpm + '</div>' +
+            '<div class="jam-card-bpm-label">BPM</div>' +
+          '</div>' +
+          '<span class="jam-card-key-badge">Key of ' + jam.key + '</span>' +
+          playBtn +
+        '</div>' +
+        '<div class="jam-card-footer">' +
+          '<div class="jam-tempos">' + tempoChips + '</div>' +
+          '<span class="jam-access-badge ' + (jam.free ? 'free' : 'members') + '">' +
+            (jam.free ? 'Free' : 'Members') +
+          '</span>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ─── Render Articles ───────────────────────────────────────────
+  function renderArticles() {
+    var grid = document.getElementById('articles-grid');
+    if (!grid || !SITE_CONTENT.articles) return;
+
+    grid.innerHTML = SITE_CONTENT.articles.map(function(article, i) {
+      var icon = articleIcons[i % articleIcons.length];
+      return '<div class="article-card">' +
+        '<div class="article-icon">' + icon + '</div>' +
+        '<div>' +
+          '<h4>' + article.title + '</h4>' +
+          '<p>' + article.excerpt + '</p>' +
+          '<div class="article-card-meta">' +
+            article.category + ' &middot; ' + formatDate(article.date) + ' &middot; ' + article.readTime + ' read' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ─── Render Community Posts ────────────────────────────────────
+  function renderCommunityPosts() {
+    var container = document.getElementById('community-posts');
+    if (!container || !SITE_CONTENT.communityPosts) return;
+
+    // Sort: pinned first, then by date
+    var sorted = SITE_CONTENT.communityPosts.slice().sort(function(a, b) {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+      return new Date(b.date) - new Date(a.date);
+    });
+
+    container.innerHTML = sorted.map(function(post) {
+      var videoEmbed = '';
+      var videoId = getYouTubeId(post.youtubeUrl);
+      if (videoId) {
+        videoEmbed = '<div class="community-post-media">' +
+          '<iframe src="https://www.youtube.com/embed/' + videoId + '" ' +
+          'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ' +
+          'allowfullscreen loading="lazy"></iframe>' +
+        '</div>';
+      }
+
+      var audioEmbed = '';
+      if (post.audioUrl) {
+        audioEmbed = '<div class="community-post-media">' +
+          '<audio controls preload="none" src="' + post.audioUrl + '"></audio>' +
+        '</div>';
+      }
+
+      var comments = '';
+      if (post.comments && post.comments.length > 0) {
+        comments = '<div class="community-post-comments">' +
+          post.comments.map(function(c) {
+            return '<div class="community-comment">' +
+              '<div class="community-comment-avatar">' + getInitials(c.author) + '</div>' +
+              '<div class="community-comment-content">' +
+                '<span class="community-comment-author">' + c.author + '</span>' +
+                '<span class="community-comment-date">' + formatDate(c.date) + '</span>' +
+                '<p class="community-comment-text">' + c.text + '</p>' +
+              '</div>' +
+            '</div>';
+          }).join('') +
+          '<button class="community-reply-btn">&#9997; Reply</button>' +
+        '</div>';
+      } else {
+        comments = '<div class="community-post-comments">' +
+          '<button class="community-reply-btn">&#9997; Be the first to reply</button>' +
+        '</div>';
+      }
+
+      return '<div class="community-post' + (post.pinned ? ' pinned' : '') + '">' +
+        '<div class="community-post-header">' +
+          '<div class="community-post-avatar">' + getInitials(post.author) + '</div>' +
+          '<div>' +
+            '<div class="community-post-author">' + post.author + '</div>' +
+            '<div class="community-post-date">' + formatDate(post.date) + '</div>' +
+          '</div>' +
+          (post.pinned ? '<span class="community-post-pin">&#128204; Pinned</span>' : '') +
+          '<span class="community-post-type ' + post.type + '">' + post.type + '</span>' +
+        '</div>' +
+        '<h4>' + post.title + '</h4>' +
+        '<p class="community-post-text">' + post.text + '</p>' +
+        videoEmbed +
+        audioEmbed +
+        comments +
+      '</div>';
+    }).join('');
+  }
+
+  // ─── Video Modal ───────────────────────────────────────────────
+  window.openVideoModal = function(url) {
+    var id = getYouTubeId(url);
+    if (!id) return;
+    var modal = document.getElementById('video-modal');
+    var inner = document.getElementById('video-modal-inner');
+    inner.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1" ' +
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ' +
+      'allowfullscreen></iframe>';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeVideoModal = function() {
+    var modal = document.getElementById('video-modal');
+    var inner = document.getElementById('video-modal-inner');
+    modal.classList.remove('active');
+    inner.innerHTML = '';
+    document.body.style.overflow = '';
+  };
+
+  document.getElementById('video-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeVideoModal();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeVideoModal();
+  });
+
+  // ─── Scroll Animations ────────────────────────────────────────
+  function initScrollAnimations() {
+    var sections = document.querySelectorAll('.fade-in-section');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08 });
+
+    sections.forEach(function(s) { observer.observe(s); });
+  }
+
+  // ─── Smooth nav scroll + close mobile menu ────────────────────
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      document.querySelector('.nav-links').classList.remove('open');
+    });
+  });
+
+  // ─── Init ──────────────────────────────────────────────────────
+  if (typeof SITE_CONTENT !== 'undefined') {
+    renderLessons();
+    renderTabs();
+    renderJamTracks();
+    renderArticles();
+    renderCommunityPosts();
+  }
+  initScrollAnimations();
+
+})();
+</script>
 
 </body>
 </html>
