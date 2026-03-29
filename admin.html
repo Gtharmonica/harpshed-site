@@ -441,7 +441,7 @@ var currentSection = 'lessons';
 var hasUnsaved = false;
 var GITHUB_TOKEN_KEY = 'harpshed_github_token';
 var GITHUB_REPO = 'Gtharmonica/harpshed-site';
-var PASS_HASH = 'd6736921872967d7b09b4abdd0ad48275b0a48ce80a07d009706dbba33dbc8cb';
+var PASS_HASH = '5da197405eacd7b948069159de674626d16bf6eefca73d5bcab02722aade0417';
 
 // ═══ Pure JS SHA-256 (works on HTTP and HTTPS) ═══
 function sha256(message) {
@@ -509,8 +509,6 @@ function doLogin() {
   var val = document.getElementById('admin-pass').value;
   if (!val) return;
   var hash = sha256(val);
-  // TEMP DEBUG: show the generated hash so we can update PASS_HASH
-  console.log('YOUR_HASH: ' + hash);
   if (hash === PASS_HASH) {
     sessionStorage.setItem('harpshed_admin', 'granted');
     document.getElementById('admin-gate').style.display = 'none';
