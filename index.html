@@ -3,6 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Security Headers (meta-based, GitHub Pages doesn't allow server headers) -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' https://formspree.io;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com;
+  img-src 'self' https://img.youtube.com data:;
+  frame-src https://www.youtube.com;
+  connect-src 'self' https://formspree.io;
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self' https://formspree.io;
+">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>HarpShed — Traditional Roots, Boundless Creativity</title>
 <meta name="description" content="Old time, Appalachian and pre-war harmonica lessons from GT Harmonica. Video tutorials, tablature, jam tracks and a community of players called The Fox Chasers.">
 <meta name="keywords" content="harmonica lessons, harmonica tabs, old time harmonica, Appalachian harmonica, pre-war blues, country blues harmonica, harmonica teacher, learn harmonica, GT Harmonica, Gareth Tucker">
@@ -2871,16 +2888,49 @@
 </div>
 <script>
 (function() {
-  var PASS = 'foxchaser';
+  // Password is stored as SHA-256 hash — not visible in source code
+  var PASS_HASH = 'd6736921872967d7b09b4abdd0ad48275b0a48ce80a07d009706dbba33dbc8cb';
   var KEY = 'harpshed_access';
+  var MAX_ATTEMPTS = 5;
+  var LOCKOUT_KEY = 'harpshed_lockout';
+
+  // SHA-256 hash function using Web Crypto API
+  async function sha256(text) {
+    var encoder = new TextEncoder();
+    var data = encoder.encode(text);
+    var hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(function(b) {
+      return b.toString(16).padStart(2, '0');
+    }).join('');
+  }
+
+  // Check lockout
+  function isLockedOut() {
+    var lockout = localStorage.getItem(LOCKOUT_KEY);
+    if (!lockout) return false;
+    var data = JSON.parse(lockout);
+    if (data.until > Date.now()) return true;
+    localStorage.removeItem(LOCKOUT_KEY);
+    return false;
+  }
+
+  function recordFailedAttempt() {
+    var lockout = localStorage.getItem(LOCKOUT_KEY);
+    var data = lockout ? JSON.parse(lockout) : { attempts: 0, until: 0 };
+    data.attempts++;
+    if (data.attempts >= MAX_ATTEMPTS) {
+      data.until = Date.now() + (5 * 60 * 1000); // 5 minute lockout
+      data.attempts = 0;
+    }
+    localStorage.setItem(LOCKOUT_KEY, JSON.stringify(data));
+  }
 
   // If already authenticated, skip the gate entirely
   if (sessionStorage.getItem(KEY) === 'granted') {
     document.getElementById('coming-soon-gate').style.display = 'none';
-    return;
+  } else {
+    document.body.style.overflow = 'hidden';
   }
-
-  document.body.style.overflow = 'hidden';
 
   // Toggle between coming soon and admin login
   document.getElementById('admin-login-link').addEventListener('click', function(e) {
@@ -2896,16 +2946,27 @@
     document.getElementById('coming-soon-public').style.display = 'block';
   });
 
-  // Admin password check
-  function tryAccess() {
+  // Admin password check (hashed comparison + brute force protection)
+  async function tryAccess() {
+    if (isLockedOut()) {
+      var err = document.getElementById('gate-error');
+      err.textContent = 'Too many attempts. Try again in 5 minutes.';
+      err.style.opacity = '1';
+      return;
+    }
+
     var val = document.getElementById('gate-input').value;
-    if (val === PASS) {
+    var hash = await sha256(val);
+
+    if (hash === PASS_HASH) {
       sessionStorage.setItem(KEY, 'granted');
+      localStorage.removeItem(LOCKOUT_KEY);
       document.getElementById('coming-soon-gate').style.display = 'none';
       document.body.style.overflow = '';
     } else {
+      recordFailedAttempt();
       var err = document.getElementById('gate-error');
-      err.textContent = 'Wrong password';
+      err.textContent = isLockedOut() ? 'Too many attempts. Try again in 5 minutes.' : 'Wrong password';
       err.style.opacity = '1';
       document.getElementById('gate-input').value = '';
       document.getElementById('gate-input').focus();
