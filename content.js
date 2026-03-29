@@ -370,5 +370,31 @@ var SITE_CONTENT = {
       pinned: false,
       comments: []
     }
+  ],
+
+  // ─── GALLERY ────────────────────────────────────────────────────
+  // Each photo needs: src (filename), caption (optional), alt
+  // Place image files in this folder.
+  gallery: [
+    {
+      src: "hero-photo.jpg",
+      caption: "Live with Dave Thomas",
+      alt: "Gareth Tucker performing live in black and white"
+    },
+    {
+      src: "gareth-harpshed.jpg",
+      caption: "Solo set, sepia",
+      alt: "Gareth Tucker solo performance"
+    },
+    {
+      src: "gareth-live-colour.jpg",
+      caption: "Under the lights",
+      alt: "Gareth Tucker live with stage lighting"
+    },
+    {
+      src: "fox-chaser.jpg",
+      caption: "The Fox Chaser",
+      alt: "Fox Chaser painting with harmonica"
+    }
   ]
 };
