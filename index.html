@@ -1285,6 +1285,315 @@
     margin-bottom: 16px;
   }
 
+  /* ─── Fundamentals Section ──────────────────────────────────────── */
+  .fundamentals-pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 900px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .fundamental-pillar {
+    background: rgba(244,236,224,0.04);
+    border: 1px solid rgba(244,236,224,0.06);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .fundamental-pillar:hover {
+    background: rgba(244,236,224,0.07);
+    border-color: rgba(160,82,45,0.2);
+  }
+
+  .fundamental-pillar-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .fundamental-pillar-icon {
+    width: 52px;
+    height: 52px;
+    background: rgba(160,82,45,0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+
+  .fundamental-pillar-info {
+    flex: 1;
+  }
+
+  .fundamental-pillar-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--parchment);
+    margin-bottom: 2px;
+  }
+
+  .fundamental-pillar-info .pillar-subtitle {
+    font-size: 13px;
+    color: var(--rust-light);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .fundamental-pillar-info p {
+    font-size: 14px;
+    opacity: 0.6;
+    line-height: 1.5;
+    color: var(--parchment);
+    margin-top: 4px;
+  }
+
+  .fundamental-pillar-toggle {
+    font-size: 20px;
+    color: var(--rust-light);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .fundamental-pillar.open .fundamental-pillar-toggle {
+    transform: rotate(180deg);
+  }
+
+  .fundamental-pillar-items {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .fundamental-pillar.open .fundamental-pillar-items {
+    max-height: 800px;
+  }
+
+  .fundamental-pillar-items-inner {
+    padding: 0 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .fundamental-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: rgba(244,236,224,0.04);
+    border: 1px solid rgba(244,236,224,0.05);
+    border-radius: 6px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .fundamental-item:hover {
+    background: rgba(244,236,224,0.08);
+    border-color: rgba(160,82,45,0.2);
+  }
+
+  .fundamental-item-level {
+    padding: 3px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .fundamental-item-level.start-here {
+    background: rgba(160,82,45,0.2);
+    color: var(--rust-light);
+  }
+
+  .fundamental-item-level.building {
+    background: rgba(44,74,110,0.2);
+    color: var(--delta-blue-light);
+  }
+
+  .fundamental-item-level.developing {
+    background: rgba(196,155,60,0.2);
+    color: var(--gold-dust);
+  }
+
+  .fundamental-item-text h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--parchment);
+    margin-bottom: 2px;
+  }
+
+  .fundamental-item-text p {
+    font-size: 13px;
+    opacity: 0.55;
+    line-height: 1.4;
+    color: var(--parchment);
+  }
+
+  .fundamental-item-play {
+    margin-left: auto;
+    opacity: 0.3;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .fundamental-item:hover .fundamental-item-play {
+    opacity: 0.6;
+  }
+
+  /* ─── Trails Section ──────────────────────────────────────────── */
+  .trails-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-width: 1000px;
+  }
+
+  .trail-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(59,47,32,0.1);
+    background: white;
+    box-shadow: 0 4px 24px rgba(42,33,24,0.06);
+    transition: all 0.3s;
+  }
+
+  .trail-card:hover {
+    box-shadow: 0 8px 40px rgba(42,33,24,0.1);
+    transform: translateY(-2px);
+  }
+
+  .trail-card.coming-soon {
+    opacity: 0.65;
+  }
+
+  .trail-card-header {
+    padding: 32px 32px 24px;
+    position: relative;
+    border-bottom: 1px solid rgba(59,47,32,0.06);
+  }
+
+  .trail-card-header-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+  }
+
+  .trail-tradition-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  .trail-card-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .trail-card-header h3 .trail-icon {
+    font-size: 28px;
+  }
+
+  .trail-card-header p {
+    font-size: 15px;
+    color: var(--wood-mid);
+    line-height: 1.6;
+    max-width: 700px;
+  }
+
+  .trail-coming-soon-badge {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    padding: 6px 14px;
+    background: rgba(59,47,32,0.08);
+    color: var(--wood-light);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 4px;
+  }
+
+  .trail-stages {
+    padding: 24px 32px 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .trail-stage {
+    padding: 16px;
+    border-radius: 8px;
+    background: var(--parchment);
+    border: 1px solid rgba(59,47,32,0.06);
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .trail-stage:hover {
+    border-color: rgba(160,82,45,0.2);
+    background: var(--parchment-dark);
+  }
+
+  .trail-stage-number {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-family: 'Special Elite', monospace;
+    font-size: 28px;
+    opacity: 0.1;
+    color: var(--ink);
+  }
+
+  .trail-stage h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .trail-stage p {
+    font-size: 13px;
+    color: var(--wood-mid);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .trail-stage-tunes {
+    font-size: 11px;
+    color: var(--rust);
+    font-weight: 600;
+    font-style: italic;
+  }
+
   /* ─── About / Instructor ───────────────────────────────────────── */
   .about-grid {
     display: grid;
@@ -1582,6 +1891,9 @@
     .lessons-grid { grid-template-columns: 1fr; }
     .tabs-grid { grid-template-columns: 1fr; }
     .jams-grid { grid-template-columns: 1fr; }
+    .trail-stages { grid-template-columns: 1fr; }
+    .trail-card-header { padding: 24px 20px 20px; }
+    .trail-stages { padding: 16px 20px 24px; }
     footer { padding: 40px 24px 24px; }
     .hero-brand { font-size: 36px; }
     .hero-brand::before, .hero-brand::after { display: none; }
@@ -1676,6 +1988,8 @@
     <li><a href="#lessons">Lessons</a></li>
     <li><a href="#tabs">Tabs</a></li>
     <li><a href="#jams">Jam Tracks</a></li>
+    <li><a href="#fundamentals">Fundamentals</a></li>
+    <li><a href="#trails">Trails</a></li>
     <li><a href="#articles">Articles</a></li>
     <li><a href="#community">Fox Chasers</a></li>
     <li><a href="#pricing" class="nav-cta">Join the Shed</a></li>
@@ -1801,6 +2115,32 @@
   </div>
 </section>
 
+<!-- ═══ FUNDAMENTALS ═════════════════════════════════════════════════ -->
+<section class="section section-dark fade-in-section" id="fundamentals">
+  <div class="section-label">The Foundation</div>
+  <h2 class="section-title">Fundamentals.</h2>
+  <p class="section-subtitle">
+    Five pillars of harmonica playing. Master these and everything else falls into place.
+  </p>
+  <div class="ornament">&#10022; &#10022; &#10022;</div>
+  <div class="fundamentals-pillars" id="fundamentals-pillars">
+    <!-- Rendered from content.js -->
+  </div>
+</section>
+
+<!-- ═══ THE HARPSHED TRAILS ═════════════════════════════════════════ -->
+<section class="section fade-in-section" id="trails" style="background: var(--cream); border-top: 1px solid rgba(59,47,32,0.08);">
+  <div class="section-label">The HarpShed Trails</div>
+  <h2 class="section-title">Choose your path.</h2>
+  <p class="section-subtitle">
+    Three traditions. One instrument. Each trail takes you from your first notes to playing your own way &mdash; with real tunes, real technique, and stages that mean something.
+  </p>
+  <div class="ornament">&#10022; &#10022; &#10022;</div>
+  <div class="trails-container" id="trails-container">
+    <!-- Rendered from content.js -->
+  </div>
+</section>
+
 <!-- ═══ FOX CHASERS COMMUNITY ════════════════════════════════════════ -->
 <section class="section section-dark fox-chasers-section fade-in-section" id="community">
   <div class="fox-chasers-bg"></div>
@@ -1921,6 +2261,8 @@
       <a href="#lessons">Video Lessons</a>
       <a href="#tabs">Tablature</a>
       <a href="#jams">Jam Tracks</a>
+      <a href="#fundamentals">Fundamentals</a>
+      <a href="#trails">The Trails</a>
       <a href="#articles">Articles</a>
     </div>
     <div class="footer-links">
@@ -2098,6 +2440,84 @@
     }).join('');
   }
 
+  // ─── Render Fundamentals ────────────────────────────────────────
+  function renderFundamentals() {
+    var container = document.getElementById('fundamentals-pillars');
+    if (!container || !SITE_CONTENT.fundamentals) return;
+
+    container.innerHTML = SITE_CONTENT.fundamentals.map(function(pillar) {
+      var items = (pillar.items || []).map(function(item) {
+        var levelClass = item.level.toLowerCase().replace(/\s+/g, '-');
+        var hasVideo = !!getYouTubeId(item.youtubeUrl);
+        var clickAttr = hasVideo
+          ? ' onclick="openVideoModal(\'' + item.youtubeUrl + '\')"'
+          : '';
+        var playIcon = hasVideo ? '&#9654;' : '&#128274;';
+
+        return '<div class="fundamental-item"' + clickAttr + '>' +
+          '<span class="fundamental-item-level ' + levelClass + '">' + item.level + '</span>' +
+          '<div class="fundamental-item-text">' +
+            '<h4>' + item.title + '</h4>' +
+            '<p>' + item.description + '</p>' +
+          '</div>' +
+          '<span class="fundamental-item-play">' + playIcon + '</span>' +
+        '</div>';
+      }).join('');
+
+      return '<div class="fundamental-pillar" data-pillar="' + pillar.id + '">' +
+        '<div class="fundamental-pillar-header" onclick="togglePillar(this)">' +
+          '<div class="fundamental-pillar-icon">' + pillar.icon + '</div>' +
+          '<div class="fundamental-pillar-info">' +
+            '<h3>' + pillar.title + '</h3>' +
+            '<div class="pillar-subtitle">' + pillar.subtitle + '</div>' +
+            '<p>' + pillar.description + '</p>' +
+          '</div>' +
+          '<span class="fundamental-pillar-toggle">&#9660;</span>' +
+        '</div>' +
+        '<div class="fundamental-pillar-items">' +
+          '<div class="fundamental-pillar-items-inner">' + items + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  window.togglePillar = function(header) {
+    var pillar = header.parentElement;
+    pillar.classList.toggle('open');
+  };
+
+  // ─── Render Trails ────────────────────────────────────────────
+  function renderTrails() {
+    var container = document.getElementById('trails-container');
+    if (!container || !SITE_CONTENT.trails) return;
+
+    container.innerHTML = SITE_CONTENT.trails.map(function(trail) {
+      var stages = trail.stages.map(function(stage, i) {
+        return '<div class="trail-stage">' +
+          '<div class="trail-stage-number">' + (i + 1) + '</div>' +
+          '<h4>' + stage.name + '</h4>' +
+          '<p>' + stage.description + '</p>' +
+          '<div class="trail-stage-tunes">' + stage.tunes + '</div>' +
+        '</div>';
+      }).join('');
+
+      var comingSoonBadge = trail.comingSoon
+        ? '<div class="trail-coming-soon-badge">Coming Soon</div>'
+        : '';
+
+      return '<div class="trail-card' + (trail.comingSoon ? ' coming-soon' : '') + '">' +
+        '<div class="trail-card-header">' +
+          '<div class="trail-card-header-bg" style="background:' + trail.color + ';"></div>' +
+          '<span class="trail-tradition-badge" style="background:' + trail.color + ';">' + trail.tradition + '</span>' +
+          comingSoonBadge +
+          '<h3><span class="trail-icon">' + trail.icon + '</span> ' + trail.title + '</h3>' +
+          '<p>' + trail.description + '</p>' +
+        '</div>' +
+        '<div class="trail-stages">' + stages + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
   // ─── Render Articles ───────────────────────────────────────────
   function renderArticles() {
     var grid = document.getElementById('articles-grid');
@@ -2243,6 +2663,8 @@
     renderLessons();
     renderTabs();
     renderJamTracks();
+    renderFundamentals();
+    renderTrails();
     renderArticles();
     renderCommunityPosts();
   }
