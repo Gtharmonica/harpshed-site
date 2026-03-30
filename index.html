@@ -79,7 +79,11 @@
     "name": "Harmonica Lessons",
     "description": "Structured harmonica lessons covering old time, Appalachian, pre-war solo harp, and country blues traditions"
   },
-  "sameAs": []
+  "sameAs": [
+    "https://www.youtube.com/@GTharmonica",
+    "https://www.instagram.com/gtharmonica/",
+    "https://www.tiktok.com/@bluesharmonica"
+  ]
 }
 </script>
 
@@ -143,7 +147,7 @@
       radial-gradient(ellipse at 40% 85%, rgba(196,155,60,0.04) 0%, transparent 30%),
       radial-gradient(ellipse at 90% 15%, rgba(160,82,45,0.04) 0%, transparent 25%);
     pointer-events: none;
-    z-index: 1000;
+    z-index: 50;
   }
 
   /* ─── Navigation ─────────────────────────────────────────────────── */
@@ -1961,6 +1965,14 @@
   html { scroll-behavior: smooth; }
 
   /* ─── Responsive ─────────────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .hero-content { max-width: 600px; padding: 0 40px; }
+    .lessons-grid { grid-template-columns: repeat(2, 1fr); }
+    .tabs-grid { grid-template-columns: repeat(2, 1fr); }
+    .jams-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-cards { gap: 20px; }
+  }
+
   @media (max-width: 900px) {
     .articles-grid { grid-template-columns: 1fr; }
     .about-grid { grid-template-columns: 1fr; }
@@ -1986,7 +1998,7 @@
       gap: 8px;
       border-bottom: none;
       overflow-y: auto;
-      z-index: 99;
+      z-index: 100;
     }
     .nav-links.open { display: flex; }
     .nav-links a {
@@ -2036,6 +2048,13 @@
     .footer-bottom { flex-direction: column; text-align: center; }
   }
 
+  @media (max-width: 640px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .pricing-cards { flex-direction: column; }
+    .pricing-card { max-width: 100%; }
+    .community-post-header { flex-direction: column; gap: 4px; }
+  }
+
   @media (max-width: 400px) {
     .section { padding: 36px 12px; }
     .hero-content { padding: 0 14px; }
@@ -2045,6 +2064,13 @@
     .feature-card { padding: 16px; }
     .lesson-thumb { height: 180px; }
     .tab-card-photo { height: 160px; }
+  }
+
+  /* Landscape phones — reduce hero height */
+  @media (max-height: 500px) and (orientation: landscape) {
+    .hero { min-height: 60vh; }
+    .hero-brand { font-size: 28px; }
+    .hero h1 { font-size: 24px; }
   }
 
   /* ─── Page-based navigation ─────────────────────────────────── */
@@ -2966,7 +2992,7 @@
   }
 
   // If already authenticated, skip the gate entirely
-  if (sessionStorage.getItem(KEY) === 'granted') {
+  if (localStorage.getItem(KEY) === 'granted') {
     document.getElementById('coming-soon-gate').style.display = 'none';
   } else {
     document.body.style.overflow = 'hidden';
@@ -2987,7 +3013,7 @@
   });
 
   // Admin password check (hashed comparison + brute force protection)
-  async function tryAccess() {
+  function tryAccess() {
     if (isLockedOut()) {
       var err = document.getElementById('gate-error');
       err.textContent = 'Too many attempts. Try again in 5 minutes.';
@@ -2999,7 +3025,7 @@
     var hash = sha256(val);
 
     if (hash === PASS_HASH) {
-      sessionStorage.setItem(KEY, 'granted');
+      localStorage.setItem(KEY, 'granted');
       localStorage.removeItem(LOCKOUT_KEY);
       document.getElementById('coming-soon-gate').style.display = 'none';
       document.body.style.overflow = '';
@@ -3481,7 +3507,7 @@
     grid.innerHTML = SITE_CONTENT.lessons.map(function(lesson, idx) {
       var thumb = getYouTubeThumbnail(lesson.youtubeUrl);
       var thumbStyle = thumb
-        ? '<img src="' + thumb + '" alt="' + lesson.title + '" loading="lazy">'
+        ? '<img src="' + thumb + '" alt="' + lesson.title + '" loading="lazy" onerror="this.style.display=\'none\'">'
         : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;opacity:0.4;">&#127909;</div>';
 
       var hasVideo = !!getYouTubeId(lesson.youtubeUrl);
@@ -3523,7 +3549,7 @@
 
       return '<div class="tab-card">' +
         '<div class="tab-card-photo">' +
-          '<img src="' + imgSrc + '" alt="' + tab.title + '" loading="lazy">' +
+          '<img src="' + imgSrc + '" alt="' + tab.title + '" loading="lazy" onerror="this.style.display=\'none\'">' +
           '<div class="tab-card-photo-overlay"></div>' +
           '<span class="tab-method-badge ' + tab.method + '">' +
             'Standard Tab' +
@@ -3610,7 +3636,7 @@
       }).join('');
 
       return '<div class="fundamental-pillar" data-pillar="' + pillar.id + '">' +
-        '<div class="fundamental-pillar-header" onclick="togglePillar(this)">' +
+        '<div class="fundamental-pillar-header" role="button" tabindex="0" aria-expanded="false" onclick="togglePillar(this)" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();togglePillar(this)}">' +
           '<div class="fundamental-pillar-icon">' + pillar.icon + '</div>' +
           '<div class="fundamental-pillar-info">' +
             '<h3>' + pillar.title + '</h3>' +
@@ -3629,6 +3655,8 @@
   window.togglePillar = function(header) {
     var pillar = header.parentElement;
     pillar.classList.toggle('open');
+    var isOpen = pillar.classList.contains('open');
+    header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   };
 
   // ─── Render Trails (Carousel) ───────────────────────────────────
@@ -3871,7 +3899,7 @@
 
     grid.innerHTML = SITE_CONTENT.gallery.map(function(photo, i) {
       return '<div class="gallery-item" onclick="openLightbox(' + i + ')">' +
-        '<img src="' + photo.src + '" alt="' + photo.alt + '" loading="lazy">' +
+        '<img src="' + photo.src + '" alt="' + photo.alt + '" loading="lazy" onerror="this.parentElement.style.display=\'none\'">' +
         (photo.caption ? '<div class="gallery-item-caption">' + photo.caption + '</div>' : '') +
       '</div>';
     }).join('');
