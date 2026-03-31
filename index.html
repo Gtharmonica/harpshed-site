@@ -2055,6 +2055,18 @@
     .pricing-card { padding: 32px 20px; }
     .pricing-price { font-size: 48px; }
     .zoom-lessons-layout { grid-template-columns: 1fr; gap: 32px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .taster-grid { grid-template-columns: 1fr; }
+    .roadmap-tracks { grid-template-columns: 1fr; gap: 40px; }
+    .lead-magnet { padding: 36px 16px; }
+    .lead-magnet h3 { font-size: 22px; }
+    .lead-magnet-form { flex-direction: column; gap: 10px; }
+    .lead-magnet-form input { border-right: 1px solid rgba(244,236,224,0.15); border-radius: 6px; }
+    .lead-magnet-form button { border-radius: 6px; padding: 14px; }
+    .whats-new-item { flex-direction: column; gap: 12px; }
+    .whats-new-date-col { text-align: left; display: flex; align-items: baseline; gap: 8px; }
+    .whats-new-day { font-size: 24px; }
+    .shed-updates-grid { grid-template-columns: 1fr; }
     .zoom-booking-panel { position: static; }
     .zoom-price-card { padding: 24px; }
     .zoom-price-amount { font-size: 44px; }
@@ -2202,6 +2214,580 @@
   .trails-carousel-dot.active {
     background: var(--rust);
     transform: scale(1.2);
+  }
+
+  /* ─── Testimonials ──────────────────────────────────────────── */
+  .testimonials-section {
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(92,74,56,0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 80%, rgba(92,74,56,0.2) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 50%, rgba(59,47,32,1) 0%, rgba(42,33,24,1) 100%);
+    color: var(--parchment);
+    position: relative;
+    text-align: center;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .testimonial-card {
+    background: rgba(244,236,224,0.06);
+    border: 1px solid rgba(244,236,224,0.08);
+    border-radius: 10px;
+    padding: 32px 28px;
+    text-align: left;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .testimonial-card:hover {
+    background: rgba(244,236,224,0.09);
+    border-color: rgba(160,82,45,0.3);
+  }
+
+  .testimonial-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: var(--rust-light);
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: 0.5;
+  }
+
+  .testimonial-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(244,236,224,0.85);
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testimonial-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(160,82,45,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--rust-light);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .testimonial-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .testimonial-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--parchment);
+  }
+
+  .testimonial-role {
+    font-size: 12px;
+    color: rgba(244,236,224,0.5);
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── Free Taster Lessons ─────────────────────────────────────── */
+  .taster-section {
+    background:
+      radial-gradient(ellipse at 85% 25%, rgba(160,82,45,0.06) 0%, transparent 20%),
+      radial-gradient(ellipse at 15% 70%, rgba(196,155,60,0.05) 0%, transparent 30%),
+      linear-gradient(180deg, var(--cream) 0%, var(--parchment) 100%);
+    border-top: 1px solid rgba(59,47,32,0.08);
+  }
+
+  .taster-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1100px;
+  }
+
+  .taster-card {
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 16px rgba(42,33,24,0.07);
+    border: 1px solid rgba(59,47,32,0.06);
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .taster-card:hover {
+    box-shadow: 0 8px 36px rgba(42,33,24,0.12);
+    transform: translateY(-4px);
+  }
+
+  .taster-card-thumb {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--wood-dark), var(--wood-mid));
+  }
+
+  .taster-card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .taster-free-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 5px 14px;
+    background: rgba(160,82,45,0.95);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 3px;
+  }
+
+  .taster-play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.15);
+    transition: background 0.3s;
+  }
+
+  .taster-card:hover .taster-play-overlay {
+    background: rgba(0,0,0,0.3);
+  }
+
+  .taster-play-circle {
+    width: 64px;
+    height: 64px;
+    background: rgba(160,82,45,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s;
+  }
+
+  .taster-card:hover .taster-play-circle {
+    transform: scale(1.1);
+    background: var(--rust-light);
+  }
+
+  .taster-play-circle::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 18px;
+    border-color: transparent transparent transparent white;
+    margin-left: 3px;
+  }
+
+  .taster-card-body {
+    padding: 20px;
+  }
+
+  .taster-card-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .taster-card-body p {
+    font-size: 14px;
+    color: var(--wood-mid);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .taster-card-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--wood-light);
+  }
+
+  .taster-card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .taster-cta {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  /* ─── Trails Roadmap Preview ──────────────────────────────────── */
+  .roadmap-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .roadmap-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--rust), var(--gold-dust), var(--rust), transparent);
+  }
+
+  .roadmap-tracks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .roadmap-track {
+    position: relative;
+  }
+
+  .roadmap-track-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .roadmap-track-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+  }
+
+  .roadmap-track-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--parchment);
+    margin-bottom: 4px;
+  }
+
+  .roadmap-track-tradition {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    color: var(--parchment);
+  }
+
+  .roadmap-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  .roadmap-stages::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    bottom: 14px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--rust-light), rgba(196,155,60,0.3));
+    opacity: 0.4;
+  }
+
+  .roadmap-stage {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    position: relative;
+  }
+
+  .roadmap-stage-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-left: 9px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .roadmap-stage-name {
+    font-size: 14px;
+    color: rgba(244,236,224,0.75);
+    font-weight: 400;
+  }
+
+  .roadmap-stage:first-child .roadmap-stage-name {
+    color: var(--parchment);
+    font-weight: 600;
+  }
+
+  .roadmap-cta {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  /* ─── From the Shed (GT Updates) ──────────────────────────────── */
+  .shed-updates-section {
+    background: var(--cream);
+    border-top: 1px solid rgba(59,47,32,0.08);
+  }
+
+  .shed-updates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+  }
+
+  .shed-update-card {
+    background: white;
+    border-radius: 10px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(42,33,24,0.06);
+    border: 1px solid rgba(59,47,32,0.06);
+    border-left: 3px solid var(--rust);
+    transition: all 0.3s;
+  }
+
+  .shed-update-card:hover {
+    box-shadow: 0 6px 24px rgba(42,33,24,0.1);
+    transform: translateY(-2px);
+  }
+
+  .shed-update-date {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .shed-update-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .shed-update-card p {
+    font-size: 14px;
+    color: var(--wood-mid);
+    line-height: 1.6;
+  }
+
+  .shed-update-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(160,82,45,0.1);
+    color: var(--rust);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    margin-top: 12px;
+  }
+
+  /* ─── What's New Page ─────────────────────────────────────────── */
+  .whats-new-feed {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .whats-new-item {
+    display: flex;
+    gap: 20px;
+    padding: 24px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(42,33,24,0.06);
+    border: 1px solid rgba(59,47,32,0.06);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .whats-new-item:hover {
+    box-shadow: 0 6px 24px rgba(42,33,24,0.1);
+    transform: translateY(-2px);
+  }
+
+  .whats-new-date-col {
+    flex-shrink: 0;
+    text-align: center;
+    min-width: 60px;
+  }
+
+  .whats-new-month {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    color: var(--rust);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .whats-new-day {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .whats-new-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .whats-new-content p {
+    font-size: 14px;
+    color: var(--wood-mid);
+    line-height: 1.6;
+  }
+
+  .whats-new-type {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 3px;
+    margin-top: 8px;
+  }
+
+  .whats-new-type.lesson { background: rgba(160,82,45,0.15); color: var(--rust); }
+  .whats-new-type.tab { background: rgba(44,74,110,0.15); color: var(--delta-blue); }
+  .whats-new-type.jam { background: rgba(196,155,60,0.15); color: var(--gold-dust); }
+  .whats-new-type.article { background: rgba(139,58,58,0.15); color: var(--worn-red); }
+  .whats-new-type.update { background: rgba(59,47,32,0.1); color: var(--wood-mid); }
+
+  /* ─── Lead Magnet Banner ──────────────────────────────────────── */
+  .lead-magnet {
+    background: linear-gradient(135deg, var(--wood-dark), #4a3828, var(--wood-dark));
+    color: var(--parchment);
+    padding: 48px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lead-magnet::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(88deg, transparent, transparent 18px, rgba(196,155,60,0.03) 18px, rgba(196,155,60,0.03) 19px);
+    pointer-events: none;
+  }
+
+  .lead-magnet h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .lead-magnet p {
+    font-size: 16px;
+    opacity: 0.75;
+    margin-bottom: 24px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  .lead-magnet-form {
+    display: flex;
+    max-width: 480px;
+    margin: 0 auto;
+    gap: 0;
+    position: relative;
+  }
+
+  .lead-magnet-form input {
+    flex: 1;
+    padding: 14px 18px;
+    border: 1px solid rgba(244,236,224,0.15);
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    background: rgba(244,236,224,0.08);
+    color: var(--parchment);
+    font-size: 15px;
+    outline: none;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  .lead-magnet-form input::placeholder {
+    color: rgba(244,236,224,0.4);
+  }
+
+  .lead-magnet-form input:focus {
+    border-color: var(--rust-light);
+    background: rgba(244,236,224,0.12);
+  }
+
+  .lead-magnet-form button {
+    padding: 14px 24px;
+    background: var(--rust);
+    color: var(--cream);
+    border: none;
+    border-radius: 0 6px 6px 0;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  .lead-magnet-form button:hover {
+    background: var(--rust-light);
+  }
+
+  .lead-magnet-success {
+    color: var(--gold-dust);
+    font-weight: 600;
+    display: none;
+    position: relative;
+    font-size: 15px;
+  }
+
+  .lead-magnet-preview {
+    font-size: 12px;
+    opacity: 0.5;
+    margin-top: 12px;
+    position: relative;
   }
 
   /* ─── Zoom Lessons (1-to-1 Booking) ─────────────────────────── */
@@ -3299,6 +3885,7 @@
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#community">Fox Chasers</a></li>
     <li><a href="#zoom-lessons">1-to-1</a></li>
+    <li><a href="#whats-new">New</a></li>
     <li><a href="#pricing" class="nav-cta">Join the Shed</a></li>
   </ul>
 </nav>
@@ -3319,6 +3906,22 @@
     <div class="hero-buttons">
       <a href="#pricing" class="btn-primary">&#9834; Join The Shed</a>
       <a href="#lessons" class="btn-secondary">&#9654; Browse Lessons</a>
+    </div>
+    <!-- Hero video intro — replace the empty URL below with your YouTube intro video URL -->
+    <div class="hero-video-teaser" id="hero-video-teaser" style="margin-top:24px; display:none;">
+      <a href="#" onclick="openVideoModal(''); return false;" style="
+        display: inline-flex; align-items: center; gap: 10px;
+        color: rgba(244,236,224,0.6); text-decoration: none; font-size: 14px;
+        transition: color 0.2s;
+      " onmouseover="this.style.color='#c4724a'" onmouseout="this.style.color='rgba(244,236,224,0.6)'">
+        <span style="
+          width: 36px; height: 36px; border-radius: 50%;
+          border: 1.5px solid rgba(244,236,224,0.3);
+          display: flex; align-items: center; justify-content: center;
+          transition: border-color 0.2s;
+        ">&#9654;</span>
+        Watch the intro &mdash; 90 seconds
+      </a>
     </div>
   </div>
   <div class="hero-art">
@@ -3422,6 +4025,232 @@
             and stripped-back roots playing. The Harp Shed brings all of that together: teaching, session
             work, live performance, and a deep commitment to music with character, history, and soul.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Free Taster Lessons -->
+    <section class="section taster-section">
+      <div class="section-label">Try Before You Join</div>
+      <h2 class="section-title">Three free lessons. No signup.</h2>
+      <p class="section-subtitle">
+        The three tunes that hook everyone. Pick one up, play along, and see if The Shed is for you.
+      </p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="taster-grid">
+        <div class="taster-card" onclick="openVideoModal('')">
+          <div class="taster-card-thumb">
+            <img src="hero-photo.jpg" alt="Train Rhythm lesson" loading="lazy" onerror="this.style.display='none'">
+            <div class="taster-free-badge">Free</div>
+            <div class="taster-play-overlay">
+              <div class="taster-play-circle"></div>
+            </div>
+          </div>
+          <div class="taster-card-body">
+            <h3>Train Rhythm in 5 Minutes</h3>
+            <p>The harmonica's greatest party trick. Learn the chug pattern, add the whistle, and you'll sound like a locomotive by the end.</p>
+            <div class="taster-card-meta">
+              <span>&#9201; 6 min</span>
+              <span>&#127925; Beginner</span>
+              <span>&#127908; Solo Harp</span>
+            </div>
+          </div>
+        </div>
+        <div class="taster-card" onclick="openVideoModal('')">
+          <div class="taster-card-thumb">
+            <img src="gareth-harpshed.jpg" alt="Old Joe Clark lesson" loading="lazy" onerror="this.style.display='none'">
+            <div class="taster-free-badge">Free</div>
+            <div class="taster-play-overlay">
+              <div class="taster-play-circle"></div>
+            </div>
+          </div>
+          <div class="taster-card-body">
+            <h3>Old Joe Clark &mdash; Your First Fiddle Tune</h3>
+            <p>A classic Appalachian reel in first position. Simple melody, instant gratification, and the doorway to old-time playing.</p>
+            <div class="taster-card-meta">
+              <span>&#9201; 8 min</span>
+              <span>&#127925; Beginner</span>
+              <span>&#127956; Old Time</span>
+            </div>
+          </div>
+        </div>
+        <div class="taster-card" onclick="openVideoModal('')">
+          <div class="taster-card-thumb">
+            <img src="gareth-live-colour.jpg" alt="Blues lick lesson" loading="lazy" onerror="this.style.display='none'">
+            <div class="taster-free-badge">Free</div>
+            <div class="taster-play-overlay">
+              <div class="taster-play-circle"></div>
+            </div>
+          </div>
+          <div class="taster-card-body">
+            <h3>Your First Blues Lick</h3>
+            <p>Three notes, one bend, and you'll sound like you've been playing for years. The riff that starts every blues player's journey.</p>
+            <div class="taster-card-meta">
+              <span>&#9201; 5 min</span>
+              <span>&#127925; Beginner</span>
+              <span>&#127928; Blues</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="taster-cta">
+        <a href="#lessons" class="btn-primary" onclick="showPage('lessons')">&#9654; See All Lessons</a>
+      </div>
+    </section>
+
+    <!-- Trails Roadmap Preview -->
+    <section class="section section-dark roadmap-section">
+      <div class="section-label" style="text-align:center;">Your Path</div>
+      <h2 class="section-title" style="text-align:center;">Three traditions. Six stages each.</h2>
+      <p class="section-subtitle" style="text-align:center;max-width:640px;margin-left:auto;margin-right:auto;">
+        Choose your trail and follow the road from first notes to playing your own way. Each stage unlocks tunes, techniques, and deeper understanding.
+      </p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="roadmap-tracks">
+        <!-- Blue Ridge Trail -->
+        <div class="roadmap-track">
+          <div class="roadmap-track-header">
+            <div class="roadmap-track-icon">&#127956;</div>
+            <div class="roadmap-track-title">The Blue Ridge Trail</div>
+            <div class="roadmap-track-tradition">Old-Time</div>
+          </div>
+          <div class="roadmap-stages">
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:var(--delta-blue-light);"></div><span class="roadmap-stage-name">Getting Started</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(74,113,153,0.7);"></div><span class="roadmap-stage-name">Getting a Sound</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(74,113,153,0.5);"></div><span class="roadmap-stage-name">Playing Along</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(74,113,153,0.4);"></div><span class="roadmap-stage-name">Holding It Down</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(74,113,153,0.3);"></div><span class="roadmap-stage-name">Carrying Tunes</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(74,113,153,0.2);"></div><span class="roadmap-stage-name">Playing Your Own Way</span></div>
+          </div>
+        </div>
+        <!-- Solo Harp Trail -->
+        <div class="roadmap-track">
+          <div class="roadmap-track-header">
+            <div class="roadmap-track-icon">&#128646;</div>
+            <div class="roadmap-track-title">The Solo Harp Trail</div>
+            <div class="roadmap-track-tradition">Solo Harp</div>
+          </div>
+          <div class="roadmap-stages">
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:var(--rust-light);"></div><span class="roadmap-stage-name">Getting Started</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(196,114,74,0.7);"></div><span class="roadmap-stage-name">Getting a Sound</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(196,114,74,0.5);"></div><span class="roadmap-stage-name">Playing Along</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(196,114,74,0.4);"></div><span class="roadmap-stage-name">Holding It Down</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(196,114,74,0.3);"></div><span class="roadmap-stage-name">Carrying Tunes</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(196,114,74,0.2);"></div><span class="roadmap-stage-name">Playing Your Own Way</span></div>
+          </div>
+        </div>
+        <!-- Juke Joint Trail -->
+        <div class="roadmap-track">
+          <div class="roadmap-track-header">
+            <div class="roadmap-track-icon">&#127928;</div>
+            <div class="roadmap-track-title">The Juke Joint Trail</div>
+            <div class="roadmap-track-tradition">Early Blues</div>
+          </div>
+          <div class="roadmap-stages">
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:var(--worn-red);"></div><span class="roadmap-stage-name">Getting Started</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(139,58,58,0.7);"></div><span class="roadmap-stage-name">Getting a Sound</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(139,58,58,0.5);"></div><span class="roadmap-stage-name">Playing Along</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(139,58,58,0.4);"></div><span class="roadmap-stage-name">Holding It Down</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(139,58,58,0.3);"></div><span class="roadmap-stage-name">Carrying Tunes</span></div>
+            <div class="roadmap-stage"><div class="roadmap-stage-dot" style="background:rgba(139,58,58,0.2);"></div><span class="roadmap-stage-name">Playing Your Own Way</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="roadmap-cta">
+        <a href="#trails" class="btn-primary" onclick="showPage('trails')" style="background:var(--rust);">&#127956; Explore the Trails</a>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials-section">
+      <div class="section-label" style="text-align:center;">What They Say</div>
+      <h2 class="section-title" style="text-align:center;">From the players and the greats.</h2>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-quote">&ldquo;</div>
+          <p class="testimonial-text">Gareth is a serious student of the tradition. His commitment to the roots of this instrument and his ability to teach it with clarity and feel make him one to watch. Keep doing what you're doing.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JF</div>
+            <div>
+              <div class="testimonial-name">Joe Filisko</div>
+              <div class="testimonial-role">Master harmonicist, educator, instrument customiser</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">&ldquo;</div>
+          <p class="testimonial-text">There's a real depth to Gareth's playing and teaching. He understands the feel and the history behind the music, and that comes through in everything he does. A genuine voice for the tradition.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">GD</div>
+            <div>
+              <div class="testimonial-name">Grant Dermody</div>
+              <div class="testimonial-role">Blues harmonicist &amp; educator</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">&ldquo;</div>
+          <p class="testimonial-text">Gareth's approach to harmonica is rooted and authentic. His ear for old-time and pre-war styles is exceptional, and the way he breaks things down makes it accessible to anyone willing to listen and learn.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">VP</div>
+            <div>
+              <div class="testimonial-name">Victor Puertas</div>
+              <div class="testimonial-role">Harmonica player &amp; performer</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">&ldquo;</div>
+          <p class="testimonial-text">The HarpShed fills a gap nobody else was filling. Real teaching, real tradition, none of the fluff. If you want to learn this instrument properly, this is where you go.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">TW</div>
+            <div>
+              <div class="testimonial-name">Tom Walbank</div>
+              <div class="testimonial-role">Harmonica player &amp; session musician</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">&ldquo;</div>
+          <p class="testimonial-text">What sets Gareth apart is the authenticity. He's not just teaching licks &mdash; he's teaching the music, the context, and the feeling behind it. That's rare, and it makes all the difference.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">TF</div>
+            <div>
+              <div class="testimonial-name">Teilhard Frost</div>
+              <div class="testimonial-role">Musician &amp; performer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- From the Shed (GT Updates) -->
+    <section class="section shed-updates-section">
+      <div class="section-label">From the Shed</div>
+      <h2 class="section-title">What GT's up to.</h2>
+      <p class="section-subtitle">
+        Gigs, recordings, new tunes, things that caught my ear. The life behind the lessons.
+      </p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="shed-updates-grid">
+        <div class="shed-update-card">
+          <div class="shed-update-date">Mar 2026</div>
+          <h3>Building The HarpShed</h3>
+          <p>After years of teaching face-to-face and through one-off videos, I'm finally putting it all under one roof. Lessons, tabs, jam tracks, trails &mdash; the whole lot. Launching soon.</p>
+          <span class="shed-update-tag">Update</span>
+        </div>
+        <div class="shed-update-card">
+          <div class="shed-update-date">Mar 2026</div>
+          <h3>Working on the Fox Chase</h3>
+          <p>Recording a new arrangement of the DeFord Bailey Fox Chase this week. Trying to keep the spirit of the original while finding my own take on it. It's slow going but it's getting there.</p>
+          <span class="shed-update-tag">Recording</span>
+        </div>
+        <div class="shed-update-card">
+          <div class="shed-update-date">Mar 2026</div>
+          <h3>Gig with Dave Thomas &mdash; Norwich</h3>
+          <p>Playing the Birdcage with Dave this Saturday. Acoustic set, stripped back. Come say hello if you're local. Always good to put faces to names.</p>
+          <span class="shed-update-tag">Live</span>
         </div>
       </div>
     </section>
@@ -3558,6 +4387,86 @@
     </section>
   </div>
 
+  <!-- PAGE: What's New -->
+  <div class="page" id="page-whats-new">
+    <section class="section" style="background: var(--cream); border-top: 1px solid rgba(59,47,32,0.08);">
+      <div class="section-label">Latest</div>
+      <h2 class="section-title">What's new in The Shed.</h2>
+      <p class="section-subtitle">
+        New lessons, tabs, jam tracks, and articles as they land. Everything in one feed.
+      </p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="whats-new-feed">
+        <div class="whats-new-item" onclick="showPage('lessons')">
+          <div class="whats-new-date-col">
+            <div class="whats-new-month">Mar</div>
+            <div class="whats-new-day">31</div>
+          </div>
+          <div class="whats-new-content">
+            <h3>Train Rhythm in 5 Minutes &mdash; Free Lesson</h3>
+            <p>Learn the harmonica's most iconic sound. Chug pattern, whistle, and full steam ahead. No experience needed.</p>
+            <span class="whats-new-type lesson">Lesson</span>
+          </div>
+        </div>
+        <div class="whats-new-item" onclick="showPage('lessons')">
+          <div class="whats-new-date-col">
+            <div class="whats-new-month">Mar</div>
+            <div class="whats-new-day">31</div>
+          </div>
+          <div class="whats-new-content">
+            <h3>Old Joe Clark &mdash; Your First Fiddle Tune</h3>
+            <p>The classic Appalachian reel, broken down step by step. First position, simple melody, big reward.</p>
+            <span class="whats-new-type lesson">Lesson</span>
+          </div>
+        </div>
+        <div class="whats-new-item" onclick="showPage('tabs')">
+          <div class="whats-new-date-col">
+            <div class="whats-new-month">Mar</div>
+            <div class="whats-new-day">28</div>
+          </div>
+          <div class="whats-new-content">
+            <h3>Fox Chase &mdash; DeFord Bailey Tab</h3>
+            <p>Full notation for the original Fox Chase. Every bend, tongue block, and train whistle marked out precisely.</p>
+            <span class="whats-new-type tab">Tab</span>
+          </div>
+        </div>
+        <div class="whats-new-item" onclick="showPage('jams')">
+          <div class="whats-new-date-col">
+            <div class="whats-new-month">Mar</div>
+            <div class="whats-new-day">25</div>
+          </div>
+          <div class="whats-new-content">
+            <h3>Country Blues in E &mdash; Jam Track</h3>
+            <p>Fingerpicked acoustic guitar, upright bass, light shuffle. Three tempos: slow, medium, and up.</p>
+            <span class="whats-new-type jam">Jam Track</span>
+          </div>
+        </div>
+        <div class="whats-new-item" onclick="showPage('articles')">
+          <div class="whats-new-date-col">
+            <div class="whats-new-month">Mar</div>
+            <div class="whats-new-day">20</div>
+          </div>
+          <div class="whats-new-content">
+            <h3>The Appalachian Harp Tradition</h3>
+            <p>Before the blues, there was old time. The mountain roots of American harmonica playing and how it shaped everything that came after.</p>
+            <span class="whats-new-type article">Article</span>
+          </div>
+        </div>
+        <div class="whats-new-item">
+          <div class="whats-new-date-col">
+            <div class="whats-new-month">Mar</div>
+            <div class="whats-new-day">15</div>
+          </div>
+          <div class="whats-new-content">
+            <h3>1-to-1 Zoom Lessons Now Available</h3>
+            <p>Book a private 45-minute lesson with Gareth over Zoom. &pound;35 per session, open to all levels.</p>
+            <span class="whats-new-type update">Update</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
   <!-- PAGE: Zoom Lessons (1-to-1 Booking) -->
   <div class="page" id="page-zoom-lessons">
     <section class="section zoom-lessons-section">
@@ -3652,15 +4561,16 @@
 </div>
 <!-- ═══ END PAGE CONTAINER ═══════════════════════════════════════════ -->
 
-<!-- Email Signup -->
-<section class="email-signup" id="email-signup">
-  <h3>Get on the list.</h3>
-  <p>Be first to know when The Shed opens its doors. Free lessons, tab drops, and news &mdash; straight to your inbox.</p>
-  <form class="email-signup-form" id="signup-form" onsubmit="return handleSignup(event)">
+<!-- Lead Magnet — Free Tab Pack -->
+<section class="lead-magnet" id="email-signup">
+  <h3>3 Old-Time Tunes &mdash; Free Tab Pack</h3>
+  <p>Old Joe Clark, Cripple Creek, and Soldier's Joy. Full harmonica tablature, free to download. Just drop your email.</p>
+  <form class="lead-magnet-form" id="signup-form" onsubmit="return handleSignup(event)">
     <input type="email" id="signup-email" placeholder="Your email address" required>
-    <button type="submit">Join the List</button>
+    <button type="submit">Send Me the Tabs</button>
   </form>
-  <p class="email-signup-success" id="signup-success">You're in. Welcome to The Shed.</p>
+  <p class="lead-magnet-success" id="signup-success">Check your inbox &mdash; the tabs are on their way.</p>
+  <p class="lead-magnet-preview">&#127932; PDF download &bull; Standard harmonica tablature &bull; C harmonica, 1st position</p>
 </section>
 
 <!-- Pricing -->
@@ -3746,6 +4656,7 @@
       <h4>Community</h4>
       <a href="#community">The Fox Chasers</a>
       <a href="#zoom-lessons">1-to-1 Lessons</a>
+      <a href="#whats-new">What's New</a>
       <a href="#contact">Contact</a>
       <div class="footer-social">
         <a href="https://www.youtube.com/@GTHarmonica" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube">&#9654;</a>
@@ -3756,7 +4667,7 @@
     <div class="footer-links">
       <h4>Membership</h4>
       <a href="#pricing">Join The Shed</a>
-      <a href="#email-signup">Mailing List</a>
+      <a href="#email-signup">Free Tab Pack</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -4361,6 +5272,7 @@
     'gallery': 'page-gallery',
     'community': 'page-community',
     'zoom-lessons': 'page-zoom-lessons',
+    'whats-new': 'page-whats-new',
     'lesson-detail': 'page-lesson-detail',
     'home': 'page-home',
     'pricing': null  // pricing scrolls, not a page
@@ -4538,7 +5450,7 @@
     fetch('https://formspree.io/f/xgopabae', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ email: email, _subject: 'HarpShed - New mailing list signup', source: 'main-site-signup' })
+      body: JSON.stringify({ email: email, _subject: 'HarpShed - Free Tab Pack Request', source: 'free-tab-pack' })
     }).catch(function() {});
 
     // Show success
