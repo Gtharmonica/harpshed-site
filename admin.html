@@ -391,6 +391,7 @@
     <button onclick="showSection('articles')">Articles</button>
     <button onclick="showSection('gallery')">Gallery</button>
     <button onclick="showSection('community')">Community</button>
+    <button onclick="showSection('trails')">Trails</button>
     <button onclick="showSection('settings')">Settings</button>
   </div>
 
@@ -546,6 +547,10 @@ function doLogin() {
       renderSettings(container);
       return;
     }
+    if (currentSection === 'trails') {
+      renderTrailsSection(container);
+      return;
+    }
     var items = getItems();
     var sectionLabels = {
       lessons: 'Lesson', tabs: 'Tab', jams: 'Jam Track',
@@ -598,8 +603,10 @@ function doLogin() {
       badges = '<span class="badge badge-blue">Key of ' + (item.key || '') + '</span>' +
                '<span class="badge badge-rust">' + (item.difficulty || '') + '</span>';
     } else if (section === 'jams') {
+      var tempoCount = (item.tempos && item.tempos.length) ? item.tempos.length + ' tempos' : 'No tempos';
       badges = '<span class="badge badge-blue">' + (item.bpm || '') + ' BPM</span>' +
-               '<span class="badge badge-rust">' + (item.genre || '') + '</span>';
+               '<span class="badge badge-rust">' + (item.genre || '') + '</span>' +
+               '<span class="badge badge-gold">' + tempoCount + '</span>';
     } else if (section === 'articles') {
       badges = '<span class="badge badge-rust">' + (item.category || '') + '</span>' +
                '<span class="badge badge-blue">' + (item.readTime || '') + '</span>';
@@ -648,8 +655,9 @@ function doLogin() {
         { key: 'description', label: 'Description', type: 'textarea' },
         { key: 'genre', label: 'Genre', type: 'text', hint: 'e.g. "Old Time", "Delta Blues"' },
         { key: 'key', label: 'Key', type: 'text', half: true },
-        { key: 'bpm', label: 'BPM', type: 'number', half: true },
-        { key: 'youtubeUrl', label: 'YouTube URL', type: 'text' },
+        { key: 'bpm', label: 'Main BPM', type: 'number', half: true },
+        { key: 'youtubeUrl', label: 'YouTube URL', type: 'text', hint: 'Main tempo video' },
+        { key: 'tempos', label: 'Tempo Variants', type: 'tempos', hint: 'Add different BPM versions. Format: "Label (BPM)" e.g. "Slow (70bpm)"' },
         { key: 'free', label: 'Free?', type: 'checkbox' }
       ],
       articles: [
@@ -717,7 +725,19 @@ function doLogin() {
       html += '<div class="form-group">';
       html += '<label>' + f.label + (f.required ? ' *' : '') + '</label>';
 
-      if (f.type === 'textarea') {
+      if (f.type === 'tempos') {
+        // Dynamic tempo list editor
+        var tempos = (Array.isArray(val) ? val : []);
+        html += '<div id="tempos-list" style="margin-bottom:8px;">';
+        tempos.forEach(function(t, ti) {
+          html += '<div class="tempo-row" style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">';
+          html += '<input type="text" class="tempo-label" value="' + escAttr(t) + '" placeholder="e.g. Slow (70bpm)" style="flex:1;">';
+          html += '<button type="button" class="btn btn-danger" style="padding:4px 10px;font-size:11px;" onclick="this.parentElement.remove()">X</button>';
+          html += '</div>';
+        });
+        html += '</div>';
+        html += '<button type="button" class="btn btn-outline" style="padding:6px 14px;font-size:12px;" onclick="addTempoRow()">+ Add Tempo</button>';
+      } else if (f.type === 'textarea') {
         html += '<textarea id="field-' + f.key + '">' + escHtml(val) + '</textarea>';
       } else if (f.type === 'select') {
         html += '<select id="field-' + f.key + '">';
@@ -752,6 +772,17 @@ function doLogin() {
     var fields = getFormFields();
     var item = {};
     fields.forEach(function(f) {
+      if (f.type === 'tempos') {
+        // Collect tempo values from dynamic list
+        var tempos = [];
+        var inputs = document.querySelectorAll('#tempos-list .tempo-label');
+        inputs.forEach(function(inp) {
+          var v = inp.value.trim();
+          if (v) tempos.push(v);
+        });
+        item.tempos = tempos;
+        return;
+      }
       var el = document.getElementById('field-' + f.key);
       if (!el) return;
       if (f.type === 'checkbox') item[f.key] = el.checked;
@@ -788,6 +819,17 @@ function doLogin() {
     document.getElementById('modal-overlay').classList.remove('active');
   };
 
+  window.addTempoRow = function() {
+    var list = document.getElementById('tempos-list');
+    if (!list) return;
+    var row = document.createElement('div');
+    row.className = 'tempo-row';
+    row.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:6px;';
+    row.innerHTML = '<input type="text" class="tempo-label" value="" placeholder="e.g. Slow (70bpm)" style="flex:1;">' +
+      '<button type="button" class="btn btn-danger" style="padding:4px 10px;font-size:11px;" onclick="this.parentElement.remove()">X</button>';
+    list.appendChild(row);
+  };
+
   window.deleteItem = function(index) {
     if (!confirm('Delete this item?')) return;
     var items = getItems();
@@ -796,6 +838,172 @@ function doLogin() {
     markUnsaved();
     renderSection();
   };
+
+  // ═══ Trails Section ══════════════════════════════
+  function renderTrailsSection(container) {
+    if (!content.trails) { container.innerHTML = '<p>No trails data found.</p>'; return; }
+
+    var html = '<h2 style="margin-bottom:20px;">Trail Content Management</h2>' +
+      '<p style="color:var(--text-dim);font-size:13px;margin-bottom:24px;">Add video lessons, insights, and tab PDFs to each stage of each trail. Click a stage to see its content items.</p>';
+
+    content.trails.forEach(function(trail, ti) {
+      html += '<div class="trail-admin-card" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:20px;overflow:hidden;">';
+      html += '<div style="background:' + trail.color + ';padding:16px 20px;cursor:pointer;" onclick="this.parentElement.classList.toggle(\'open\')">';
+      html += '<h3 style="color:#fff;margin:0;font-size:18px;">' + escHtml(trail.title) + ' <span style="font-size:12px;opacity:0.7;">(' + trail.tradition + ')</span></h3>';
+      html += '<p style="color:rgba(255,255,255,0.7);font-size:12px;margin:4px 0 0;">' + escHtml(trail.description) + '</p>';
+      html += '</div>';
+      html += '<div class="trail-admin-stages" style="display:none;">';
+
+      trail.stages.forEach(function(stage, si) {
+        var contentItems = stage.content || [];
+        var countLabel = contentItems.length > 0 ? '<span class="badge badge-green" style="margin-left:8px;">' + contentItems.length + ' item' + (contentItems.length > 1 ? 's' : '') + '</span>' : '<span class="badge" style="margin-left:8px;background:var(--border);color:var(--text-dim);">empty</span>';
+
+        html += '<div style="padding:16px 20px;border-bottom:1px solid var(--border);">';
+        html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">';
+        html += '<div><strong style="color:var(--rust-light);">Stage ' + (si + 1) + ':</strong> ' + escHtml(stage.name) + countLabel + '</div>';
+        html += '<button class="btn btn-primary" style="padding:6px 14px;font-size:12px;" onclick="addTrailContent(' + ti + ',' + si + ')">+ Add Content</button>';
+        html += '</div>';
+        html += '<p style="font-size:12px;color:var(--text-dim);margin:0 0 4px;">' + escHtml(stage.description) + '</p>';
+        html += '<div style="font-size:11px;color:var(--rust);font-style:italic;margin-bottom:8px;">Tunes: ' + escHtml(stage.tunes) + '</div>';
+
+        // Existing content items
+        contentItems.forEach(function(item, ci) {
+          html += '<div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;margin-top:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">';
+          html += '<div style="flex:1;">';
+          html += '<strong>' + escHtml(item.title) + '</strong>';
+          html += ' <span style="font-size:11px;color:var(--text-dim);">Key of ' + escHtml(item.key || '') + ' · ' + escHtml(item.position || '') + '</span>';
+          if (item.subgenre) html += ' <span class="badge badge-gold" style="font-size:10px;">' + escHtml(item.subgenre) + '</span>';
+          html += '<div style="font-size:11px;color:var(--text-dim);margin-top:4px;">';
+          if (item.youtubeUrl) html += '&#9654; Video ';
+          if (item.tabPdf) html += '&#8615; Tab PDF ';
+          if (!item.youtubeUrl && !item.tabPdf) html += 'No media yet';
+          html += '</div>';
+          html += '</div>';
+          html += '<div style="display:flex;gap:6px;">';
+          html += '<button class="btn btn-outline" style="padding:4px 10px;font-size:11px;" onclick="editTrailContent(' + ti + ',' + si + ',' + ci + ')">Edit</button>';
+          html += '<button class="btn btn-danger" style="padding:4px 10px;font-size:11px;" onclick="deleteTrailContent(' + ti + ',' + si + ',' + ci + ')">Del</button>';
+          html += '</div></div>';
+        });
+
+        html += '</div>';
+      });
+
+      html += '</div></div>';
+    });
+
+    container.innerHTML = html;
+    document.getElementById('item-count').textContent = content.trails.length + ' trails';
+
+    // Make trail cards openable
+    document.querySelectorAll('.trail-admin-card').forEach(function(card) {
+      var stages = card.querySelector('.trail-admin-stages');
+      if (stages) {
+        card.classList.contains('open') ? stages.style.display = 'block' : null;
+      }
+    });
+  }
+
+  // Toggle trail card open/close in admin
+  var oldToggle = HTMLElement.prototype.classList.toggle;
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.trail-admin-card').forEach(function(card) {
+      var stages = card.querySelector('.trail-admin-stages');
+      if (stages) stages.style.display = card.classList.contains('open') ? 'block' : 'none';
+    });
+  });
+
+  // Trail content modal fields
+  var trailContentFields = [
+    { key: 'title', label: 'Tune Title', type: 'text', required: true },
+    { key: 'youtubeUrl', label: 'YouTube URL', type: 'text', hint: 'Paste full YouTube URL for the lesson video' },
+    { key: 'insight', label: 'Teaching Insight', type: 'textarea', hint: 'Playing notes, background, what to focus on' },
+    { key: 'tabPdf', label: 'Tab PDF Path', type: 'text', hint: 'e.g. "tabs/Rain_Crow_Bill.pdf"' },
+    { key: 'key', label: 'Key', type: 'text', hint: 'e.g. "C", "D", "Bb"', half: true },
+    { key: 'position', label: 'Position', type: 'text', hint: 'e.g. "1st", "2nd"', half: true },
+    { key: 'subgenre', label: 'Subgenre', type: 'text', hint: 'e.g. "Blues / Jazz Crossover" (optional)' }
+  ];
+
+  var editingTrail = -1;
+  var editingStage = -1;
+  var editingContentItem = -1;
+
+  window.addTrailContent = function(trailIdx, stageIdx) {
+    editingTrail = trailIdx;
+    editingStage = stageIdx;
+    editingContentItem = -1;
+    var defaults = {};
+    trailContentFields.forEach(function(f) { defaults[f.key] = ''; });
+    openTrailModal('Add Content to Stage ' + (stageIdx + 1), defaults);
+  };
+
+  window.editTrailContent = function(trailIdx, stageIdx, contentIdx) {
+    editingTrail = trailIdx;
+    editingStage = stageIdx;
+    editingContentItem = contentIdx;
+    var item = content.trails[trailIdx].stages[stageIdx].content[contentIdx];
+    openTrailModal('Edit: ' + (item.title || 'Item'), item);
+  };
+
+  window.deleteTrailContent = function(trailIdx, stageIdx, contentIdx) {
+    if (!confirm('Delete this content item?')) return;
+    content.trails[trailIdx].stages[stageIdx].content.splice(contentIdx, 1);
+    markUnsaved();
+    renderTrailsSection(document.getElementById('section-content'));
+  };
+
+  function openTrailModal(title, data) {
+    document.getElementById('modal-title').textContent = title;
+    var html = '';
+    var inRow = false;
+
+    trailContentFields.forEach(function(f, i) {
+      var val = data[f.key] !== undefined ? data[f.key] : '';
+      if (f.half && !inRow) { html += '<div class="form-row">'; inRow = true; }
+      html += '<div class="form-group">';
+      html += '<label>' + f.label + (f.required ? ' *' : '') + '</label>';
+      if (f.type === 'textarea') {
+        html += '<textarea id="field-' + f.key + '" style="min-height:120px;">' + escHtml(val) + '</textarea>';
+      } else {
+        html += '<input type="' + f.type + '" id="field-' + f.key + '" value="' + escAttr(val) + '">';
+      }
+      if (f.hint) html += '<div class="hint">' + f.hint + '</div>';
+      html += '</div>';
+      if (f.half) {
+        var next = trailContentFields[i + 1];
+        if (!next || !next.half) { html += '</div>'; inRow = false; }
+      }
+    });
+
+    document.getElementById('modal-body').innerHTML = html;
+    document.getElementById('modal-save-btn').onclick = saveTrailContent;
+    document.getElementById('modal-overlay').classList.add('active');
+  }
+
+  function saveTrailContent() {
+    var item = {};
+    trailContentFields.forEach(function(f) {
+      var el = document.getElementById('field-' + f.key);
+      if (el) item[f.key] = el.value;
+    });
+
+    var stage = content.trails[editingTrail].stages[editingStage];
+    if (!stage.content) stage.content = [];
+
+    if (editingContentItem >= 0) {
+      // Preserve any extra fields
+      var existing = stage.content[editingContentItem];
+      Object.keys(existing).forEach(function(k) {
+        if (item[k] === undefined) item[k] = existing[k];
+      });
+      stage.content[editingContentItem] = item;
+    } else {
+      stage.content.push(item);
+    }
+
+    markUnsaved();
+    closeModal();
+    renderTrailsSection(document.getElementById('section-content'));
+  }
 
   // ═══ Settings Section ════════════════════════════
   function renderSettings(container) {
