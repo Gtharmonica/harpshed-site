@@ -1770,6 +1770,287 @@
     font-style: italic;
   }
 
+  /* ─── Trail Stage Accordion (on carousel cards) ─────────────── */
+  .trail-stage.has-content {
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .trail-stage.has-content:hover {
+    background: rgba(160,82,45,0.04);
+  }
+
+  .trail-stage-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .trail-stage-info {
+    flex: 1;
+  }
+
+  .trail-stage-toggle {
+    font-size: 12px;
+    color: var(--wood-light);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .trail-stage.open .trail-stage-toggle {
+    transform: rotate(180deg);
+  }
+
+  .trail-stage-content-count {
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--rust);
+    color: var(--cream);
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .trail-stage-coming {
+    font-size: 10px;
+    color: var(--wood-light);
+    font-style: italic;
+    margin-left: 6px;
+  }
+
+  .trail-stage-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .trail-stage.open .trail-stage-content {
+    max-height: 2000px;
+  }
+
+  .trail-content-item {
+    background: rgba(244,236,224,0.06);
+    border: 1px solid rgba(160,82,45,0.12);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 12px;
+    margin-left: 36px;
+  }
+
+  .trail-content-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .trail-content-header h5 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .trail-content-key {
+    font-size: 11px;
+    color: var(--wood-light);
+  }
+
+  .trail-content-insight {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--wood-mid);
+    margin: 0 0 12px 0;
+  }
+
+  .trail-content-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .trail-content-video-btn,
+  .trail-content-pdf-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .trail-content-video-btn {
+    background: var(--rust);
+    color: var(--cream);
+  }
+
+  .trail-content-video-btn:hover {
+    background: var(--rust-light);
+  }
+
+  .trail-content-video-btn.disabled {
+    background: transparent;
+    border: 1px solid var(--wood-light);
+    color: var(--wood-light);
+    cursor: default;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .trail-content-pdf-btn {
+    background: var(--wood-dark);
+    color: var(--cream);
+  }
+
+  .trail-content-pdf-btn:hover {
+    background: var(--wood-mid);
+  }
+
+  /* ─── Full Trail Detail Page ────────────────────────────────── */
+  .trail-detail-header {
+    text-align: center;
+    padding-bottom: 28px;
+    margin-bottom: 32px;
+    border-bottom: 3px solid;
+  }
+
+  .trail-detail-header h2 {
+    font-family: 'Special Elite', monospace;
+    font-size: 32px;
+    color: var(--parchment);
+    margin: 12px 0 8px;
+  }
+
+  .trail-detail-header p {
+    color: var(--parchment-dark);
+    opacity: 0.7;
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 15px;
+  }
+
+  .trail-subgenres {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .trail-detail-stages {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .trail-detail-stage {
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(232,220,200,0.1);
+  }
+
+  .trail-detail-stage:last-child {
+    border-bottom: none;
+  }
+
+  .trail-detail-stage-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .trail-detail-stage-header h3 {
+    font-family: 'Special Elite', monospace;
+    font-size: 20px;
+    color: var(--parchment);
+    margin: 0 0 4px;
+  }
+
+  .trail-detail-stage-header p {
+    font-size: 14px;
+    color: var(--parchment-dark);
+    opacity: 0.65;
+    margin: 0;
+  }
+
+  .trail-detail-items {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-left: 52px;
+  }
+
+  .trail-detail-item {
+    background: rgba(244,236,224,0.04);
+    border: 1px solid rgba(160,82,45,0.15);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .trail-detail-video {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    background: #111;
+  }
+
+  .trail-detail-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .trail-detail-video-placeholder {
+    padding: 40px;
+    text-align: center;
+    color: var(--wood-light);
+    font-style: italic;
+    background: rgba(0,0,0,0.3);
+    font-size: 14px;
+  }
+
+  .trail-detail-item-body {
+    padding: 20px;
+  }
+
+  .trail-detail-item-body h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--parchment);
+    margin: 0 0 4px;
+  }
+
+  .trail-detail-item-body p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--parchment-dark);
+    opacity: 0.75;
+    margin: 10px 0 16px;
+  }
+
+  .trail-detail-item-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .trail-detail-empty {
+    margin-left: 52px;
+    padding: 20px;
+    color: var(--wood-light);
+    font-style: italic;
+    font-size: 13px;
+    border: 1px dashed rgba(160,82,45,0.15);
+    border-radius: 8px;
+    text-align: center;
+  }
+
   /* ─── About / Instructor ───────────────────────────────────────── */
   .about-grid {
     display: grid;
@@ -4403,6 +4684,13 @@
     </section>
   </div>
 
+  <!-- PAGE: Trail Detail (Full Trail Guide) -->
+  <div class="page" id="page-trail-detail">
+    <section class="section section-dark" style="padding-top:40px;">
+      <div id="trail-detail-content"></div>
+    </section>
+  </div>
+
   <!-- PAGE: Fox Chasers Community -->
   <div class="page" id="page-community">
     <section class="section section-dark fox-chasers-section">
@@ -5047,30 +5335,69 @@
 
     track.innerHTML = SITE_CONTENT.trails.map(function(trail) {
       var stages = trail.stages.map(function(stage, i) {
-        return '<div class="trail-stage">' +
-          '<div class="trail-stage-number">' + (i + 1) + '</div>' +
-          '<h4>' + stage.name + '</h4>' +
-          '<p>' + stage.description + '</p>' +
-          '<div class="trail-stage-tunes">' + stage.tunes + '</div>' +
+        var hasContent = stage.content && stage.content.length > 0;
+        var contentCount = hasContent ? stage.content.length : 0;
+        var contentBadge = hasContent
+          ? '<span class="trail-stage-content-count">' + contentCount + ' tune' + (contentCount > 1 ? 's' : '') + '</span>'
+          : '<span class="trail-stage-coming">coming soon</span>';
+
+        var contentHtml = '';
+        if (hasContent) {
+          contentHtml = '<div class="trail-stage-content">' +
+            stage.content.map(function(item) {
+              var hasVideo = !!getYouTubeId(item.youtubeUrl);
+              var videoBtn = hasVideo
+                ? '<button class="trail-content-video-btn" onclick="event.stopPropagation();openVideoModal(\'' + item.youtubeUrl + '\')">&#9654; Watch Video</button>'
+                : '<span class="trail-content-video-btn disabled">&#9654; Video coming soon</span>';
+              var hasPdf = !!item.tabPdf;
+              var pdfBtn = hasPdf
+                ? '<button class="trail-content-pdf-btn" onclick="event.stopPropagation();window.open(\'' + item.tabPdf + '\',\'_blank\')">&#8615; Download Tab</button>'
+                : '';
+              var subgenreTag = item.subgenre
+                ? '<span class="tab-subgenre-badge">' + item.subgenre + '</span>'
+                : '';
+              return '<div class="trail-content-item">' +
+                '<div class="trail-content-header">' +
+                  '<h5>' + item.title + '</h5>' +
+                  '<span class="trail-content-key">Key of ' + item.key + ' &middot; ' + item.position + ' pos</span>' +
+                  subgenreTag +
+                '</div>' +
+                '<p class="trail-content-insight">' + item.insight + '</p>' +
+                '<div class="trail-content-actions">' +
+                  videoBtn + pdfBtn +
+                '</div>' +
+              '</div>';
+            }).join('') +
+          '</div>';
+        }
+
+        return '<div class="trail-stage' + (hasContent ? ' has-content' : '') + '" ' +
+          (hasContent ? 'onclick="toggleTrailStage(this)"' : '') + '>' +
+          '<div class="trail-stage-header">' +
+            '<div class="trail-stage-number" style="background:' + trail.color + ';">' + (i + 1) + '</div>' +
+            '<div class="trail-stage-info">' +
+              '<h4>' + stage.name + ' ' + contentBadge + '</h4>' +
+              '<p>' + stage.description + '</p>' +
+              '<div class="trail-stage-tunes">' + stage.tunes + '</div>' +
+            '</div>' +
+            (hasContent ? '<span class="trail-stage-toggle">&#9660;</span>' : '') +
+          '</div>' +
+          contentHtml +
         '</div>';
       }).join('');
 
-      var comingSoonBadge = trail.comingSoon
-        ? '<div class="trail-coming-soon-badge">Coming Soon</div>'
-        : '';
-
       return '<div class="trails-carousel-slide">' +
-        '<div class="trail-card' + (trail.comingSoon ? ' coming-soon' : '') + '">' +
+        '<div class="trail-card">' +
           '<div class="trail-card-header">' +
             '<div class="trail-card-header-bg" style="background:' + trail.color + ';"></div>' +
             '<span class="trail-tradition-badge" style="background:' + trail.color + ';">' + trail.tradition + '</span>' +
-            comingSoonBadge +
             '<h3><span class="trail-icon">' + trail.icon + '</span> ' + trail.title + '</h3>' +
             '<p>' + trail.description + '</p>' +
           '</div>' +
           '<div class="trail-stages">' + stages + '</div>' +
-          '<div style="text-align:center;padding:16px 20px 24px;">' +
-            '<button class="tab-download-btn" style="font-size:14px;padding:10px 24px;" onclick="showTrailTabs(\'' + trail.id + '\')">&#9835; Browse ' + trail.tradition + ' Tabs</button>' +
+          '<div style="text-align:center;padding:16px 20px 24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">' +
+            '<button class="tab-download-btn" style="font-size:14px;padding:10px 24px;" onclick="showTrailTabs(\'' + trail.id + '\')">&#9835; Browse Tabs</button>' +
+            '<button class="tab-download-btn" style="font-size:14px;padding:10px 24px;background:' + trail.color + ';" onclick="showFullTrail(\'' + trail.id + '\')">&#128218; Full Trail Guide</button>' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -5177,6 +5504,93 @@
       e.preventDefault();
     });
   }
+
+  // ─── Trail Stage Accordion Toggle ──────────────────────────────
+  window.toggleTrailStage = function(stageEl) {
+    stageEl.classList.toggle('open');
+  };
+
+  // ─── Full Trail Page ───────────────────────────────────────────
+  window.showFullTrail = function(trailId) {
+    var trail = SITE_CONTENT.trails.find(function(t) { return t.id === trailId; });
+    if (!trail) return;
+
+    var container = document.getElementById('trail-detail-content');
+    if (!container) return;
+
+    var html = '<div class="trail-detail-header" style="border-color:' + trail.color + ';">' +
+      '<span class="trail-tradition-badge" style="background:' + trail.color + ';">' + trail.tradition + '</span>' +
+      '<h2><span class="trail-icon">' + trail.icon + '</span> ' + trail.title + '</h2>' +
+      '<p>' + trail.description + '</p>' +
+    '</div>';
+
+    // Subgenres for Juke Joint
+    if (trail.subgenres && trail.subgenres.length > 0) {
+      html += '<div class="trail-subgenres">';
+      trail.subgenres.forEach(function(sg) {
+        html += '<span class="tab-subgenre-badge" style="font-size:11px;padding:4px 12px;">' + sg + '</span>';
+      });
+      html += '</div>';
+    }
+
+    html += '<div class="trail-detail-stages">';
+    trail.stages.forEach(function(stage, i) {
+      var hasContent = stage.content && stage.content.length > 0;
+
+      html += '<div class="trail-detail-stage">' +
+        '<div class="trail-detail-stage-header">' +
+          '<div class="trail-stage-number" style="background:' + trail.color + ';width:36px;height:36px;font-size:16px;">' + (i + 1) + '</div>' +
+          '<div>' +
+            '<h3>' + stage.name + '</h3>' +
+            '<p>' + stage.description + '</p>' +
+            '<div class="trail-stage-tunes" style="margin-top:6px;">' + stage.tunes + '</div>' +
+          '</div>' +
+        '</div>';
+
+      if (hasContent) {
+        html += '<div class="trail-detail-items">';
+        stage.content.forEach(function(item) {
+          var hasVideo = !!getYouTubeId(item.youtubeUrl);
+          var videoEmbed = hasVideo
+            ? '<div class="trail-detail-video"><iframe src="https://www.youtube.com/embed/' + getYouTubeId(item.youtubeUrl) + '" frameborder="0" allowfullscreen loading="lazy"></iframe></div>'
+            : '<div class="trail-detail-video-placeholder">&#9654; Video coming soon</div>';
+          var hasPdf = !!item.tabPdf;
+          var pdfBtn = hasPdf
+            ? '<button class="tab-download-btn" onclick="window.open(\'' + item.tabPdf + '\',\'_blank\')">&#8615; Download Tab PDF</button>'
+            : '';
+          var subgenreTag = item.subgenre
+            ? '<span class="tab-subgenre-badge">' + item.subgenre + '</span>'
+            : '';
+
+          html += '<div class="trail-detail-item">' +
+            videoEmbed +
+            '<div class="trail-detail-item-body">' +
+              '<h4>' + item.title + ' ' + subgenreTag + '</h4>' +
+              '<div class="trail-content-key">Key of ' + item.key + ' &middot; ' + item.position + ' position</div>' +
+              '<p>' + item.insight + '</p>' +
+              '<div class="trail-detail-item-actions">' + pdfBtn + '</div>' +
+            '</div>' +
+          '</div>';
+        });
+        html += '</div>';
+      } else {
+        html += '<div class="trail-detail-empty">Content for this stage is on its way.</div>';
+      }
+
+      html += '</div>';
+    });
+    html += '</div>';
+
+    html += '<div style="text-align:center;padding:24px 0;">' +
+      '<button class="tab-download-btn" style="font-size:14px;padding:10px 24px;" onclick="showTrailTabs(\'' + trail.id + '\')">&#9835; Browse All ' + trail.tradition + ' Tabs</button>' +
+      '&nbsp;&nbsp;' +
+      '<button class="tab-download-btn" style="font-size:14px;padding:10px 24px;background:var(--wood-dark);" onclick="showPage(\'trails\')">&#8592; Back to Trails</button>' +
+    '</div>';
+
+    container.innerHTML = html;
+    showPage('trail-detail');
+    window.scrollTo(0, 0);
+  };
 
   // ─── Render Articles ───────────────────────────────────────────
   function renderArticles() {
@@ -5422,6 +5836,7 @@
     'jams': 'page-jams',
     'fundamentals': 'page-fundamentals',
     'trails': 'page-trails',
+    'trail-detail': 'page-trail-detail',
     'articles': 'page-articles',
     'gallery': 'page-gallery',
     'community': 'page-community',

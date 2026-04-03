@@ -407,32 +407,73 @@ var SITE_CONTENT = {
         {
           "name": "Getting Started",
           "description": "Learning your first fiddle tune melody. Clean notes, simple rhythm, getting the shape of the tune.",
-          "tunes": "Old Joe Clark, Cripple Creek, Soldier's Joy"
+          "tunes": "Old Joe Clark, Cripple Creek, Soldier's Joy",
+          "content": [
+            {
+              "title": "Old Joe Clark",
+              "youtubeUrl": "",
+              "insight": "A classic Appalachian reel and the perfect place to start. Clean first-position melody — just blow and draw notes, no bends needed. Focus on getting the rhythm steady before you worry about speed.",
+              "tabPdf": "",
+              "key": "C",
+              "position": "1st"
+            }
+          ]
         },
         {
           "name": "Getting a Sound",
           "description": "Developing tone and timing. Playing with a metronome, getting clean single notes with some character.",
-          "tunes": "Cluck Old Hen, Red Haired Boy, Shady Grove"
+          "tunes": "Cluck Old Hen, Red Haired Boy, Shady Grove",
+          "content": []
         },
         {
           "name": "Playing Along",
           "description": "Fitting in with other instruments. Following a fiddle, locking with a banjo, not stepping on toes.",
-          "tunes": "Angeline the Baker, Sandy Boys, June Apple"
+          "tunes": "Angeline the Baker, Sandy Boys, June Apple",
+          "content": [
+            {
+              "title": "Salt River",
+              "youtubeUrl": "",
+              "insight": "Fiddle tune in the key of A on a D harmonica, 2nd position. AABB form — the A part is melodic and flowing, the B part drives harder with more rhythmic punch. Source: The Improbabillies Album. The alternate B part adds octave jumps for when you want to push the energy up.",
+              "tabPdf": "tabs/Salt_River.pdf",
+              "key": "D",
+              "position": "2nd"
+            }
+          ]
         },
         {
           "name": "Holding It Down",
           "description": "Driving the rhythm. Chords, chugs, and breathing patterns that hold a tune together even without melody.",
-          "tunes": "Sail Away Ladies, Liberty, Cumberland Gap"
+          "tunes": "Sail Away Ladies, Liberty, Cumberland Gap",
+          "content": [
+            {
+              "title": "Rain Crow Bill",
+              "youtubeUrl": "",
+              "insight": "A traditional fox chase style piece — rhythm, melody, and raincrow riffs all woven together. This is the full toolkit of solo harp showmanship in the old-time tradition. The rhythm section is your foundation — get that locked in before you layer the melody and riffs on top. The raincrow riffs slot in after specific phrases in the fox chase pattern.",
+              "tabPdf": "tabs/Rain_Crow_Bill.pdf",
+              "key": "C",
+              "position": "1st"
+            },
+            {
+              "title": "Tree of Life",
+              "youtubeUrl": "",
+              "insight": "Old time / Irish crossover in the key of F on a Bb harmonica, 2nd position. Inspired by Grant Dermody's playing. The melody has a beautiful, rolling quality — it breathes between phrases. Learn by ear first, use the tab as backup. The ghost notes and sustained notes are what give this tune its character.",
+              "tabPdf": "tabs/Tree_of_Life.pdf",
+              "key": "Bb",
+              "position": "2nd"
+            }
+          ]
         },
         {
           "name": "Carrying Tunes",
           "description": "Leading a tune from start to finish. Ornaments, dynamics, knowing when to push and when to lay back.",
-          "tunes": "Forked Deer, Blackberry Blossom, Whiskey Before Breakfast"
+          "tunes": "Forked Deer, Blackberry Blossom, Whiskey Before Breakfast",
+          "content": []
         },
         {
           "name": "Playing Your Own Way",
           "description": "Making the tunes yours. Arranging, improvising, and bringing your own voice to the tradition.",
-          "tunes": "Your own arrangements and variations"
+          "tunes": "Your own arrangements and variations",
+          "content": []
         }
       ]
     },
@@ -447,32 +488,38 @@ var SITE_CONTENT = {
         {
           "name": "Getting Started",
           "description": "Simple melodies played solo. Learning to carry a tune on your own without backing.",
-          "tunes": "Oh Susanna, Amazing Grace, When the Saints"
+          "tunes": "Oh Susanna, Amazing Grace, When the Saints",
+          "content": []
         },
         {
           "name": "Getting a Sound",
           "description": "Building tone and texture. Tongue blocking, adding chords behind melody, first steps toward self-accompaniment.",
-          "tunes": "Fox Chase (simple), Pan American Blues, basic train rhythms"
+          "tunes": "Fox Chase (simple), Pan American Blues, basic train rhythms",
+          "content": []
         },
         {
           "name": "Playing Along",
           "description": "Developing the rhythm-melody split. Chugging and playing melody simultaneously.",
-          "tunes": "Lost John, Cherry Pink and Apple Blossom White (simple), Bugle Call Rag"
+          "tunes": "Lost John, Cherry Pink and Apple Blossom White (simple), Bugle Call Rag",
+          "content": []
         },
         {
           "name": "Holding It Down",
           "description": "Full self-accompaniment. Train pieces with multiple sections, novelty tunes with showmanship.",
-          "tunes": "DeFord Bailey Fox Chase, La Cucaracha (Big Walter style), freight train pieces"
+          "tunes": "DeFord Bailey Fox Chase, La Cucaracha (Big Walter style), freight train pieces",
+          "content": []
         },
         {
           "name": "Carrying Tunes",
           "description": "Complete performances. Multi-section pieces with dynamics, storytelling, and crowd engagement.",
-          "tunes": "Full DeFord Bailey repertoire, Sonny Terry pieces, narrative train suites"
+          "tunes": "Full DeFord Bailey repertoire, Sonny Terry pieces, narrative train suites",
+          "content": []
         },
         {
           "name": "Playing Your Own Way",
           "description": "Creating your own solo pieces. Arranging any tune for unaccompanied harmonica.",
-          "tunes": "Your own solo arrangements and original pieces"
+          "tunes": "Your own solo arrangements and original pieces",
+          "content": []
         }
       ]
     },
@@ -483,37 +530,53 @@ var SITE_CONTENT = {
       "description": "Pre-war phrasing, Delta feel, country blues, and the raw sound that came before amplification. The music that filled juke joints, front porches, and Saturday night fish fries.",
       "color": "#8b3a3a",
       "icon": "&#127928;",
-      "comingSoon": true,
+      "subgenres": ["Country Blues", "Delta Blues", "Gospel Blues", "Blues / Jazz Crossover"],
       "stages": [
         {
           "name": "Getting Started",
           "description": "Basic 2nd position playing. Finding the blues notes, learning to bend with intention.",
-          "tunes": "Simple 12-bar blues, basic riffs"
+          "tunes": "Simple 12-bar blues, basic riffs",
+          "content": []
         },
         {
           "name": "Getting a Sound",
           "description": "Developing a pre-war tone. Acoustic playing, hand effects, throat vibrato.",
-          "tunes": "Easy Rider, Sitting on Top of the World"
+          "tunes": "Easy Rider, Sitting on Top of the World",
+          "content": []
         },
         {
           "name": "Playing Along",
           "description": "Playing with a guitar. Call and response, filling spaces, supporting a song.",
-          "tunes": "Key to the Highway, Trouble in Mind"
+          "tunes": "Key to the Highway, Trouble in Mind",
+          "content": []
         },
         {
           "name": "Holding It Down",
           "description": "Phrasing like the masters. Space, timing, and the notes you don't play.",
-          "tunes": "Sonny Terry pieces, early Sonny Boy"
+          "tunes": "Sonny Terry pieces, early Sonny Boy",
+          "content": []
         },
         {
           "name": "Carrying Tunes",
           "description": "Leading a blues. Playing the head, improvising choruses, building intensity.",
-          "tunes": "Full arrangements in country blues style"
+          "tunes": "Full arrangements in country blues style",
+          "content": [
+            {
+              "title": "Cherry Pink and Apple Blossom White",
+              "subgenre": "Blues / Jazz Crossover",
+              "youtubeUrl": "",
+              "insight": "Inspired by Kim Wilson's version with the Fabulous Thunderbirds. A mambo on diatonic harmonica — originally a Damaso Perez Prado hit from 1955. There's a longer tradition of blues harp players tackling Latin tunes than people realise. Big Walter Horton was doing La Cucaracha and La Paloma decades ago. Kim Wilson grew up studying Walter closely, and you can hear that lineage here. The verse melody sits in the middle register and should feel relaxed and singable. The chorus has a punchy, horn-section feel. Then you drop into the low register break — completely different colour, darker, more intimate. The ascending run takes you right up through the high register. Learn by ear first, use the tab as backup.",
+              "tabPdf": "tabs/Cherry_Pink_and_Apple_Blossom_White.pdf",
+              "key": "C",
+              "position": "1st"
+            }
+          ]
         },
         {
           "name": "Playing Your Own Way",
           "description": "Your own blues voice. Writing, arranging, and performing original material.",
-          "tunes": "Original blues compositions"
+          "tunes": "Original blues compositions",
+          "content": []
         }
       ]
     }
