@@ -81,6 +81,54 @@ var SITE_CONTENT = {
       "downloadUrl": "",
       "image": "hero-photo.jpg",
       "free": false
+    },
+    {
+      "title": "Rain Crow Bill",
+      "description": "Traditional fox chase style piece. Rhythm, melody, and raincrow riffs — the full toolkit of solo harp showmanship.",
+      "key": "C",
+      "position": "1st",
+      "difficulty": "Intermediate",
+      "trail": "old-time",
+      "method": "standard",
+      "downloadUrl": "tabs/Rain_Crow_Bill.pdf",
+      "image": "gareth-harpshed.jpg",
+      "free": true
+    },
+    {
+      "title": "Salt River",
+      "description": "Fiddle tune in the key of A on a D harmonica. AABB form with basic melody and advanced octave variations. Source: The Improbabillies Album.",
+      "key": "D",
+      "position": "2nd",
+      "difficulty": "Intermediate",
+      "trail": "old-time",
+      "method": "standard",
+      "downloadUrl": "tabs/Salt_River.pdf",
+      "image": "hero-photo.jpg",
+      "free": false
+    },
+    {
+      "title": "Tree of Life",
+      "description": "Old time / Irish crossover tune in the key of F on a Bb harmonica. Inspired by Grant Dermody. Learn by ear first — use the tab as backup.",
+      "key": "Bb",
+      "position": "2nd",
+      "difficulty": "Intermediate",
+      "trail": "old-time",
+      "method": "standard",
+      "downloadUrl": "tabs/Tree_of_Life.pdf",
+      "image": "gareth-harpshed.jpg",
+      "free": false
+    },
+    {
+      "title": "Cherry Pink and Apple Blossom White",
+      "description": "Inspired by Kim Wilson's version with the Fabulous Thunderbirds. A mambo on diatonic harmonica — verse, chorus, low register break, and riff & outro.",
+      "key": "C",
+      "position": "1st",
+      "difficulty": "Advanced",
+      "trail": "juke-joint",
+      "method": "standard",
+      "downloadUrl": "tabs/Cherry_Pink_and_Apple_Blossom_White.pdf",
+      "image": "hero-photo.jpg",
+      "free": false
     }
   ],
   "jamTracks": [
