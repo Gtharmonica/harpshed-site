@@ -941,6 +941,78 @@
     cursor: not-allowed;
   }
 
+  /* ─── Trail Filter Buttons ─────────────────────────────────── */
+  .tabs-trail-filters {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .trail-filter-btn {
+    padding: 8px 20px;
+    border-radius: 24px;
+    border: 1.5px solid var(--wood-light);
+    background: transparent;
+    color: var(--parchment-dark);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .trail-filter-btn:hover {
+    border-color: var(--rust-light);
+    color: var(--rust-light);
+  }
+
+  .trail-filter-btn.active {
+    background: var(--rust);
+    border-color: var(--rust);
+    color: var(--cream);
+  }
+
+  /* ─── Trail Badge on Tab Cards ──────────────────────────────── */
+  .tab-trail-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+
+  .tab-trail-badge.blue-ridge {
+    background: rgba(74,113,153,0.15);
+    color: #7aaed4;
+  }
+
+  .tab-trail-badge.solo-harp {
+    background: rgba(160,82,45,0.15);
+    color: var(--rust-light);
+  }
+
+  .tab-trail-badge.juke-joint {
+    background: rgba(139,58,58,0.15);
+    color: #c46a6a;
+  }
+
+  .tab-subgenre-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: rgba(196,155,60,0.12);
+    color: var(--gold-dust);
+    margin-left: 4px;
+  }
+
   /* ─── Jam Tracks Section ────────────────────────────────────────── */
   .jams-section {
     background:
@@ -4278,6 +4350,9 @@
         Full harmonica notation with every bend, every tongue block, and every ornament marked out. Download, print, play.
       </p>
       <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="tabs-trail-filters" id="tabs-trail-filters">
+        <button class="trail-filter-btn active" onclick="filterTabs('all')">All</button>
+      </div>
       <div class="tabs-grid" id="tabs-grid"></div>
     </section>
   </div>
@@ -4761,12 +4836,76 @@
     }).join('');
   }
 
+  // ─── Trail name lookup ──────────────────────────────────────────
+  var trailNames = {
+    'blue-ridge': 'Blue Ridge',
+    'solo-harp': 'Solo Harp',
+    'juke-joint': 'Juke Joint'
+  };
+  var trailColors = {
+    'blue-ridge': '#4a7199',
+    'solo-harp': '#a0522d',
+    'juke-joint': '#8b3a3a'
+  };
+  var currentTabFilter = 'all';
+
+  // ─── Build trail filter buttons ────────────────────────────────
+  function buildTabFilters() {
+    var container = document.getElementById('tabs-trail-filters');
+    if (!container || !SITE_CONTENT.trails) return;
+    var btns = '<button class="trail-filter-btn active" onclick="filterTabs(\'all\')">All</button>';
+    SITE_CONTENT.trails.forEach(function(trail) {
+      btns += '<button class="trail-filter-btn" onclick="filterTabs(\'' + trail.id + '\')">' + trail.title.replace('The ', '') + '</button>';
+    });
+    container.innerHTML = btns;
+  }
+
+  // ─── Filter tabs by trail ──────────────────────────────────────
+  window.filterTabs = function(trailId) {
+    currentTabFilter = trailId;
+    // Update active button
+    document.querySelectorAll('.trail-filter-btn').forEach(function(btn) {
+      btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    renderTabs();
+  };
+
+  // ─── Navigate to tabs filtered by trail (from trail cards) ────
+  window.showTrailTabs = function(trailId) {
+    currentTabFilter = trailId;
+    showPage('tabs');
+    setTimeout(function() {
+      // Update filter buttons
+      document.querySelectorAll('.trail-filter-btn').forEach(function(btn) {
+        var isMatch = btn.textContent.toLowerCase().replace(/\s/g, '-') === trailId ||
+                      (trailId === 'all' && btn.textContent === 'All');
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').indexOf(trailId) > -1) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      renderTabs();
+    }, 50);
+  };
+
   // ─── Render Tablature ──────────────────────────────────────────
   function renderTabs() {
     var grid = document.getElementById('tabs-grid');
     if (!grid || !SITE_CONTENT.tabs) return;
 
-    grid.innerHTML = SITE_CONTENT.tabs.map(function(tab) {
+    var filtered = SITE_CONTENT.tabs.filter(function(tab) {
+      if (currentTabFilter === 'all') return true;
+      return tab.trail === currentTabFilter;
+    });
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<p style="text-align:center;opacity:0.5;color:var(--parchment);padding:40px 0;">No tabs on this trail yet — more coming soon.</p>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map(function(tab) {
       var imgSrc = tab.image || 'gareth-harpshed.jpg';
       var hasDownload = !!tab.downloadUrl;
       var btnClass = hasDownload ? '' : ' disabled';
@@ -4774,7 +4913,18 @@
         ? ' onclick="window.open(\'' + tab.downloadUrl + '\', \'_blank\')"'
         : '';
 
-      return '<div class="tab-card">' +
+      // Trail badge
+      var trailBadge = '';
+      if (tab.trail && trailNames[tab.trail]) {
+        trailBadge = '<span class="tab-trail-badge ' + tab.trail + '">' + trailNames[tab.trail] + '</span>';
+      }
+      // Subgenre badge
+      var subgenreBadge = '';
+      if (tab.subgenre) {
+        subgenreBadge = '<span class="tab-subgenre-badge">' + tab.subgenre + '</span>';
+      }
+
+      return '<div class="tab-card" data-trail="' + (tab.trail || '') + '">' +
         '<div class="tab-card-photo">' +
           '<img src="' + imgSrc + '" alt="' + tab.title + '" loading="lazy" onerror="this.style.display=\'none\'">' +
           '<div class="tab-card-photo-overlay"></div>' +
@@ -4787,6 +4937,7 @@
           '<div class="tab-card-key">Key of ' + tab.key + '</div>' +
         '</div>' +
         '<div class="tab-card-body">' +
+          trailBadge + subgenreBadge +
           '<h3>' + tab.title + '</h3>' +
           '<p>' + tab.description + '</p>' +
           '<div class="tab-card-info">' +
@@ -4918,6 +5069,9 @@
             '<p>' + trail.description + '</p>' +
           '</div>' +
           '<div class="trail-stages">' + stages + '</div>' +
+          '<div style="text-align:center;padding:16px 20px 24px;">' +
+            '<button class="tab-download-btn" style="font-size:14px;padding:10px 24px;" onclick="showTrailTabs(\'' + trail.id + '\')">&#9835; Browse ' + trail.tradition + ' Tabs</button>' +
+          '</div>' +
         '</div>' +
       '</div>';
     }).join('');
@@ -5502,6 +5656,7 @@
   // ─── Init ──────────────────────────────────────────────────────
   if (typeof SITE_CONTENT !== 'undefined') {
     renderLessons();
+    buildTabFilters();
     renderTabs();
     renderJamTracks();
     renderFundamentals();
