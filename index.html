@@ -1013,6 +1013,268 @@
     margin-left: 4px;
   }
 
+  /* ─── Tunes Library Page ───────────────────────────────────────── */
+  .tunes-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .tunes-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tunes-filter-group label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--wood-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tunes-filter-group select {
+    background: rgba(0,0,0,0.3);
+    color: var(--parchment);
+    border: 1px solid rgba(160,82,45,0.3);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-family: 'Source Sans 3', sans-serif;
+    cursor: pointer;
+  }
+
+  .tunes-filter-group select:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+
+  .tunes-filter-count {
+    font-size: 12px;
+    color: var(--wood-light);
+    margin-left: 8px;
+    font-style: italic;
+  }
+
+  .tunes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .tune-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(160,82,45,0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+
+  .tune-card:hover {
+    border-color: rgba(160,82,45,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+
+  .tune-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    cursor: pointer;
+  }
+
+  .tune-card-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--parchment);
+    margin: 0 0 2px;
+    flex: 1;
+  }
+
+  .tune-card-meta {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .tune-card-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tune-card-badge.genre {
+    background: rgba(160,82,45,0.15);
+    color: var(--rust-light);
+  }
+
+  .tune-card-badge.key-badge {
+    background: rgba(74,113,153,0.15);
+    color: #7faed4;
+  }
+
+  .tune-card-badge.position-badge {
+    background: rgba(76,143,76,0.12);
+    color: #6bba6b;
+  }
+
+  .tune-card-badge.difficulty-badge {
+    background: rgba(160,82,45,0.08);
+    color: var(--wood-light);
+  }
+
+  .tune-card-badge.free-badge {
+    background: rgba(76,143,76,0.15);
+    color: #6bba6b;
+  }
+
+  .tune-card-badge.members-badge {
+    background: rgba(160,82,45,0.1);
+    color: var(--rust-light);
+  }
+
+  .tune-card-expand {
+    font-size: 14px;
+    color: var(--wood-light);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .tune-card.open .tune-card-expand {
+    transform: rotate(180deg);
+  }
+
+  .tune-card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .tune-card.open .tune-card-body {
+    max-height: 4000px;
+  }
+
+  .tune-card-body-inner {
+    padding: 0 18px 18px;
+    border-top: 1px solid rgba(160,82,45,0.1);
+  }
+
+  .tune-card-body-inner p.tune-desc {
+    font-size: 14px;
+    color: rgba(244,236,224,0.7);
+    line-height: 1.6;
+    margin: 14px 0;
+  }
+
+  .tune-card-video {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    background: #111;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 14px 0;
+  }
+
+  .tune-card-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .tune-card-video-placeholder {
+    padding: 30px;
+    text-align: center;
+    color: var(--wood-light);
+    font-style: italic;
+    font-size: 13px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    margin: 14px 0;
+    border: 1px dashed rgba(160,82,45,0.15);
+  }
+
+  .tune-card-tools {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .tune-card-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .tune-no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--wood-light);
+    font-style: italic;
+    font-size: 15px;
+    grid-column: 1 / -1;
+  }
+
+  /* Loop controls for jam track */
+  .jam-track-loop-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .jam-track-loop-controls label {
+    font-size: 11px;
+    color: var(--wood-light);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .jam-track-loop-controls input[type="number"] {
+    width: 60px;
+    background: rgba(0,0,0,0.3);
+    color: var(--parchment);
+    border: 1px solid rgba(160,82,45,0.3);
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .jam-track-loop-controls button {
+    background: var(--rust);
+    color: var(--parchment);
+    border: none;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .jam-track-loop-controls button:hover {
+    background: var(--rust-light);
+  }
+
+  .jam-track-loop-controls button.active-loop {
+    background: #4c8f4c;
+  }
+
   /* ─── Jam Tracks Section ────────────────────────────────────────── */
   .jams-section {
     background:
@@ -1629,6 +1891,442 @@
     opacity: 0.6;
   }
 
+  /* ─── Trail Selection Cards ────────────────────────────────────── */
+  .trails-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .trail-select-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(59,47,32,0.08);
+    background: white;
+    box-shadow: 0 4px 20px rgba(42,33,24,0.06);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .trail-select-card:hover {
+    box-shadow: 0 8px 40px rgba(42,33,24,0.12);
+    transform: translateY(-4px);
+    border-color: rgba(160,82,45,0.2);
+  }
+
+  .trail-select-card-top {
+    padding: 28px 24px 20px;
+    position: relative;
+  }
+
+  .trail-select-card-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+  }
+
+  .trail-select-card-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .trail-select-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .trail-select-card p {
+    font-size: 14px;
+    color: var(--wood-mid);
+    line-height: 1.6;
+  }
+
+  .trail-select-card-progress {
+    padding: 16px 24px 20px;
+    background: var(--parchment);
+    border-top: 1px solid rgba(59,47,32,0.06);
+  }
+
+  .trail-progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: rgba(59,47,32,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .trail-progress-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    min-width: 0;
+  }
+
+  .trail-progress-text {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--wood-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .trail-select-stages {
+    padding: 0 24px 20px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .trail-select-stage-pip {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: var(--parchment);
+    color: var(--wood-mid);
+    font-weight: 600;
+    border: 1px solid rgba(59,47,32,0.08);
+  }
+
+  .trail-select-stage-pip.has-content {
+    background: rgba(160,82,45,0.08);
+    color: var(--rust);
+    border-color: rgba(160,82,45,0.15);
+  }
+
+  /* ─── Dedicated Trail Page ─────────────────────────────────────── */
+  .trail-page-header {
+    text-align: center;
+    padding: 20px 0 30px;
+    position: relative;
+  }
+
+  .trail-page-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .trail-page-header p {
+    font-size: 15px;
+    color: var(--wood-mid);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .trail-page-overall-progress {
+    max-width: 400px;
+    margin: 20px auto 0;
+    text-align: center;
+  }
+
+  .trail-page-overall-progress .trail-progress-text {
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .trail-page-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--rust);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 6px 0;
+    margin-bottom: 16px;
+    transition: color 0.2s;
+  }
+
+  .trail-page-back:hover {
+    color: var(--rust-light);
+  }
+
+  /* ─── Stage Roadmap ────────────────────────────────────────────── */
+  .trail-roadmap {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .trail-roadmap-stage {
+    position: relative;
+    padding-left: 48px;
+    padding-bottom: 8px;
+    margin-bottom: 0;
+  }
+
+  .trail-roadmap-stage::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 36px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(59,47,32,0.1);
+  }
+
+  .trail-roadmap-stage:last-child::before {
+    display: none;
+  }
+
+  .trail-roadmap-stage-number {
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Special Elite', monospace;
+    font-size: 16px;
+    color: white;
+    font-weight: 700;
+    z-index: 1;
+  }
+
+  .trail-roadmap-stage-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0 6px;
+    cursor: pointer;
+  }
+
+  .trail-roadmap-stage-head h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .trail-roadmap-stage-head p {
+    font-size: 13px;
+    color: var(--wood-mid);
+    margin: 2px 0 0;
+    line-height: 1.5;
+  }
+
+  .trail-roadmap-stage-toggle {
+    font-size: 14px;
+    color: var(--wood-light);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    padding: 4px;
+  }
+
+  .trail-roadmap-stage.open .trail-roadmap-stage-toggle {
+    transform: rotate(180deg);
+  }
+
+  .trail-roadmap-stage-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .trail-roadmap-stage-tunes {
+    font-size: 11px;
+    color: var(--rust);
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .trail-roadmap-stage-progress {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(160,82,45,0.08);
+    color: var(--rust);
+  }
+
+  .trail-roadmap-stage-progress.complete {
+    background: rgba(76,143,76,0.12);
+    color: #4c8f4c;
+  }
+
+  /* Stage content area */
+  .trail-roadmap-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .trail-roadmap-stage.open .trail-roadmap-content {
+    max-height: 5000px;
+  }
+
+  .trail-roadmap-content-inner {
+    padding: 12px 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Tune card within a stage */
+  .trail-tune-card {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid rgba(59,47,32,0.08);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(42,33,24,0.04);
+    transition: box-shadow 0.2s;
+  }
+
+  .trail-tune-card:hover {
+    box-shadow: 0 4px 20px rgba(42,33,24,0.08);
+  }
+
+  .trail-tune-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(59,47,32,0.04);
+  }
+
+  .trail-tune-checkbox {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid rgba(59,47,32,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    font-size: 12px;
+    color: transparent;
+  }
+
+  .trail-tune-checkbox:hover {
+    border-color: var(--rust);
+  }
+
+  .trail-tune-checkbox.checked {
+    background: var(--rust);
+    border-color: var(--rust);
+    color: white;
+  }
+
+  .trail-tune-card-info h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 2px;
+  }
+
+  .trail-tune-card-info .tune-key {
+    font-size: 12px;
+    color: var(--wood-light);
+    font-weight: 600;
+  }
+
+  .trail-tune-expand {
+    margin-left: auto;
+    font-size: 14px;
+    color: var(--wood-light);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .trail-tune-card.open .trail-tune-expand {
+    transform: rotate(180deg);
+  }
+
+  .trail-tune-card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .trail-tune-card.open .trail-tune-card-body {
+    max-height: 3000px;
+  }
+
+  .trail-tune-card-body-inner {
+    padding: 20px;
+  }
+
+  .trail-tune-card-body-inner p {
+    font-size: 14px;
+    color: var(--wood-mid);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .trail-tune-video {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    background: #111;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .trail-tune-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .trail-tune-video-placeholder {
+    padding: 40px;
+    text-align: center;
+    color: var(--wood-light);
+    font-style: italic;
+    background: var(--parchment);
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    border: 1px dashed rgba(59,47,32,0.12);
+  }
+
+  .trail-tune-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .trail-empty-stage {
+    padding: 20px;
+    text-align: center;
+    color: var(--wood-light);
+    font-style: italic;
+    font-size: 14px;
+    background: var(--parchment);
+    border-radius: 8px;
+    border: 1px dashed rgba(59,47,32,0.12);
+  }
+
   /* ─── Trails Section ──────────────────────────────────────────── */
   .trails-container {
     display: flex;
@@ -2014,6 +2712,216 @@
     font-style: italic;
     background: rgba(0,0,0,0.3);
     font-size: 14px;
+  }
+
+  /* Jam Track MP3 Player */
+  .jam-track-player {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(160,82,45,0.3);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 12px;
+  }
+
+  .jam-track-player-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--rust-light);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .jam-track-player audio {
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+
+  .jam-track-controls {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .jam-track-control {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .jam-track-control label {
+    font-size: 11px;
+    color: var(--wood-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .jam-track-control input[type="range"] {
+    width: 120px;
+    accent-color: var(--rust);
+    cursor: pointer;
+  }
+
+  .jam-track-control .control-value {
+    font-size: 11px;
+    color: var(--parchment);
+    text-align: center;
+    font-family: monospace;
+  }
+
+  .jam-track-control button {
+    background: var(--rust);
+    color: var(--parchment);
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .jam-track-control button:hover {
+    background: var(--rust-light);
+  }
+
+  .jam-track-empty {
+    font-size: 12px;
+    color: var(--wood-light);
+    font-style: italic;
+    padding: 10px 0;
+  }
+
+  /* Metronome */
+  .metronome-widget {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(160,82,45,0.3);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 12px;
+  }
+
+  .metronome-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .metronome-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--rust-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .metronome-bpm-display {
+    font-family: monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--parchment);
+    text-align: center;
+    margin: 8px 0 4px;
+    line-height: 1;
+  }
+
+  .metronome-bpm-label {
+    font-size: 10px;
+    color: var(--wood-light);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .metronome-bpm-slider {
+    width: 100%;
+    accent-color: var(--rust);
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+
+  .metronome-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .metronome-row label {
+    font-size: 11px;
+    color: var(--wood-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    min-width: 50px;
+  }
+
+  .metronome-row select {
+    background: rgba(0,0,0,0.3);
+    color: var(--parchment);
+    border: 1px solid rgba(160,82,45,0.3);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .metronome-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: var(--rust);
+    color: var(--parchment);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    min-width: 100px;
+  }
+
+  .metronome-btn:hover {
+    background: var(--rust-light);
+  }
+
+  .metronome-btn.playing {
+    background: #8b3a3a;
+  }
+
+  .metronome-beat-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
+  .metronome-beat-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(160,82,45,0.2);
+    border: 1px solid rgba(160,82,45,0.4);
+    transition: background 0.08s, transform 0.08s;
+  }
+
+  .metronome-beat-dot.active {
+    background: var(--rust-light);
+    transform: scale(1.3);
+    border-color: var(--rust-light);
+  }
+
+  .metronome-beat-dot.accent {
+    background: var(--rust);
+    transform: scale(1.4);
+    border-color: var(--rust);
   }
 
   .trail-detail-item-body {
@@ -4230,8 +5138,7 @@
   </button>
   <ul class="nav-links">
     <li><a href="#lessons">Lessons</a></li>
-    <li><a href="#tabs">Tabs</a></li>
-    <li><a href="#jams">Jam Tracks</a></li>
+    <li><a href="#tunes">Tunes</a></li>
     <li><a href="#fundamentals">Fundamentals</a></li>
     <li><a href="#trails">Trails</a></li>
     <li><a href="#articles">Articles</a></li>
@@ -4315,15 +5222,10 @@
           <h3>Video Lessons</h3>
           <p>Old time fiddle tunes, pre-war solo harp, country blues, and beyond. Structured courses that start with the tradition and build from there.</p>
         </div>
-        <div class="feature-card" onclick="showPage('tabs')" style="cursor:pointer;">
+        <div class="feature-card" onclick="showPage('tunes')" style="cursor:pointer;">
           <div class="feature-icon">&#127932;</div>
-          <h3>Tablature</h3>
-          <p>Full harmonica tab &mdash; from Appalachian reels to DeFord Bailey solos to Chicago blues. Clean notation so you can focus on the playing.</p>
-        </div>
-        <div class="feature-card" onclick="showPage('jams')" style="cursor:pointer;">
-          <div class="feature-icon">&#127928;</div>
-          <h3>Jam Tracks</h3>
-          <p>Old time string band grooves, country dance, slow blues shuffles, gospel. Play along at your pace and find the feel in the music.</p>
+          <h3>Tunes</h3>
+          <p>Tabs, jam tracks, videos, and practice tools all in one place. Filter by genre, key, or position. Everything you need to learn and master every tune.</p>
         </div>
         <div class="feature-card" onclick="showPage('fundamentals')" style="cursor:pointer;">
           <div class="feature-icon">&#128170;</div>
@@ -4622,32 +5524,17 @@
     </section>
   </div>
 
-  <!-- PAGE: Tablature -->
-  <div class="page" id="page-tabs">
-    <section class="section section-dark tabs-section">
-      <div class="section-label">Tablature Library</div>
-      <h2 class="section-title">The notes on the page.</h2>
+  <!-- PAGE: Tunes (Unified Library) -->
+  <div class="page" id="page-tunes">
+    <section class="section section-dark">
+      <div class="section-label">The Library</div>
+      <h2 class="section-title">Tunes.</h2>
       <p class="section-subtitle">
-        Full harmonica notation with every bend, every tongue block, and every ornament marked out. Download, print, play.
+        Every tune in one place. Tabs, jam tracks, videos, and practice tools. Filter by genre, key, or position and dig in.
       </p>
       <div class="ornament">&#10022; &#10022; &#10022;</div>
-      <div class="tabs-trail-filters" id="tabs-trail-filters">
-        <button class="trail-filter-btn active" onclick="filterTabs('all')">All</button>
-      </div>
-      <div class="tabs-grid" id="tabs-grid"></div>
-    </section>
-  </div>
-
-  <!-- PAGE: Jam Tracks -->
-  <div class="page" id="page-jams">
-    <section class="section jams-section">
-      <div class="section-label">Jam Tracks</div>
-      <h2 class="section-title">Play along. Find the groove.</h2>
-      <p class="section-subtitle">
-        String band, country blues, delta, gospel. Real instruments, multiple tempos. Lock in and let the music breathe.
-      </p>
-      <div class="ornament">&#10022; &#10022; &#10022;</div>
-      <div class="jams-grid" id="jams-grid"></div>
+      <div class="tunes-filter-bar" id="tunes-filter-bar"></div>
+      <div class="tunes-grid" id="tunes-grid"></div>
     </section>
   </div>
 
@@ -4673,20 +5560,13 @@
         Three traditions. One instrument. Each trail takes you from your first notes to playing your own way &mdash; with real tunes, real technique, and stages that mean something.
       </p>
       <div class="ornament">&#10022; &#10022; &#10022;</div>
-      <div class="trails-carousel" id="trails-carousel">
-        <div class="trails-carousel-track" id="trails-track"></div>
-        <div class="trails-carousel-nav">
-          <button class="trails-carousel-btn" onclick="moveTrail(-1)">&#8592;</button>
-          <div class="trails-carousel-dots" id="trails-dots"></div>
-          <button class="trails-carousel-btn" onclick="moveTrail(1)">&#8594;</button>
-        </div>
-      </div>
+      <div class="trails-selection" id="trails-selection"></div>
     </section>
   </div>
 
-  <!-- PAGE: Trail Detail (Full Trail Guide) -->
+  <!-- PAGE: Trail Detail (Dedicated Trail Page) -->
   <div class="page" id="page-trail-detail">
-    <section class="section section-dark" style="padding-top:40px;">
+    <section class="section" style="background: var(--cream); padding-top:32px;">
       <div id="trail-detail-content"></div>
     </section>
   </div>
@@ -4782,7 +5662,7 @@
             <span class="whats-new-type lesson">Lesson</span>
           </div>
         </div>
-        <div class="whats-new-item" onclick="showPage('tabs')">
+        <div class="whats-new-item" onclick="showPage('tunes')">
           <div class="whats-new-date-col">
             <div class="whats-new-month">Mar</div>
             <div class="whats-new-day">28</div>
@@ -4793,7 +5673,7 @@
             <span class="whats-new-type tab">Tab</span>
           </div>
         </div>
-        <div class="whats-new-item" onclick="showPage('jams')">
+        <div class="whats-new-item" onclick="showPage('tunes')">
           <div class="whats-new-date-col">
             <div class="whats-new-month">Mar</div>
             <div class="whats-new-day">25</div>
@@ -5008,8 +5888,7 @@
     <div class="footer-links">
       <h4>Learn</h4>
       <a href="#lessons">Video Lessons</a>
-      <a href="#tabs">Tablature</a>
-      <a href="#jams">Jam Tracks</a>
+      <a href="#tunes">Tunes</a>
       <a href="#fundamentals">Fundamentals</a>
       <a href="#trails">The Trails</a>
       <a href="#articles">Articles</a>
@@ -5135,147 +6014,183 @@
     'solo-harp': '#a0522d',
     'juke-joint': '#8b3a3a'
   };
-  var currentTabFilter = 'all';
 
-  // ─── Build trail filter buttons ────────────────────────────────
-  function buildTabFilters() {
-    var container = document.getElementById('tabs-trail-filters');
-    if (!container || !SITE_CONTENT.trails) return;
-    var btns = '<button class="trail-filter-btn active" onclick="filterTabs(\'all\')">All</button>';
-    SITE_CONTENT.trails.forEach(function(trail) {
-      btns += '<button class="trail-filter-btn" onclick="filterTabs(\'' + trail.id + '\')">' + trail.title.replace('The ', '') + '</button>';
+  // ─── Render Tunes (Unified Library) ────────────────────────────
+
+  var tuneFilters = { genre: 'all', key: 'all', position: 'all', difficulty: 'all' };
+
+  function renderTuneFilters() {
+    var bar = document.getElementById('tunes-filter-bar');
+    if (!bar || !SITE_CONTENT.tabs) return;
+
+    // Collect unique values
+    var genres = [], keys = [], positions = [], difficulties = [];
+    SITE_CONTENT.tabs.forEach(function(t) {
+      if (t.genre && genres.indexOf(t.genre) === -1) genres.push(t.genre);
+      if (t.key && keys.indexOf(t.key) === -1) keys.push(t.key);
+      if (t.position && positions.indexOf(t.position) === -1) positions.push(t.position);
+      if (t.difficulty && difficulties.indexOf(t.difficulty) === -1) difficulties.push(t.difficulty);
     });
-    container.innerHTML = btns;
+    genres.sort();
+    keys.sort();
+
+    function makeSelect(id, label, options) {
+      var opts = '<option value="all">All</option>';
+      options.forEach(function(o) { opts += '<option value="' + o + '">' + o + '</option>'; });
+      return '<div class="tunes-filter-group">' +
+        '<label>' + label + '</label>' +
+        '<select id="' + id + '" onchange="tuneFilters[\'' + id.replace('filter-','') + '\']=this.value;renderTunes()">' + opts + '</select>' +
+      '</div>';
+    }
+
+    bar.innerHTML =
+      makeSelect('filter-genre', 'Genre', genres) +
+      makeSelect('filter-key', 'Key', keys) +
+      makeSelect('filter-position', 'Position', positions) +
+      makeSelect('filter-difficulty', 'Difficulty', difficulties) +
+      '<span class="tunes-filter-count" id="tunes-count"></span>';
   }
 
-  // ─── Filter tabs by trail ──────────────────────────────────────
-  window.filterTabs = function(trailId) {
-    currentTabFilter = trailId;
-    // Update active button
-    document.querySelectorAll('.trail-filter-btn').forEach(function(btn) {
-      btn.classList.remove('active');
-    });
-    event.target.classList.add('active');
-    renderTabs();
-  };
-
-  // ─── Navigate to tabs filtered by trail (from trail cards) ────
-  window.showTrailTabs = function(trailId) {
-    currentTabFilter = trailId;
-    showPage('tabs');
-    setTimeout(function() {
-      // Update filter buttons
-      document.querySelectorAll('.trail-filter-btn').forEach(function(btn) {
-        var isMatch = btn.textContent.toLowerCase().replace(/\s/g, '-') === trailId ||
-                      (trailId === 'all' && btn.textContent === 'All');
-        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').indexOf(trailId) > -1) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
-      renderTabs();
-    }, 50);
-  };
-
-  // ─── Render Tablature ──────────────────────────────────────────
-  function renderTabs() {
-    var grid = document.getElementById('tabs-grid');
+  function renderTunes() {
+    var grid = document.getElementById('tunes-grid');
     if (!grid || !SITE_CONTENT.tabs) return;
 
     var filtered = SITE_CONTENT.tabs.filter(function(tab) {
-      if (currentTabFilter === 'all') return true;
-      return tab.trail === currentTabFilter;
+      if (tuneFilters.genre !== 'all' && tab.genre !== tuneFilters.genre) return false;
+      if (tuneFilters.key !== 'all' && tab.key !== tuneFilters.key) return false;
+      if (tuneFilters.position !== 'all' && tab.position !== tuneFilters.position) return false;
+      if (tuneFilters.difficulty !== 'all' && tab.difficulty !== tuneFilters.difficulty) return false;
+      return true;
     });
 
+    var countEl = document.getElementById('tunes-count');
+    if (countEl) countEl.textContent = filtered.length + ' tune' + (filtered.length !== 1 ? 's' : '');
+
     if (filtered.length === 0) {
-      grid.innerHTML = '<p style="text-align:center;opacity:0.5;color:var(--parchment);padding:40px 0;">No tabs on this trail yet — more coming soon.</p>';
+      grid.innerHTML = '<div class="tune-no-results">No tunes match those filters. Try broadening your search.</div>';
       return;
     }
 
-    grid.innerHTML = filtered.map(function(tab) {
-      var imgSrc = tab.image || 'gareth-harpshed.jpg';
-      var hasDownload = !!tab.downloadUrl;
-      var btnClass = hasDownload ? '' : ' disabled';
-      var btnAttr = hasDownload
-        ? ' onclick="window.open(\'' + tab.downloadUrl + '\', \'_blank\')"'
+    grid.innerHTML = filtered.map(function(tab, idx) {
+      var tuneId = 'tune-lib-' + idx;
+      var hasVideo = tab.youtubeUrl && getYouTubeId(tab.youtubeUrl);
+      var videoHtml = hasVideo
+        ? '<div class="tune-card-video"><iframe src="https://www.youtube.com/embed/' + getYouTubeId(tab.youtubeUrl) + '" frameborder="0" allowfullscreen loading="lazy"></iframe></div>'
+        : '<div class="tune-card-video-placeholder">&#9654; Video coming soon</div>';
+
+      var hasPdf = !!tab.downloadUrl;
+      var pdfBtn = hasPdf
+        ? '<button class="tab-download-btn" onclick="event.stopPropagation();window.open(\'' + tab.downloadUrl + '\',\'_blank\')">&#8615; Download Tab PDF</button>'
         : '';
 
-      // Trail badge
-      var trailBadge = '';
-      if (tab.trail && trailNames[tab.trail]) {
-        trailBadge = '<span class="tab-trail-badge ' + tab.trail + '">' + trailNames[tab.trail] + '</span>';
-      }
-      // Subgenre badge
-      var subgenreBadge = '';
-      if (tab.subgenre) {
-        subgenreBadge = '<span class="tab-subgenre-badge">' + tab.subgenre + '</span>';
+      // Jam track player with loop
+      var jamHtml = '';
+      if (tab.jamTrackUrl) {
+        var jtId = 'jt-lib-' + idx;
+        jamHtml = '<div class="jam-track-player">' +
+          '<div class="jam-track-player-title">&#9835; Jam Track' + (tab.jamTrackTitle ? ': ' + tab.jamTrackTitle : '') + '</div>' +
+          '<audio id="' + jtId + '" controls preload="none"><source src="' + tab.jamTrackUrl + '" type="audio/mpeg"></audio>' +
+          '<div class="jam-track-controls">' +
+            '<div class="jam-track-control"><label>Speed</label>' +
+              '<input type="range" min="0.5" max="1.5" step="0.05" value="1" oninput="var a=document.getElementById(\'' + jtId + '\');a.playbackRate=this.value;this.nextElementSibling.textContent=this.value+\'x\'">' +
+              '<span class="control-value">1x</span></div>' +
+            '<div class="jam-track-control"><label>Pitch</label>' +
+              '<input type="range" min="-6" max="6" step="1" value="0" oninput="var a=document.getElementById(\'' + jtId + '\');if(a.preservesPitch!==undefined){a.preservesPitch=false;}this.nextElementSibling.textContent=(this.value>0?\'+\':\'\')+this.value">' +
+              '<span class="control-value">0</span></div>' +
+            '<div class="jam-track-control"><button onclick="var a=document.getElementById(\'' + jtId + '\');a.playbackRate=1;a.preservesPitch=true;this.closest(\'.jam-track-controls\').querySelectorAll(\'input[type=range]\').forEach(function(r){r.value=r.defaultValue;r.dispatchEvent(new Event(\'input\'))})">Reset</button></div>' +
+          '</div>' +
+          '<div class="jam-track-loop-controls">' +
+            '<label>Loop</label>' +
+            '<label>Start (s)</label><input type="number" id="' + jtId + '-ls" min="0" step="1" value="0">' +
+            '<label>End (s)</label><input type="number" id="' + jtId + '-le" min="0" step="1" value="0">' +
+            '<button onclick="startLoop(\'' + jtId + '\')">Set Loop</button>' +
+            '<button onclick="clearLoop(\'' + jtId + '\')">Clear</button>' +
+          '</div>' +
+        '</div>';
+      } else if (tab.jamTrackUrl === '') {
+        jamHtml = '<div class="jam-track-player"><div class="jam-track-empty">&#9835; Jam track coming soon</div></div>';
       }
 
-      return '<div class="tab-card" data-trail="' + (tab.trail || '') + '">' +
-        '<div class="tab-card-photo">' +
-          '<img src="' + imgSrc + '" alt="' + tab.title + '" loading="lazy" onerror="this.style.display=\'none\'">' +
-          '<div class="tab-card-photo-overlay"></div>' +
-          '<span class="tab-method-badge ' + tab.method + '">' +
-            'Standard Tab' +
-          '</span>' +
-          '<span class="tab-free-badge ' + (tab.free ? 'free' : 'members') + '">' +
-            (tab.free ? 'Free' : 'Members') +
-          '</span>' +
-          '<div class="tab-card-key">Key of ' + tab.key + '</div>' +
-        '</div>' +
-        '<div class="tab-card-body">' +
-          trailBadge + subgenreBadge +
-          '<h3>' + tab.title + '</h3>' +
-          '<p>' + tab.description + '</p>' +
-          '<div class="tab-card-info">' +
-            '<span>' + tab.position + ' position</span>' +
-            '<span>' + tab.difficulty + '</span>' +
+      // Metronome
+      var metId = 'met-lib-' + idx;
+      var metHtml = buildMetronomeHtml(metId);
+
+      return '<div class="tune-card" id="' + tuneId + '">' +
+        '<div class="tune-card-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
+          '<div>' +
+            '<h3>' + tab.title + '</h3>' +
+            '<div class="tune-card-meta">' +
+              '<span class="tune-card-badge genre">' + (tab.genre || 'General') + '</span>' +
+              '<span class="tune-card-badge key-badge">Key of ' + tab.key + '</span>' +
+              '<span class="tune-card-badge position-badge">' + tab.position + '</span>' +
+              '<span class="tune-card-badge difficulty-badge">' + tab.difficulty + '</span>' +
+              '<span class="tune-card-badge ' + (tab.free ? 'free-badge' : 'members-badge') + '">' + (tab.free ? 'Free' : 'Members') + '</span>' +
+            '</div>' +
           '</div>' +
-          '<button class="tab-download-btn' + btnClass + '"' + btnAttr + '>' +
-            '&#8615; ' + (hasDownload ? 'Download PDF' : 'Coming Soon') +
-          '</button>' +
+          '<span class="tune-card-expand">&#9660;</span>' +
         '</div>' +
+        '<div class="tune-card-body"><div class="tune-card-body-inner">' +
+          '<p class="tune-desc">' + tab.description + '</p>' +
+          videoHtml +
+          '<div class="tune-card-tools">' +
+            jamHtml +
+            metHtml +
+          '</div>' +
+          '<div class="tune-card-actions">' + pdfBtn + '</div>' +
+        '</div></div>' +
       '</div>';
     }).join('');
   }
 
-  // ─── Render Jam Tracks ─────────────────────────────────────────
-  function renderJamTracks() {
-    var grid = document.getElementById('jams-grid');
-    if (!grid || !SITE_CONTENT.jamTracks) return;
+  // Loop functionality
+  var loopIntervals = {};
+  window.startLoop = function(audioId) {
+    clearLoop(audioId);
+    var audio = document.getElementById(audioId);
+    if (!audio) return;
+    var startInput = document.getElementById(audioId + '-ls');
+    var endInput = document.getElementById(audioId + '-le');
+    var loopStart = parseFloat(startInput.value) || 0;
+    var loopEnd = parseFloat(endInput.value) || 0;
+    if (loopEnd <= loopStart) {
+      loopEnd = audio.duration || 999;
+      endInput.value = Math.floor(loopEnd);
+    }
+    audio.currentTime = loopStart;
+    audio.play();
+    loopIntervals[audioId] = setInterval(function() {
+      if (audio.currentTime >= loopEnd) {
+        audio.currentTime = loopStart;
+      }
+    }, 100);
+    // Visual feedback
+    var btn = startInput.parentElement.querySelector('button');
+    if (btn) btn.classList.add('active-loop');
+  };
 
-    grid.innerHTML = SITE_CONTENT.jamTracks.map(function(jam) {
-      var hasVideo = !!getYouTubeId(jam.youtubeUrl);
-      var playBtn = hasVideo
-        ? '<button class="jam-play-btn" onclick="openVideoModal(\'' + jam.youtubeUrl + '\')">&#9654; Play Track</button>'
-        : '<button class="jam-play-btn disabled" style="opacity:0.4;cursor:default;">&#9654; Coming Soon</button>';
+  window.clearLoop = function(audioId) {
+    if (loopIntervals[audioId]) {
+      clearInterval(loopIntervals[audioId]);
+      delete loopIntervals[audioId];
+    }
+    var startInput = document.getElementById(audioId + '-ls');
+    if (startInput) {
+      var btn = startInput.parentElement.querySelector('button');
+      if (btn) btn.classList.remove('active-loop');
+    }
+  };
 
-      var tempoChips = (jam.tempos || []).map(function(t) {
-        return '<span class="jam-tempo-chip">' + t + '</span>';
-      }).join('');
-
-      return '<div class="jam-card">' +
-        '<div class="jam-card-header">' +
-          '<div class="jam-card-genre">' + jam.genre + '</div>' +
-          '<h3>' + jam.title + '</h3>' +
-          '<p>' + jam.description + '</p>' +
-          '<div class="jam-card-bpm">' +
-            '<div class="jam-card-bpm-number">' + jam.bpm + '</div>' +
-            '<div class="jam-card-bpm-label">BPM</div>' +
-          '</div>' +
-          '<span class="jam-card-key-badge">Key of ' + jam.key + '</span>' +
-          playBtn +
-        '</div>' +
-        '<div class="jam-card-footer">' +
-          '<div class="jam-tempos">' + tempoChips + '</div>' +
-          '<span class="jam-access-badge ' + (jam.free ? 'free' : 'members') + '">' +
-            (jam.free ? 'Free' : 'Members') +
-          '</span>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-  }
+  // ─── Navigate to tunes filtered by trail (from trail cards) ────
+  window.showTrailTabs = function(trailId) {
+    var genreMap = { 'blue-ridge': 'Old Time', 'juke-joint': 'Blues', 'solo-harp': 'Solo' };
+    tuneFilters = { genre: genreMap[trailId] || 'all', key: 'all', position: 'all', difficulty: 'all' };
+    showPage('tunes');
+    renderTuneFilters();
+    // Set the select to match
+    var sel = document.getElementById('filter-genre');
+    if (sel) sel.value = tuneFilters.genre;
+    renderTunes();
+  };
 
   // ─── Render Fundamentals ────────────────────────────────────────
   function renderFundamentals() {
@@ -5325,192 +6240,96 @@
     header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   };
 
-  // ─── Render Trails (Carousel) ───────────────────────────────────
-  var currentTrail = 0;
+  // ─── Trail Progress (localStorage) ──────────────────────────────
+  var TRAIL_PROGRESS_KEY = 'harpshed_trail_progress';
+
+  function getTrailProgress() {
+    try {
+      return JSON.parse(localStorage.getItem(TRAIL_PROGRESS_KEY)) || {};
+    } catch(e) { return {}; }
+  }
+
+  function saveTrailProgress(progress) {
+    try {
+      localStorage.setItem(TRAIL_PROGRESS_KEY, JSON.stringify(progress));
+    } catch(e) {}
+  }
+
+  function toggleTuneComplete(trailId, stageIdx, tuneTitle) {
+    var progress = getTrailProgress();
+    var key = trailId + '_' + stageIdx + '_' + tuneTitle;
+    progress[key] = !progress[key];
+    saveTrailProgress(progress);
+    return progress[key];
+  }
+
+  function isTuneComplete(trailId, stageIdx, tuneTitle) {
+    var progress = getTrailProgress();
+    var key = trailId + '_' + stageIdx + '_' + tuneTitle;
+    return !!progress[key];
+  }
+
+  function getTrailCompletionStats(trail) {
+    var total = 0;
+    var done = 0;
+    trail.stages.forEach(function(stage, si) {
+      if (stage.content && stage.content.length > 0) {
+        stage.content.forEach(function(item) {
+          total++;
+          if (isTuneComplete(trail.id, si, item.title)) done++;
+        });
+      }
+    });
+    return { total: total, done: done, percent: total > 0 ? Math.round((done / total) * 100) : 0 };
+  }
+
+  function getStageCompletionStats(trail, stageIdx) {
+    var stage = trail.stages[stageIdx];
+    var total = 0;
+    var done = 0;
+    if (stage.content && stage.content.length > 0) {
+      stage.content.forEach(function(item) {
+        total++;
+        if (isTuneComplete(trail.id, stageIdx, item.title)) done++;
+      });
+    }
+    return { total: total, done: done, percent: total > 0 ? Math.round((done / total) * 100) : 0 };
+  }
+
+  // ─── Render Trails (Selection Cards) ────────────────────────────
 
   function renderTrails() {
-    var track = document.getElementById('trails-track');
-    var dots = document.getElementById('trails-dots');
-    if (!track || !SITE_CONTENT.trails) return;
+    var container = document.getElementById('trails-selection');
+    if (!container || !SITE_CONTENT.trails) return;
 
-    track.innerHTML = SITE_CONTENT.trails.map(function(trail) {
-      var stages = trail.stages.map(function(stage, i) {
+    container.innerHTML = SITE_CONTENT.trails.map(function(trail) {
+      var stats = getTrailCompletionStats(trail);
+      var stagePips = trail.stages.map(function(stage) {
         var hasContent = stage.content && stage.content.length > 0;
-        var contentCount = hasContent ? stage.content.length : 0;
-        var contentBadge = hasContent
-          ? '<span class="trail-stage-content-count">' + contentCount + ' tune' + (contentCount > 1 ? 's' : '') + '</span>'
-          : '<span class="trail-stage-coming">coming soon</span>';
-
-        var contentHtml = '';
-        if (hasContent) {
-          contentHtml = '<div class="trail-stage-content">' +
-            stage.content.map(function(item) {
-              var hasVideo = !!getYouTubeId(item.youtubeUrl);
-              var videoBtn = hasVideo
-                ? '<button class="trail-content-video-btn" onclick="event.stopPropagation();openVideoModal(\'' + item.youtubeUrl + '\')">&#9654; Watch Video</button>'
-                : '<span class="trail-content-video-btn disabled">&#9654; Video coming soon</span>';
-              var hasPdf = !!item.tabPdf;
-              var pdfBtn = hasPdf
-                ? '<button class="trail-content-pdf-btn" onclick="event.stopPropagation();window.open(\'' + item.tabPdf + '\',\'_blank\')">&#8615; Download Tab</button>'
-                : '';
-              var subgenreTag = item.subgenre
-                ? '<span class="tab-subgenre-badge">' + item.subgenre + '</span>'
-                : '';
-              return '<div class="trail-content-item">' +
-                '<div class="trail-content-header">' +
-                  '<h5>' + item.title + '</h5>' +
-                  '<span class="trail-content-key">Key of ' + item.key + ' &middot; ' + item.position + ' pos</span>' +
-                  subgenreTag +
-                '</div>' +
-                '<p class="trail-content-insight">' + item.insight + '</p>' +
-                '<div class="trail-content-actions">' +
-                  videoBtn + pdfBtn +
-                '</div>' +
-              '</div>';
-            }).join('') +
-          '</div>';
-        }
-
-        return '<div class="trail-stage' + (hasContent ? ' has-content' : '') + '" ' +
-          (hasContent ? 'onclick="toggleTrailStage(this)"' : '') + '>' +
-          '<div class="trail-stage-header">' +
-            '<div class="trail-stage-number" style="background:' + trail.color + ';">' + (i + 1) + '</div>' +
-            '<div class="trail-stage-info">' +
-              '<h4>' + stage.name + ' ' + contentBadge + '</h4>' +
-              '<p>' + stage.description + '</p>' +
-              '<div class="trail-stage-tunes">' + stage.tunes + '</div>' +
-            '</div>' +
-            (hasContent ? '<span class="trail-stage-toggle">&#9660;</span>' : '') +
-          '</div>' +
-          contentHtml +
-        '</div>';
+        return '<span class="trail-select-stage-pip' + (hasContent ? ' has-content' : '') + '">' + stage.name + '</span>';
       }).join('');
 
-      return '<div class="trails-carousel-slide">' +
-        '<div class="trail-card">' +
-          '<div class="trail-card-header">' +
-            '<div class="trail-card-header-bg" style="background:' + trail.color + ';"></div>' +
-            '<span class="trail-tradition-badge" style="background:' + trail.color + ';">' + trail.tradition + '</span>' +
-            '<h3><span class="trail-icon">' + trail.icon + '</span> ' + trail.title + '</h3>' +
-            '<p>' + trail.description + '</p>' +
+      return '<div class="trail-select-card" onclick="showFullTrail(\'' + trail.id + '\')">' +
+        '<div class="trail-select-card-top" style="border-top:5px solid ' + trail.color + ';">' +
+          '<div class="trail-select-card-icon">' + trail.icon + '</div>' +
+          '<span class="trail-tradition-badge" style="background:' + trail.color + ';">' + trail.tradition + '</span>' +
+          '<h3>' + trail.title + '</h3>' +
+          '<p>' + trail.description + '</p>' +
+        '</div>' +
+        '<div class="trail-select-stages">' + stagePips + '</div>' +
+        '<div class="trail-select-card-progress">' +
+          '<div class="trail-progress-bar-bg">' +
+            '<div class="trail-progress-bar-fill" style="width:' + stats.percent + '%;background:' + trail.color + ';"></div>' +
           '</div>' +
-          '<div class="trail-stages">' + stages + '</div>' +
-          '<div style="text-align:center;padding:16px 20px 24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">' +
-            '<button class="tab-download-btn" style="font-size:14px;padding:10px 24px;" onclick="showTrailTabs(\'' + trail.id + '\')">&#9835; Browse Tabs</button>' +
-            '<button class="tab-download-btn" style="font-size:14px;padding:10px 24px;background:' + trail.color + ';" onclick="showFullTrail(\'' + trail.id + '\')">&#128218; Full Trail Guide</button>' +
-          '</div>' +
+          '<span class="trail-progress-text">' +
+            (stats.total > 0 ? stats.done + ' of ' + stats.total + ' tunes complete (' + stats.percent + '%)' : 'Content coming soon') +
+          '</span>' +
         '</div>' +
       '</div>';
     }).join('');
-
-    // Render dots
-    if (dots) {
-      dots.innerHTML = SITE_CONTENT.trails.map(function(t, i) {
-        return '<button class="trails-carousel-dot' + (i === 0 ? ' active' : '') + '" onclick="goToTrail(' + i + ')"></button>';
-      }).join('');
-    }
-
-    // Touch/swipe support
-    initTrailSwipe();
   }
 
-  window.goToTrail = function(index) {
-    var track = document.getElementById('trails-track');
-    var dots = document.querySelectorAll('.trails-carousel-dot');
-    var total = SITE_CONTENT.trails.length;
-    currentTrail = Math.max(0, Math.min(index, total - 1));
-    track.classList.remove('dragging');
-    track.style.transform = 'translateX(-' + (currentTrail * 100) + '%)';
-    dots.forEach(function(d, i) {
-      d.classList.toggle('active', i === currentTrail);
-    });
-  };
-
-  window.moveTrail = function(dir) {
-    goToTrail(currentTrail + dir);
-  };
-
-  function initTrailSwipe() {
-    var carousel = document.getElementById('trails-carousel');
-    if (!carousel) return;
-    var track = document.getElementById('trails-track');
-    var isDragging = false;
-    var startX = 0;
-    var startTime = 0;
-    var currentX = 0;
-
-    function getCarouselWidth() {
-      return carousel.offsetWidth;
-    }
-
-    function onDragStart(x) {
-      isDragging = true;
-      startX = x;
-      startTime = Date.now();
-      currentX = 0;
-      track.classList.add('dragging');
-    }
-
-    function onDragMove(x) {
-      if (!isDragging) return;
-      currentX = x - startX;
-      var baseOffset = -(currentTrail * 100);
-      var dragPercent = (currentX / getCarouselWidth()) * 100;
-      track.style.transform = 'translateX(' + (baseOffset + dragPercent) + '%)';
-    }
-
-    function onDragEnd() {
-      if (!isDragging) return;
-      isDragging = false;
-      var elapsed = Date.now() - startTime;
-      var velocity = currentX / (elapsed || 1);
-      var threshold = getCarouselWidth() * 0.2;
-      var flick = Math.abs(velocity) > 0.4;
-
-      if (Math.abs(currentX) > threshold || flick) {
-        goToTrail(currentTrail + (currentX > 0 ? -1 : 1));
-      } else {
-        goToTrail(currentTrail);
-      }
-    }
-
-    // Touch events
-    carousel.addEventListener('touchstart', function(e) {
-      onDragStart(e.touches[0].clientX);
-    }, { passive: true });
-
-    carousel.addEventListener('touchmove', function(e) {
-      onDragMove(e.touches[0].clientX);
-    }, { passive: true });
-
-    carousel.addEventListener('touchend', onDragEnd);
-
-    // Mouse events for desktop drag
-    carousel.addEventListener('mousedown', function(e) {
-      e.preventDefault();
-      onDragStart(e.clientX);
-    });
-
-    document.addEventListener('mousemove', function(e) {
-      if (isDragging) onDragMove(e.clientX);
-    });
-
-    document.addEventListener('mouseup', function() {
-      if (isDragging) onDragEnd();
-    });
-
-    // Prevent drag on links/images inside carousel
-    carousel.addEventListener('dragstart', function(e) {
-      e.preventDefault();
-    });
-  }
-
-  // ─── Trail Stage Accordion Toggle ──────────────────────────────
-  window.toggleTrailStage = function(stageEl) {
-    stageEl.classList.toggle('open');
-  };
-
-  // ─── Full Trail Page ───────────────────────────────────────────
+  // ─── Show Full Trail (Dedicated Page) ─────────────────────────
   window.showFullTrail = function(trailId) {
     var trail = SITE_CONTENT.trails.find(function(t) { return t.id === trailId; });
     if (!trail) return;
@@ -5518,70 +6337,133 @@
     var container = document.getElementById('trail-detail-content');
     if (!container) return;
 
-    var html = '<div class="trail-detail-header" style="border-color:' + trail.color + ';">' +
+    var stats = getTrailCompletionStats(trail);
+
+    var html = '<button class="trail-page-back" onclick="showPage(\'trails\')">&#8592; All Trails</button>';
+
+    html += '<div class="trail-page-header">' +
       '<span class="trail-tradition-badge" style="background:' + trail.color + ';">' + trail.tradition + '</span>' +
       '<h2><span class="trail-icon">' + trail.icon + '</span> ' + trail.title + '</h2>' +
       '<p>' + trail.description + '</p>' +
+      '<div class="trail-page-overall-progress">' +
+        '<span class="trail-progress-text">' +
+          (stats.total > 0 ? stats.done + ' of ' + stats.total + ' tunes complete' : 'Content coming soon') +
+        '</span>' +
+        '<div class="trail-progress-bar-bg" style="margin-top:6px;">' +
+          '<div class="trail-progress-bar-fill" style="width:' + stats.percent + '%;background:' + trail.color + ';"></div>' +
+        '</div>' +
+      '</div>' +
     '</div>';
 
     // Subgenres for Juke Joint
     if (trail.subgenres && trail.subgenres.length > 0) {
-      html += '<div class="trail-subgenres">';
+      html += '<div style="text-align:center;margin-bottom:24px;">';
       trail.subgenres.forEach(function(sg) {
-        html += '<span class="tab-subgenre-badge" style="font-size:11px;padding:4px 12px;">' + sg + '</span>';
+        html += '<span class="tab-subgenre-badge" style="font-size:11px;padding:4px 12px;margin:2px;">' + sg + '</span>';
       });
       html += '</div>';
     }
 
-    html += '<div class="trail-detail-stages">';
+    html += '<div class="trail-roadmap">';
     trail.stages.forEach(function(stage, i) {
       var hasContent = stage.content && stage.content.length > 0;
+      var stageStats = getStageCompletionStats(trail, i);
+      var stageProgressLabel = '';
+      if (stageStats.total > 0) {
+        if (stageStats.done === stageStats.total) {
+          stageProgressLabel = '<span class="trail-roadmap-stage-progress complete">&#10003; Complete</span>';
+        } else {
+          stageProgressLabel = '<span class="trail-roadmap-stage-progress">' + stageStats.done + '/' + stageStats.total + '</span>';
+        }
+      }
 
-      html += '<div class="trail-detail-stage">' +
-        '<div class="trail-detail-stage-header">' +
-          '<div class="trail-stage-number" style="background:' + trail.color + ';width:36px;height:36px;font-size:16px;">' + (i + 1) + '</div>' +
-          '<div>' +
-            '<h3>' + stage.name + '</h3>' +
-            '<p>' + stage.description + '</p>' +
-            '<div class="trail-stage-tunes" style="margin-top:6px;">' + stage.tunes + '</div>' +
-          '</div>' +
-        '</div>';
-
+      var contentHtml = '';
       if (hasContent) {
-        html += '<div class="trail-detail-items">';
+        contentHtml = '<div class="trail-roadmap-content"><div class="trail-roadmap-content-inner">';
         stage.content.forEach(function(item) {
+          var isComplete = isTuneComplete(trail.id, i, item.title);
+          var tuneId = trail.id + '-' + i + '-' + item.title.replace(/[^a-zA-Z0-9]/g, '');
           var hasVideo = !!getYouTubeId(item.youtubeUrl);
           var videoEmbed = hasVideo
-            ? '<div class="trail-detail-video"><iframe src="https://www.youtube.com/embed/' + getYouTubeId(item.youtubeUrl) + '" frameborder="0" allowfullscreen loading="lazy"></iframe></div>'
-            : '<div class="trail-detail-video-placeholder">&#9654; Video coming soon</div>';
+            ? '<div class="trail-tune-video"><iframe src="https://www.youtube.com/embed/' + getYouTubeId(item.youtubeUrl) + '" frameborder="0" allowfullscreen loading="lazy"></iframe></div>'
+            : '<div class="trail-tune-video-placeholder">&#9654; Video coming soon</div>';
           var hasPdf = !!item.tabPdf;
           var pdfBtn = hasPdf
-            ? '<button class="tab-download-btn" onclick="window.open(\'' + item.tabPdf + '\',\'_blank\')">&#8615; Download Tab PDF</button>'
+            ? '<button class="tab-download-btn" onclick="event.stopPropagation();window.open(\'' + item.tabPdf + '\',\'_blank\')">&#8615; Download Tab PDF</button>'
             : '';
           var subgenreTag = item.subgenre
             ? '<span class="tab-subgenre-badge">' + item.subgenre + '</span>'
             : '';
 
-          html += '<div class="trail-detail-item">' +
-            videoEmbed +
-            '<div class="trail-detail-item-body">' +
-              '<h4>' + item.title + ' ' + subgenreTag + '</h4>' +
-              '<div class="trail-content-key">Key of ' + item.key + ' &middot; ' + item.position + ' position</div>' +
-              '<p>' + item.insight + '</p>' +
-              '<div class="trail-detail-item-actions">' + pdfBtn + '</div>' +
+          // Jam track
+          var jamTrackHtml = '';
+          if (item.jamTrackUrl) {
+            var playerId = 'jt2-' + item.title.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+            jamTrackHtml = '<div class="jam-track-player">' +
+              '<div class="jam-track-player-title">&#9835; Jam Track' + (item.jamTrackTitle ? ': ' + item.jamTrackTitle : '') + '</div>' +
+              '<audio id="' + playerId + '" controls preload="none"><source src="' + item.jamTrackUrl + '" type="audio/mpeg"></audio>' +
+              '<div class="jam-track-controls">' +
+                '<div class="jam-track-control"><label>Speed</label>' +
+                  '<input type="range" min="0.5" max="1.5" step="0.05" value="1" oninput="var a=document.getElementById(\'' + playerId + '\');a.playbackRate=this.value;this.nextElementSibling.textContent=this.value+\'x\'">' +
+                  '<span class="control-value">1x</span></div>' +
+                '<div class="jam-track-control"><label>Pitch</label>' +
+                  '<input type="range" min="-6" max="6" step="1" value="0" oninput="var a=document.getElementById(\'' + playerId + '\');if(a.preservesPitch!==undefined){a.preservesPitch=false;}this.nextElementSibling.textContent=(this.value>0?\'+\':\'\')+this.value">' +
+                  '<span class="control-value">0</span></div>' +
+                '<div class="jam-track-control"><button onclick="var a=document.getElementById(\'' + playerId + '\');a.playbackRate=1;a.preservesPitch=true;this.closest(\'.jam-track-controls\').querySelectorAll(\'input[type=range]\').forEach(function(r){r.value=r.defaultValue;r.dispatchEvent(new Event(\'input\'))})">Reset</button></div>' +
+              '</div></div>';
+          } else {
+            jamTrackHtml = '<div class="jam-track-player"><div class="jam-track-empty">&#9835; Jam track coming soon</div></div>';
+          }
+
+          // Metronome
+          var metId = 'met2-' + item.title.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+          var metronomeHtml = buildMetronomeHtml(metId);
+
+          contentHtml += '<div class="trail-tune-card" id="tune-' + tuneId + '">' +
+            '<div class="trail-tune-card-header" onclick="toggleTuneCard(this.parentElement)">' +
+              '<div class="trail-tune-checkbox' + (isComplete ? ' checked' : '') + '" onclick="event.stopPropagation();handleTuneCheck(this,\'' + trail.id + '\',' + i + ',\'' + item.title.replace(/'/g, "\\\\'") + '\')">' +
+                (isComplete ? '&#10003;' : '') +
+              '</div>' +
+              '<div class="trail-tune-card-info">' +
+                '<h4>' + item.title + ' ' + subgenreTag + '</h4>' +
+                '<span class="tune-key">Key of ' + item.key + ' &middot; ' + item.position + ' position</span>' +
+              '</div>' +
+              '<span class="trail-tune-expand">&#9660;</span>' +
             '</div>' +
+            '<div class="trail-tune-card-body"><div class="trail-tune-card-body-inner">' +
+              videoEmbed +
+              '<p>' + item.insight + '</p>' +
+              jamTrackHtml +
+              metronomeHtml +
+              '<div class="trail-tune-actions">' + pdfBtn + '</div>' +
+            '</div></div>' +
           '</div>';
         });
-        html += '</div>';
+        contentHtml += '</div></div>';
       } else {
-        html += '<div class="trail-detail-empty">Content for this stage is on its way.</div>';
+        contentHtml = '<div class="trail-roadmap-content"><div class="trail-roadmap-content-inner">' +
+          '<div class="trail-empty-stage">Content for this stage is on its way.</div>' +
+        '</div></div>';
       }
 
-      html += '</div>';
+      html += '<div class="trail-roadmap-stage">' +
+        '<div class="trail-roadmap-stage-number" style="background:' + trail.color + ';">' + (i + 1) + '</div>' +
+        '<div class="trail-roadmap-stage-head" onclick="toggleRoadmapStage(this.parentElement)">' +
+          '<div>' +
+            '<h3>' + stage.name + ' ' + stageProgressLabel + '</h3>' +
+            '<p>' + stage.description + '</p>' +
+            '<div class="trail-roadmap-stage-meta">' +
+              '<span class="trail-roadmap-stage-tunes">' + stage.tunes + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<span class="trail-roadmap-stage-toggle">&#9660;</span>' +
+        '</div>' +
+        contentHtml +
+      '</div>';
     });
     html += '</div>';
 
-    html += '<div style="text-align:center;padding:24px 0;">' +
+    html += '<div style="text-align:center;padding:32px 0 16px;">' +
       '<button class="tab-download-btn" style="font-size:14px;padding:10px 24px;" onclick="showTrailTabs(\'' + trail.id + '\')">&#9835; Browse All ' + trail.tradition + ' Tabs</button>' +
       '&nbsp;&nbsp;' +
       '<button class="tab-download-btn" style="font-size:14px;padding:10px 24px;background:var(--wood-dark);" onclick="showPage(\'trails\')">&#8592; Back to Trails</button>' +
@@ -5590,6 +6472,27 @@
     container.innerHTML = html;
     showPage('trail-detail');
     window.scrollTo(0, 0);
+  };
+
+  window.toggleRoadmapStage = function(stageEl) {
+    stageEl.classList.toggle('open');
+  };
+
+  window.toggleTuneCard = function(cardEl) {
+    cardEl.classList.toggle('open');
+  };
+
+  window.handleTuneCheck = function(checkbox, trailId, stageIdx, tuneTitle) {
+    var isNowComplete = toggleTuneComplete(trailId, stageIdx, tuneTitle);
+    if (isNowComplete) {
+      checkbox.classList.add('checked');
+      checkbox.innerHTML = '&#10003;';
+    } else {
+      checkbox.classList.remove('checked');
+      checkbox.innerHTML = '';
+    }
+    // Refresh the trail page to update progress bars
+    showFullTrail(trailId);
   };
 
   // ─── Render Articles ───────────────────────────────────────────
@@ -5829,11 +6732,161 @@
     if (e.key === 'Escape') closeVideoModal();
   });
 
+  // ─── Metronome Engine (Web Audio API) ─────────────────────────
+  (function() {
+    var metronomes = {};
+
+    function createMetronomeEngine(id) {
+      var ctx = null;
+      var timerId = null;
+      var currentBeat = 0;
+      var beatsPerMeasure = 4;
+      var bpm = 100;
+      var playing = false;
+      var tone = 'woodblock';
+
+      var toneFreqs = {
+        woodblock: { accent: 800, normal: 600, type: 'square', decay: 0.03 },
+        click: { accent: 1200, normal: 900, type: 'sine', decay: 0.02 },
+        cowbell: { accent: 560, normal: 460, type: 'triangle', decay: 0.06 },
+        rimshot: { accent: 1800, normal: 1400, type: 'sawtooth', decay: 0.015 },
+        softclick: { accent: 400, normal: 300, type: 'sine', decay: 0.04 }
+      };
+
+      function playClick(time, isAccent) {
+        if (!ctx) return;
+        var t = toneFreqs[tone] || toneFreqs.woodblock;
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = t.type;
+        osc.frequency.value = isAccent ? t.accent : t.normal;
+        gain.gain.setValueAtTime(isAccent ? 0.6 : 0.3, time);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + t.decay + 0.05);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(time);
+        osc.stop(time + t.decay + 0.06);
+      }
+
+      function tick() {
+        var isAccent = currentBeat === 0;
+        if (ctx) playClick(ctx.currentTime, isAccent);
+
+        var dots = document.querySelectorAll('#met-dots-' + id + ' .metronome-beat-dot');
+        dots.forEach(function(d, i) {
+          d.classList.remove('active', 'accent');
+          if (i === currentBeat) {
+            d.classList.add(isAccent ? 'accent' : 'active');
+          }
+        });
+
+        currentBeat = (currentBeat + 1) % beatsPerMeasure;
+      }
+
+      return {
+        start: function() {
+          if (playing) return;
+          if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+          if (ctx.state === 'suspended') ctx.resume();
+          playing = true;
+          currentBeat = 0;
+          tick();
+          timerId = setInterval(tick, 60000 / bpm);
+          var btn = document.getElementById('met-btn-' + id);
+          if (btn) { btn.classList.add('playing'); btn.innerHTML = '&#9724; Stop'; }
+        },
+        stop: function() {
+          if (!playing) return;
+          playing = false;
+          clearInterval(timerId);
+          timerId = null;
+          var dots = document.querySelectorAll('#met-dots-' + id + ' .metronome-beat-dot');
+          dots.forEach(function(d) { d.classList.remove('active', 'accent'); });
+          var btn = document.getElementById('met-btn-' + id);
+          if (btn) { btn.classList.remove('playing'); btn.innerHTML = '&#9654; Start'; }
+        },
+        toggle: function() {
+          if (playing) this.stop(); else this.start();
+        },
+        setBpm: function(v) {
+          bpm = Math.max(30, Math.min(300, parseInt(v)));
+          if (playing) {
+            clearInterval(timerId);
+            timerId = setInterval(tick, 60000 / bpm);
+          }
+          var disp = document.getElementById('met-bpm-' + id);
+          if (disp) disp.textContent = bpm;
+        },
+        setBeats: function(v) {
+          beatsPerMeasure = parseInt(v);
+          currentBeat = 0;
+          var container = document.getElementById('met-dots-' + id);
+          if (container) {
+            var dotsHtml = '';
+            for (var i = 0; i < beatsPerMeasure; i++) dotsHtml += '<div class="metronome-beat-dot"></div>';
+            container.innerHTML = dotsHtml;
+          }
+        },
+        setTone: function(v) { tone = v; },
+        isPlaying: function() { return playing; },
+        destroy: function() { this.stop(); if (ctx) { ctx.close(); ctx = null; } }
+      };
+    }
+
+    window.getMetronome = function(id) {
+      if (!metronomes[id]) metronomes[id] = createMetronomeEngine(id);
+      return metronomes[id];
+    };
+
+    window.destroyAllMetronomes = function() {
+      Object.keys(metronomes).forEach(function(k) { metronomes[k].destroy(); });
+      metronomes = {};
+    };
+  })();
+
+  function buildMetronomeHtml(id) {
+    return '<div class="metronome-widget">' +
+      '<div class="metronome-header">' +
+        '<span class="metronome-title">&#127925; Metronome</span>' +
+      '</div>' +
+      '<div class="metronome-bpm-display" id="met-bpm-' + id + '">100</div>' +
+      '<div class="metronome-bpm-label">BPM</div>' +
+      '<input type="range" class="metronome-bpm-slider" min="30" max="300" value="100" ' +
+        'oninput="getMetronome(\'' + id + '\').setBpm(this.value)">' +
+      '<div class="metronome-beat-dots" id="met-dots-' + id + '">' +
+        '<div class="metronome-beat-dot"></div>' +
+        '<div class="metronome-beat-dot"></div>' +
+        '<div class="metronome-beat-dot"></div>' +
+        '<div class="metronome-beat-dot"></div>' +
+      '</div>' +
+      '<div class="metronome-row">' +
+        '<label>Time</label>' +
+        '<select onchange="getMetronome(\'' + id + '\').setBeats(this.value)">' +
+          '<option value="4">4/4</option>' +
+          '<option value="3">3/4 (Waltz)</option>' +
+          '<option value="2">2/4 (March)</option>' +
+          '<option value="6">6/8 (Jig)</option>' +
+          '<option value="8">8/8</option>' +
+        '</select>' +
+        '<label>Tone</label>' +
+        '<select onchange="getMetronome(\'' + id + '\').setTone(this.value)">' +
+          '<option value="woodblock">Woodblock</option>' +
+          '<option value="click">Click</option>' +
+          '<option value="cowbell">Cowbell</option>' +
+          '<option value="rimshot">Rimshot</option>' +
+          '<option value="softclick">Soft Click</option>' +
+        '</select>' +
+      '</div>' +
+      '<div style="text-align:center;margin-top:8px;">' +
+        '<button class="metronome-btn" id="met-btn-' + id + '" onclick="getMetronome(\'' + id + '\').toggle()">&#9654; Start</button>' +
+      '</div>' +
+    '</div>';
+  }
+
   // ─── Page Navigation ─────────────────────────────────────────
   var pageMap = {
     'lessons': 'page-lessons',
-    'tabs': 'page-tabs',
-    'jams': 'page-jams',
+    'tunes': 'page-tunes',
     'fundamentals': 'page-fundamentals',
     'trails': 'page-trails',
     'trail-detail': 'page-trail-detail',
@@ -5859,6 +6912,9 @@
 
     var targetId = pageMap[key];
     if (!targetId) return;
+
+    // Stop any running metronomes when navigating
+    if (typeof destroyAllMetronomes === 'function') destroyAllMetronomes();
 
     // Hide all pages, show target
     document.querySelectorAll('.page').forEach(function(p) {
@@ -6071,9 +7127,8 @@
   // ─── Init ──────────────────────────────────────────────────────
   if (typeof SITE_CONTENT !== 'undefined') {
     renderLessons();
-    buildTabFilters();
-    renderTabs();
-    renderJamTracks();
+    renderTuneFilters();
+    renderTunes();
     renderFundamentals();
     renderTrails();
     renderArticles();
