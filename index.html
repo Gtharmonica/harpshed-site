@@ -6282,9 +6282,9 @@
 
   // ─── Render Tunes (Unified Library) ────────────────────────────
 
-  var tuneFilters = { genre: 'all', key: 'all', position: 'all', difficulty: 'all', search: '' };
+  window.tuneFilters = { genre: 'all', key: 'all', position: 'all', difficulty: 'all', search: '' };
 
-  function renderTuneFilters() {
+  window.renderTuneFilters = function() {
     var bar = document.getElementById('tunes-filter-bar');
     if (!bar || !SITE_CONTENT.tabs) return;
 
@@ -6311,7 +6311,7 @@
     bar.innerHTML =
       '<div class="tunes-filter-search">' +
         '<label style="font-size:11px;font-weight:700;color:var(--wood-light);text-transform:uppercase;letter-spacing:0.5px;">Search</label>' +
-        '<input type="text" id="filter-search" placeholder="Tune name..." oninput="tuneFilters.search=this.value.toLowerCase();renderTunes()">' +
+        '<input type="text" id="filter-search" placeholder="Tune name..." oninput="tuneFilters.search=this.value.toLowerCase();renderTunes()" onkeydown="if(event.key===\'Enter\'){tuneFilters.search=this.value.toLowerCase();renderTunes()}">' +
       '</div>' +
       makeSelect('filter-genre', 'Genre', genres) +
       makeSelect('filter-key', 'Key', keys) +
@@ -6326,7 +6326,7 @@
     if (tuneFilters.position !== 'all') { var el = document.getElementById('filter-position'); if (el) el.value = tuneFilters.position; }
     if (tuneFilters.difficulty !== 'all') { var el = document.getElementById('filter-difficulty'); if (el) el.value = tuneFilters.difficulty; }
     if (tuneFilters.search) { var el = document.getElementById('filter-search'); if (el) el.value = tuneFilters.search; }
-  }
+  };
 
   window.clearTuneFilters = function() {
     tuneFilters = { genre: 'all', key: 'all', position: 'all', difficulty: 'all', search: '' };
@@ -6334,7 +6334,7 @@
     renderTunes();
   };
 
-  function renderTunes() {
+  window.renderTunes = function() {
     var grid = document.getElementById('tunes-grid');
     if (!grid || !SITE_CONTENT.tabs) return;
 
@@ -6405,7 +6405,7 @@
         '</div></div>' +
       '</div>';
     }).join('');
-  }
+  };
 
   // Build enhanced jam track HTML
   function buildJamTrackHtml(id, jamTracks) {
