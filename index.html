@@ -1053,6 +1053,51 @@
     border-color: var(--rust);
   }
 
+  .tunes-filter-search {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tunes-filter-search input {
+    background: rgba(0,0,0,0.3);
+    color: var(--parchment);
+    border: 1px solid rgba(160,82,45,0.3);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-family: 'Source Sans 3', sans-serif;
+    width: 140px;
+  }
+
+  .tunes-filter-search input::placeholder {
+    color: rgba(244,236,224,0.35);
+  }
+
+  .tunes-filter-search input:focus {
+    outline: none;
+    border-color: var(--rust);
+  }
+
+  .tunes-filter-clear {
+    background: var(--rust);
+    color: var(--parchment);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif;
+    transition: background 0.2s;
+  }
+
+  .tunes-filter-clear:hover {
+    background: var(--rust-light);
+  }
+
   .tunes-filter-count {
     font-size: 12px;
     color: var(--wood-light);
@@ -6237,7 +6282,7 @@
 
   // ─── Render Tunes (Unified Library) ────────────────────────────
 
-  var tuneFilters = { genre: 'all', key: 'all', position: 'all', difficulty: 'all' };
+  var tuneFilters = { genre: 'all', key: 'all', position: 'all', difficulty: 'all', search: '' };
 
   function renderTuneFilters() {
     var bar = document.getElementById('tunes-filter-bar');
@@ -6264,18 +6309,37 @@
     }
 
     bar.innerHTML =
+      '<div class="tunes-filter-search">' +
+        '<label style="font-size:11px;font-weight:700;color:var(--wood-light);text-transform:uppercase;letter-spacing:0.5px;">Search</label>' +
+        '<input type="text" id="filter-search" placeholder="Tune name..." oninput="tuneFilters.search=this.value.toLowerCase();renderTunes()">' +
+      '</div>' +
       makeSelect('filter-genre', 'Genre', genres) +
       makeSelect('filter-key', 'Key', keys) +
       makeSelect('filter-position', 'Position', positions) +
       makeSelect('filter-difficulty', 'Difficulty', difficulties) +
+      '<button class="tunes-filter-clear" onclick="clearTuneFilters()">Show All</button>' +
       '<span class="tunes-filter-count" id="tunes-count"></span>';
+
+    // Restore current filter state to dropdowns
+    if (tuneFilters.genre !== 'all') { var el = document.getElementById('filter-genre'); if (el) el.value = tuneFilters.genre; }
+    if (tuneFilters.key !== 'all') { var el = document.getElementById('filter-key'); if (el) el.value = tuneFilters.key; }
+    if (tuneFilters.position !== 'all') { var el = document.getElementById('filter-position'); if (el) el.value = tuneFilters.position; }
+    if (tuneFilters.difficulty !== 'all') { var el = document.getElementById('filter-difficulty'); if (el) el.value = tuneFilters.difficulty; }
+    if (tuneFilters.search) { var el = document.getElementById('filter-search'); if (el) el.value = tuneFilters.search; }
   }
+
+  window.clearTuneFilters = function() {
+    tuneFilters = { genre: 'all', key: 'all', position: 'all', difficulty: 'all', search: '' };
+    renderTuneFilters();
+    renderTunes();
+  };
 
   function renderTunes() {
     var grid = document.getElementById('tunes-grid');
     if (!grid || !SITE_CONTENT.tabs) return;
 
     var filtered = SITE_CONTENT.tabs.filter(function(tab) {
+      if (tuneFilters.search && tab.title.toLowerCase().indexOf(tuneFilters.search) === -1) return false;
       if (tuneFilters.genre !== 'all' && tab.genre !== tuneFilters.genre) return false;
       if (tuneFilters.key !== 'all' && tab.key !== tuneFilters.key) return false;
       if (tuneFilters.position !== 'all' && tab.position !== tuneFilters.position) return false;
@@ -6462,12 +6526,9 @@
   // ─── Navigate to tunes filtered by trail (from trail cards) ────
   window.showTrailTabs = function(trailId) {
     var genreMap = { 'blue-ridge': 'Old Time', 'juke-joint': 'Blues', 'solo-harp': 'Solo' };
-    tuneFilters = { genre: genreMap[trailId] || 'all', key: 'all', position: 'all', difficulty: 'all' };
+    tuneFilters = { genre: genreMap[trailId] || 'all', key: 'all', position: 'all', difficulty: 'all', search: '' };
     showPage('tunes');
     renderTuneFilters();
-    // Set the select to match
-    var sel = document.getElementById('filter-genre');
-    if (sel) sel.value = tuneFilters.genre;
     renderTunes();
   };
 
