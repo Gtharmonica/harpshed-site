@@ -49,7 +49,8 @@ var SITE_CONTENT = {
       "image": "gareth-harpshed.jpg",
       "free": true,
       "genre": "Old Time",
-      "youtubeUrl": ""
+      "youtubeUrl": "",
+      "jamTracks": []
     },
     {
       "title": "Old Joe Clark",
@@ -62,7 +63,8 @@ var SITE_CONTENT = {
       "image": "hero-photo.jpg",
       "free": true,
       "genre": "Old Time",
-      "youtubeUrl": ""
+      "youtubeUrl": "",
+      "jamTracks": []
     },
     {
       "title": "Lost John — String Band Arrangement",
@@ -75,7 +77,8 @@ var SITE_CONTENT = {
       "image": "gareth-harpshed.jpg",
       "free": false,
       "genre": "Old Time",
-      "youtubeUrl": ""
+      "youtubeUrl": "",
+      "jamTracks": []
     },
     {
       "title": "Sittin' On Top of the World",
@@ -88,7 +91,8 @@ var SITE_CONTENT = {
       "image": "hero-photo.jpg",
       "free": false,
       "genre": "Blues",
-      "youtubeUrl": ""
+      "youtubeUrl": "",
+      "jamTracks": []
     },
     {
       "title": "Rain Crow Bill",
@@ -102,7 +106,8 @@ var SITE_CONTENT = {
       "image": "gareth-harpshed.jpg",
       "free": true,
       "genre": "Old Time",
-      "youtubeUrl": ""
+      "youtubeUrl": "",
+      "jamTracks": []
     },
     {
       "title": "Salt River",
@@ -116,7 +121,8 @@ var SITE_CONTENT = {
       "image": "hero-photo.jpg",
       "free": false,
       "genre": "Old Time",
-      "youtubeUrl": ""
+      "youtubeUrl": "",
+      "jamTracks": []
     },
     {
       "title": "Tree of Life",
@@ -130,7 +136,8 @@ var SITE_CONTENT = {
       "image": "gareth-harpshed.jpg",
       "free": false,
       "genre": "Old Time",
-      "youtubeUrl": ""
+      "youtubeUrl": "",
+      "jamTracks": []
     },
     {
       "title": "Cherry Pink and Apple Blossom White",
@@ -145,7 +152,8 @@ var SITE_CONTENT = {
       "image": "hero-photo.jpg",
       "free": false,
       "genre": "Blues / Jazz Crossover",
-      "youtubeUrl": ""
+      "youtubeUrl": "",
+      "jamTracks": []
     },
     {
       "title": "Yew Piney Mountain",
@@ -159,7 +167,8 @@ var SITE_CONTENT = {
       "image": "gareth-harpshed.jpg",
       "free": false,
       "genre": "Old Time",
-      "youtubeUrl": ""
+      "youtubeUrl": "",
+      "jamTracks": []
     }
   ],
   "jamTracks": [
@@ -444,8 +453,7 @@ var SITE_CONTENT = {
               "youtubeUrl": "",
               "insight": "A classic Appalachian reel and the perfect place to start. Clean first-position melody — just blow and draw notes, no bends needed. Focus on getting the rhythm steady before you worry about speed.",
               "tabPdf": "",
-              "jamTrackUrl": "",
-              "jamTrackTitle": "",
+              "jamTracks": [],
               "key": "C",
               "position": "1st"
             }
@@ -467,8 +475,7 @@ var SITE_CONTENT = {
               "youtubeUrl": "",
               "insight": "Fiddle tune in the key of A on a D harmonica, 2nd position. AABB form — the A part is melodic and flowing, the B part drives harder with more rhythmic punch. Source: The Improbabillies Album. The alternate B part adds octave jumps for when you want to push the energy up.",
               "tabPdf": "tabs/Salt_River.pdf",
-              "jamTrackUrl": "",
-              "jamTrackTitle": "",
+              "jamTracks": [],
               "key": "D",
               "position": "2nd"
             }
@@ -484,8 +491,7 @@ var SITE_CONTENT = {
               "youtubeUrl": "",
               "insight": "A traditional fox chase style piece — rhythm, melody, and raincrow riffs all woven together. This is the full toolkit of solo harp showmanship in the old-time tradition. The rhythm section is your foundation — get that locked in before you layer the melody and riffs on top. The raincrow riffs slot in after specific phrases in the fox chase pattern.",
               "tabPdf": "tabs/Rain_Crow_Bill.pdf",
-              "jamTrackUrl": "",
-              "jamTrackTitle": "",
+              "jamTracks": [],
               "key": "C",
               "position": "1st"
             },
@@ -494,8 +500,7 @@ var SITE_CONTENT = {
               "youtubeUrl": "",
               "insight": "Old time / Irish crossover in the key of F on a Bb harmonica, 2nd position. Inspired by Grant Dermody's playing. The melody has a beautiful, rolling quality — it breathes between phrases. Learn by ear first, use the tab as backup. The ghost notes and sustained notes are what give this tune its character.",
               "tabPdf": "tabs/Tree_of_Life.pdf",
-              "jamTrackUrl": "",
-              "jamTrackTitle": "",
+              "jamTracks": [],
               "key": "Bb",
               "position": "2nd"
             },
@@ -504,8 +509,7 @@ var SITE_CONTENT = {
               "youtubeUrl": "https://youtu.be/VI5PQqy3ifY",
               "insight": "One of the great old time fiddle tunes from the heart of West Virginia, believed to have been composed by Uncle Jack McElwain of Webster County. This version comes from Grant Dermody's 2003 album Crossing That River. Played in the key of A on a Low D harmonica, 2nd position. The A part sits in the upper middle register with a modal, slightly crooked feel. The B part drops into the low register with octave splits and a driving rhythmic pulse. You need to be comfortable with bends and octave splits for this one.",
               "tabPdf": "tabs/Yew_Piney_Mountain.pdf",
-              "jamTrackUrl": "",
-              "jamTrackTitle": "",
+              "jamTracks": [],
               "key": "D",
               "position": "2nd"
             }
@@ -615,8 +619,7 @@ var SITE_CONTENT = {
               "youtubeUrl": "",
               "insight": "Inspired by Kim Wilson's version with the Fabulous Thunderbirds. A mambo on diatonic harmonica — originally a Damaso Perez Prado hit from 1955. There's a longer tradition of blues harp players tackling Latin tunes than people realise. Big Walter Horton was doing La Cucaracha and La Paloma decades ago. Kim Wilson grew up studying Walter closely, and you can hear that lineage here. The verse melody sits in the middle register and should feel relaxed and singable. The chorus has a punchy, horn-section feel. Then you drop into the low register break — completely different colour, darker, more intimate. The ascending run takes you right up through the high register. Learn by ear first, use the tab as backup.",
               "tabPdf": "tabs/Cherry_Pink_and_Apple_Blossom_White.pdf",
-              "jamTrackUrl": "",
-              "jamTrackTitle": "",
+              "jamTracks": [],
               "key": "C",
               "position": "1st"
             }

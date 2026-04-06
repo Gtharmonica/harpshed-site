@@ -9,7 +9,7 @@
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta http-equiv="Content-Security-Policy" content="
   default-src 'self';
-  script-src 'self' 'unsafe-inline' https://formspree.io https://assets.calendly.com;
+  script-src 'self' 'unsafe-inline' https://formspree.io https://assets.calendly.com https://cdnjs.cloudflare.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com;
   img-src 'self' https://img.youtube.com data:;
@@ -18,6 +18,7 @@
   object-src 'none';
   base-uri 'self';
   form-action 'self' https://formspree.io;
+  media-src 'self' data: blob:;
 ">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>HarpShed — Traditional Roots, Boundless Creativity</title>
@@ -2792,6 +2793,224 @@
     color: var(--wood-light);
     font-style: italic;
     padding: 10px 0;
+  }
+
+  /* Enhanced Jam Track Player */
+  .jam-track-enhanced {
+    padding: 20px;
+  }
+
+  .jam-track-status {
+    font-size: 12px;
+    color: var(--wood-light);
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .jam-track-selector {
+    margin-bottom: 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .jam-track-selector label {
+    font-size: 11px;
+    color: var(--wood-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .jam-track-selector select {
+    flex: 1;
+    background: rgba(0,0,0,0.3);
+    color: var(--parchment);
+    border: 1px solid rgba(160,82,45,0.3);
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .jam-track-transport {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(160,82,45,0.2);
+  }
+
+  .jam-track-transport button {
+    background: var(--rust);
+    color: var(--parchment);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .jam-track-transport button:hover {
+    background: var(--rust-light);
+  }
+
+  .jam-track-transport span {
+    font-size: 12px;
+    color: var(--parchment);
+    font-family: monospace;
+    flex-shrink: 0;
+  }
+
+  .jam-track-section {
+    margin-bottom: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(160,82,45,0.2);
+  }
+
+  .jam-track-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .jam-track-section label {
+    font-size: 11px;
+    color: var(--wood-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .jam-track-speed-row,
+  .jam-track-pitch-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .jam-track-pitch-row {
+    margin-bottom: 0;
+  }
+
+  .jam-track-speed-row button,
+  .jam-track-pitch-row button {
+    background: var(--wood-mid);
+    color: var(--parchment);
+    border: 1px solid var(--rust);
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    width: 32px;
+  }
+
+  .jam-track-speed-row button:hover,
+  .jam-track-pitch-row button:hover {
+    background: var(--rust);
+  }
+
+  .jam-track-speed-row span,
+  .jam-track-pitch-row span {
+    font-size: 12px;
+    color: var(--parchment);
+    font-family: monospace;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .jam-track-speed-row small,
+  .jam-track-pitch-row small {
+    font-size: 10px;
+    color: var(--wood-light);
+    flex-shrink: 0;
+  }
+
+  .jam-track-speed-row input[type="range"],
+  .jam-track-pitch-row input[type="range"] {
+    flex: 1;
+    accent-color: var(--rust);
+    cursor: pointer;
+  }
+
+  .jam-track-loop {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .jam-track-loop-inputs {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .jam-track-loop-inputs label {
+    font-size: 11px;
+    color: var(--wood-light);
+    font-weight: 600;
+  }
+
+  .jam-track-loop-inputs input[type="number"] {
+    width: 60px;
+    background: rgba(0,0,0,0.3);
+    color: var(--parchment);
+    border: 1px solid rgba(160,82,45,0.3);
+    padding: 4px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+
+  .jam-track-loop-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .jam-track-loop-buttons button {
+    background: var(--wood-mid);
+    color: var(--parchment);
+    border: 1px solid var(--rust);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .jam-track-loop-buttons button:hover {
+    background: var(--rust);
+  }
+
+  .jam-track-loop-buttons button.active-loop {
+    background: var(--rust);
+    border-color: var(--rust-light);
+  }
+
+  .jam-track-reset {
+    text-align: center;
+  }
+
+  .jam-track-reset button {
+    background: var(--wood-dark);
+    color: var(--parchment);
+    border: 1px solid var(--rust-light);
+    padding: 8px 24px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .jam-track-reset button:hover {
+    background: var(--rust);
+    border-color: var(--rust);
   }
 
   /* Metronome */
@@ -5938,6 +6157,7 @@
 </div>
 
 <!-- ═══ CONTENT ENGINE ═══════════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
 <script src="content.js"></script>
 <script>
 (function() {
@@ -6083,31 +6303,12 @@
         ? '<button class="tab-download-btn" onclick="event.stopPropagation();window.open(\'' + tab.downloadUrl + '\',\'_blank\')">&#8615; Download Tab PDF</button>'
         : '';
 
-      // Jam track player with loop
+      // Jam track player with Tone.js engine
       var jamHtml = '';
-      if (tab.jamTrackUrl) {
-        var jtId = 'jt-lib-' + idx;
-        jamHtml = '<div class="jam-track-player">' +
-          '<div class="jam-track-player-title">&#9835; Jam Track' + (tab.jamTrackTitle ? ': ' + tab.jamTrackTitle : '') + '</div>' +
-          '<audio id="' + jtId + '" controls preload="none"><source src="' + tab.jamTrackUrl + '" type="audio/mpeg"></audio>' +
-          '<div class="jam-track-controls">' +
-            '<div class="jam-track-control"><label>Speed</label>' +
-              '<input type="range" min="0.5" max="1.5" step="0.05" value="1" oninput="var a=document.getElementById(\'' + jtId + '\');a.playbackRate=this.value;this.nextElementSibling.textContent=this.value+\'x\'">' +
-              '<span class="control-value">1x</span></div>' +
-            '<div class="jam-track-control"><label>Pitch</label>' +
-              '<input type="range" min="-6" max="6" step="1" value="0" oninput="var a=document.getElementById(\'' + jtId + '\');if(a.preservesPitch!==undefined){a.preservesPitch=false;}this.nextElementSibling.textContent=(this.value>0?\'+\':\'\')+this.value">' +
-              '<span class="control-value">0</span></div>' +
-            '<div class="jam-track-control"><button onclick="var a=document.getElementById(\'' + jtId + '\');a.playbackRate=1;a.preservesPitch=true;this.closest(\'.jam-track-controls\').querySelectorAll(\'input[type=range]\').forEach(function(r){r.value=r.defaultValue;r.dispatchEvent(new Event(\'input\'))})">Reset</button></div>' +
-          '</div>' +
-          '<div class="jam-track-loop-controls">' +
-            '<label>Loop</label>' +
-            '<label>Start (s)</label><input type="number" id="' + jtId + '-ls" min="0" step="1" value="0">' +
-            '<label>End (s)</label><input type="number" id="' + jtId + '-le" min="0" step="1" value="0">' +
-            '<button onclick="startLoop(\'' + jtId + '\')">Set Loop</button>' +
-            '<button onclick="clearLoop(\'' + jtId + '\')">Clear</button>' +
-          '</div>' +
-        '</div>';
-      } else if (tab.jamTrackUrl === '') {
+      var jtId = 'jt-lib-' + idx;
+      if (tab.jamTracks && tab.jamTracks.length > 0) {
+        jamHtml = buildJamTrackHtml(jtId, tab.jamTracks);
+      } else {
         jamHtml = '<div class="jam-track-player"><div class="jam-track-empty">&#9835; Jam track coming soon</div></div>';
       }
 
@@ -6142,7 +6343,85 @@
     }).join('');
   }
 
-  // Loop functionality
+  // Build enhanced jam track HTML
+  function buildJamTrackHtml(id, jamTracks) {
+    if (!jamTracks || jamTracks.length === 0) {
+      return '<div class="jam-track-player"><div class="jam-track-empty">&#9835; Jam track coming soon</div></div>';
+    }
+
+    var selectorHtml = '';
+    if (jamTracks.length > 1) {
+      var opts = jamTracks.map(function(t, i) {
+        return '<option value="' + i + '">' + t.title + '</option>';
+      }).join('');
+      selectorHtml = '<div class="jam-track-selector">' +
+        '<label>Track</label>' +
+        '<select id="' + id + '-track" onchange="var tracks = ' + JSON.stringify(jamTracks) + '; getJamEngine(\'' + id + '\', tracks[this.value].url).loadTrack(tracks[this.value].url)">' + opts + '</select>' +
+      '</div>';
+    }
+
+    var firstUrl = jamTracks[0].url;
+    var speedBtnMinus = 'getJamEngine(\'' + id + '\', \'' + firstUrl.replace(/'/g, "\\\\'") + '\').setSpeed(getJamEngine(\'' + id + '\').speed - 0.05)';
+    var speedBtnPlus = 'getJamEngine(\'' + id + '\', \'' + firstUrl.replace(/'/g, "\\\\'") + '\').setSpeed(getJamEngine(\'' + id + '\').speed + 0.05)';
+    var speedSlide = 'getJamEngine(\'' + id + '\', \'' + firstUrl.replace(/'/g, "\\\\'") + '\').setSpeed(this.value)';
+    var pitchMinus = 'getJamEngine(\'' + id + '\', \'' + firstUrl.replace(/'/g, "\\\\'") + '\').setPitch(getJamEngine(\'' + id + '\').semitones - 1, getJamEngine(\'' + id + '\').cents)';
+    var pitchPlus = 'getJamEngine(\'' + id + '\', \'' + firstUrl.replace(/'/g, "\\\\'") + '\').setPitch(getJamEngine(\'' + id + '\').semitones + 1, getJamEngine(\'' + id + '\').cents)';
+    var centsSlide = 'getJamEngine(\'' + id + '\', \'' + firstUrl.replace(/'/g, "\\\\'") + '\').setPitch(getJamEngine(\'' + id + '\').semitones, this.value)';
+    var setLoop = 'getJamEngine(\'' + id + '\', \'' + firstUrl.replace(/'/g, "\\\\'") + '\').setLoop()';
+    var clearLoopFn = 'getJamEngine(\'' + id + '\', \'' + firstUrl.replace(/'/g, "\\\\'") + '\').clearLoop()';
+    var resetFn = 'getJamEngine(\'' + id + '\', \'' + firstUrl.replace(/'/g, "\\\\'") + '\').reset()';
+    var toggleFn = 'getJamEngine(\'' + id + '\', \'' + firstUrl.replace(/'/g, "\\\\'") + '\').toggle()';
+
+    return '<div class="jam-track-player jam-track-enhanced">' +
+      '<div class="jam-track-player-title">&#9835; Jam Track</div>' +
+      '<div class="jam-track-status" id="' + id + '-status">Loading...</div>' +
+      selectorHtml +
+      '<div class="jam-track-transport">' +
+        '<button id="' + id + '-playbtn" onclick="' + toggleFn + '">▶ Play</button>' +
+        '<span id="' + id + '-time">0:00</span> / <span id="' + id + '-duration">0:00</span>' +
+      '</div>' +
+      '<div class="jam-track-section">' +
+        '<label>Speed</label>' +
+        '<div class="jam-track-speed-row">' +
+          '<button onclick="' + speedBtnMinus + '">−</button>' +
+          '<span id="' + id + '-speed-val">100%</span>' +
+          '<button onclick="' + speedBtnPlus + '">+</button>' +
+          '<input type="range" id="' + id + '-speed" min="0.5" max="2" step="0.05" value="1" oninput="' + speedSlide + '">' +
+        '</div>' +
+      '</div>' +
+      '<div class="jam-track-section">' +
+        '<label>Pitch</label>' +
+        '<div class="jam-track-pitch-row">' +
+          '<button onclick="' + pitchMinus + '">−</button>' +
+          '<span id="' + id + '-semi-val">+0</span>' +
+          '<small>st</small>' +
+          '<button onclick="' + pitchPlus + '">+</button>' +
+        '</div>' +
+        '<div class="jam-track-pitch-row">' +
+          '<label style="display:inline;margin:0;margin-right:4px;">Fine</label>' +
+          '<input type="range" id="' + id + '-cents" min="-50" max="50" step="1" value="0" oninput="' + centsSlide + '">' +
+          '<span id="' + id + '-cents-val">+0</span>' +
+          '<small>cents</small>' +
+        '</div>' +
+      '</div>' +
+      '<div class="jam-track-section jam-track-loop">' +
+        '<label>Loop</label>' +
+        '<div class="jam-track-loop-inputs">' +
+          '<label>Start (s)</label><input type="number" id="' + id + '-ls" min="0" step="1" value="0">' +
+          '<label>End (s)</label><input type="number" id="' + id + '-le" min="0" step="1" value="0">' +
+        '</div>' +
+        '<div class="jam-track-loop-buttons">' +
+          '<button id="' + id + '-loopbtn" onclick="' + setLoop + '">Set Loop</button>' +
+          '<button onclick="' + clearLoopFn + '">Clear</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="jam-track-section jam-track-reset">' +
+        '<button onclick="' + resetFn + '">Reset All</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // Loop functionality (legacy, keeping for compatibility)
   var loopIntervals = {};
   window.startLoop = function(audioId) {
     clearLoop(audioId);
@@ -6395,22 +6674,11 @@
             ? '<span class="tab-subgenre-badge">' + item.subgenre + '</span>'
             : '';
 
-          // Jam track
+          // Jam track with Tone.js engine
           var jamTrackHtml = '';
-          if (item.jamTrackUrl) {
-            var playerId = 'jt2-' + item.title.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-            jamTrackHtml = '<div class="jam-track-player">' +
-              '<div class="jam-track-player-title">&#9835; Jam Track' + (item.jamTrackTitle ? ': ' + item.jamTrackTitle : '') + '</div>' +
-              '<audio id="' + playerId + '" controls preload="none"><source src="' + item.jamTrackUrl + '" type="audio/mpeg"></audio>' +
-              '<div class="jam-track-controls">' +
-                '<div class="jam-track-control"><label>Speed</label>' +
-                  '<input type="range" min="0.5" max="1.5" step="0.05" value="1" oninput="var a=document.getElementById(\'' + playerId + '\');a.playbackRate=this.value;this.nextElementSibling.textContent=this.value+\'x\'">' +
-                  '<span class="control-value">1x</span></div>' +
-                '<div class="jam-track-control"><label>Pitch</label>' +
-                  '<input type="range" min="-6" max="6" step="1" value="0" oninput="var a=document.getElementById(\'' + playerId + '\');if(a.preservesPitch!==undefined){a.preservesPitch=false;}this.nextElementSibling.textContent=(this.value>0?\'+\':\'\')+this.value">' +
-                  '<span class="control-value">0</span></div>' +
-                '<div class="jam-track-control"><button onclick="var a=document.getElementById(\'' + playerId + '\');a.playbackRate=1;a.preservesPitch=true;this.closest(\'.jam-track-controls\').querySelectorAll(\'input[type=range]\').forEach(function(r){r.value=r.defaultValue;r.dispatchEvent(new Event(\'input\'))})">Reset</button></div>' +
-              '</div></div>';
+          var playerId = 'jt2-' + item.title.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+          if (item.jamTracks && item.jamTracks.length > 0) {
+            jamTrackHtml = buildJamTrackHtml(playerId, item.jamTracks);
           } else {
             jamTrackHtml = '<div class="jam-track-player"><div class="jam-track-empty">&#9835; Jam track coming soon</div></div>';
           }
@@ -6844,6 +7112,173 @@
     };
   })();
 
+  // ─── Tone.js Jam Track Engine ──────────────────────────────────
+  var jamEngines = {};
+
+  function formatTime(seconds) {
+    var mins = Math.floor(seconds / 60);
+    var secs = Math.floor(seconds % 60);
+    return mins + ':' + (secs < 10 ? '0' : '') + secs;
+  }
+
+  function createJamEngine(id, url) {
+    if (!window.Tone) {
+      console.error('Tone.js not loaded');
+      return null;
+    }
+
+    var pitchShift = new Tone.PitchShift({ pitch: 0, windowSize: 0.1 });
+    var player = new Tone.GrainPlayer({
+      url: url,
+      grainSize: 0.2,
+      overlap: 0.1,
+      playbackRate: 1,
+      onload: function() {
+        var loadEl = document.getElementById(id + '-status');
+        if (loadEl) loadEl.textContent = 'Ready';
+        var durEl = document.getElementById(id + '-duration');
+        if (durEl && player.buffer) durEl.textContent = formatTime(player.buffer.duration);
+      }
+    });
+    player.chain(pitchShift, Tone.Destination);
+
+    var engine = {
+      player: player,
+      pitchShift: pitchShift,
+      speed: 1,
+      semitones: 0,
+      cents: 0,
+      loopStart: 0,
+      loopEnd: 0,
+      looping: false,
+      playing: false,
+      startTime: 0,
+      offset: 0,
+
+      play: function() {
+        if (Tone.context.state !== 'running') Tone.start();
+        if (!this.playing && player.loaded) {
+          player.start(undefined, this.offset);
+          this.playing = true;
+          this.startTime = Tone.now();
+          this.updateTransport();
+          var btn = document.getElementById(id + '-playbtn');
+          if (btn) btn.textContent = '⏸ Pause';
+        }
+      },
+
+      pause: function() {
+        if (this.playing) {
+          this.offset += Tone.now() - this.startTime;
+          player.stop();
+          this.playing = false;
+          var btn = document.getElementById(id + '-playbtn');
+          if (btn) btn.textContent = '▶ Play';
+        }
+      },
+
+      toggle: function() {
+        if (this.playing) this.pause(); else this.play();
+      },
+
+      stop: function() {
+        if (this.playing) player.stop();
+        this.playing = false;
+        this.offset = 0;
+        var btn = document.getElementById(id + '-playbtn');
+        if (btn) btn.textContent = '▶ Play';
+      },
+
+      setSpeed: function(val) {
+        this.speed = Math.max(0.5, Math.min(2, parseFloat(val)));
+        player.playbackRate = this.speed;
+        var disp = document.getElementById(id + '-speed-val');
+        if (disp) disp.textContent = Math.round(this.speed * 100) + '%';
+      },
+
+      setPitch: function(semitones, cents) {
+        this.semitones = parseInt(semitones) || 0;
+        this.cents = parseInt(cents) || 0;
+        pitchShift.pitch = this.semitones + (this.cents / 100);
+        var sDisp = document.getElementById(id + '-semi-val');
+        if (sDisp) sDisp.textContent = (this.semitones >= 0 ? '+' : '') + this.semitones;
+        var cDisp = document.getElementById(id + '-cents-val');
+        if (cDisp) cDisp.textContent = (this.cents >= 0 ? '+' : '') + this.cents;
+      },
+
+      setLoop: function() {
+        var s = parseFloat(document.getElementById(id + '-ls').value) || 0;
+        var e = parseFloat(document.getElementById(id + '-le').value) || 0;
+        if (e <= s && player.loaded) e = player.buffer.duration;
+        player.loop = true;
+        player.loopStart = s;
+        player.loopEnd = e;
+        this.looping = true;
+        if (document.getElementById(id + '-le')) {
+          document.getElementById(id + '-le').value = Math.floor(e);
+        }
+        var btn = document.getElementById(id + '-loopbtn');
+        if (btn) btn.classList.add('active-loop');
+      },
+
+      clearLoop: function() {
+        player.loop = false;
+        this.looping = false;
+        var btn = document.getElementById(id + '-loopbtn');
+        if (btn) btn.classList.remove('active-loop');
+      },
+
+      reset: function() {
+        this.setSpeed(1);
+        this.setPitch(0, 0);
+        this.clearLoop();
+        var speedEl = document.getElementById(id + '-speed');
+        var semiEl = document.getElementById(id + '-semi');
+        var centsEl = document.getElementById(id + '-cents');
+        if (speedEl) speedEl.value = 1;
+        if (semiEl) semiEl.value = 0;
+        if (centsEl) centsEl.value = 0;
+      },
+
+      loadTrack: function(url) {
+        this.stop();
+        player.load(url);
+        var loadEl = document.getElementById(id + '-status');
+        if (loadEl) loadEl.textContent = 'Loading...';
+      },
+
+      destroy: function() {
+        this.stop();
+        player.dispose();
+        pitchShift.dispose();
+      },
+
+      updateTransport: function() {
+        if (this.playing) {
+          var elapsed = this.offset + (Tone.now() - this.startTime);
+          var timeEl = document.getElementById(id + '-time');
+          if (timeEl) timeEl.textContent = formatTime(elapsed);
+          requestAnimationFrame(this.updateTransport.bind(this));
+        }
+      }
+    };
+
+    jamEngines[id] = engine;
+    return engine;
+  }
+
+  window.getJamEngine = function(id, url) {
+    if (!jamEngines[id] && url) {
+      createJamEngine(id, url);
+    }
+    return jamEngines[id];
+  };
+
+  window.destroyAllJamEngines = function() {
+    Object.keys(jamEngines).forEach(function(k) { jamEngines[k].destroy(); });
+    jamEngines = {};
+  };
+
   function buildMetronomeHtml(id) {
     return '<div class="metronome-widget">' +
       '<div class="metronome-header">' +
@@ -6913,8 +7348,9 @@
     var targetId = pageMap[key];
     if (!targetId) return;
 
-    // Stop any running metronomes when navigating
+    // Stop any running metronomes and jam engines when navigating
     if (typeof destroyAllMetronomes === 'function') destroyAllMetronomes();
+    if (typeof destroyAllJamEngines === 'function') destroyAllJamEngines();
 
     // Hide all pages, show target
     document.querySelectorAll('.page').forEach(function(p) {

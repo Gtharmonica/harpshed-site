@@ -55,6 +55,10 @@ This is the single source of truth for all site content. It defines a global `SI
   "method": "standard",
   "downloadUrl": "tabs/Tune_Name.pdf",  // Path to the tab PDF (use underscores)
   "youtubeUrl": "https://youtu.be/XXXXXXXXXXX",  // YouTube lesson URL (leave "" if none)
+  "jamTracks": [            // Array of jam track MP3s (empty [] for coming soon)
+    {"url": "tracks/tune-slow.mp3", "title": "Slow (70 BPM)"},
+    {"url": "tracks/tune-medium.mp3", "title": "Medium (100 BPM)"}
+  ],
   "image": "gareth-harpshed.jpg",  // Card image
   "free": false            // true = free, false = members only
 }
@@ -70,8 +74,10 @@ Find the relevant trail in the `trails` array, find the right stage, and add to 
   "youtubeUrl": "https://youtu.be/XXXXXXXXXXX",
   "insight": "Longer description with playing tips, context, and what to focus on when learning this tune.",
   "tabPdf": "tabs/Tune_Name.pdf",
-  "jamTrackUrl": "",       // URL to jam track MP3 (leave "" for coming soon)
-  "jamTrackTitle": "",     // Display name for the jam track
+  "jamTracks": [
+    {"url": "tracks/tune-slow.mp3", "title": "Slow (70 BPM)"},
+    {"url": "tracks/tune-medium.mp3", "title": "Medium (100 BPM)"}
+  ],
   "key": "D",
   "position": "2nd"
 }
@@ -129,15 +135,28 @@ The Tunes page is the unified library that replaced the old separate Tabs and Ja
 
 ## Jam Track Player
 
-Each tune card and trail tune has an integrated jam track player with:
+Each tune card and trail tune has an integrated jam track player powered by Tone.js (loaded from CDN). The player provides independent pitch and speed control, similar to the Amazing Slow Downer app.
 
-- Standard HTML5 audio controls
-- Speed slider (0.5x to 1.5x)
-- Pitch slider (-6 to +6 semitones)
-- Reset button
-- Loop controls (start/end time in seconds, set loop, clear)
+Features:
 
-To add a jam track to a tune, set `jamTrackUrl` to the MP3 URL and `jamTrackTitle` to a display name. If left as empty string, it shows "Jam track coming soon".
+- Multiple MP3 support: dropdown selector when a tune has more than one track
+- Speed control: 50% to 200% playback rate (preserves pitch via Tone.GrainPlayer time-stretching)
+- Pitch control: semitone buttons (+/- 12 semitones) for coarse adjustment
+- Cents fine-tuning: slider from -50 to +50 cents for precise pitch matching
+- Speed and pitch are fully independent (changing speed keeps your pitch setting, and vice versa)
+- Loop controls: start/end time in seconds, set/clear buttons
+- Reset All button to return everything to defaults
+- Lazy loading: audio engine only initialises when the user first interacts
+
+To add jam tracks to a tune, populate the `jamTracks` array:
+```javascript
+"jamTracks": [
+  {"url": "tracks/salt-river-slow.mp3", "title": "Slow (70 BPM)"},
+  {"url": "tracks/salt-river-medium.mp3", "title": "Medium (100 BPM)"},
+  {"url": "tracks/salt-river-fast.mp3", "title": "Fast (130 BPM)"}
+]
+```
+If the array is empty `[]`, the player shows "Jam track coming soon".
 
 ## Metronome
 
@@ -165,7 +184,10 @@ These are the main JS functions in index.html relevant to content:
 - `showPage(key)` - Main navigation function
 - `buildMetronomeHtml(id)` - Returns HTML string for a metronome widget
 - `getMetronome(id)` - Gets or creates a metronome engine instance
-- `startLoop(audioId)` / `clearLoop(audioId)` - Jam track loop controls
+- `buildJamTrackHtml(id, jamTracks)` - Returns HTML for the enhanced jam track player
+- `createJamEngine(id, url)` - Creates a Tone.js audio engine (GrainPlayer + PitchShift)
+- `getJamEngine(id, url)` - Gets or lazy-creates a jam engine instance
+- `destroyAllJamEngines()` - Cleans up all Tone.js engines on navigation
 - `getYouTubeId(url)` - Extracts video ID from YouTube URLs
 
 ## Page Map
