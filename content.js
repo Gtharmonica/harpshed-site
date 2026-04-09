@@ -240,6 +240,36 @@ var SITE_CONTENT = {
         {"url": "tracks/angeline-banjo-only.mp3", "title": "Banjo Only"},
         {"url": "tracks/angeline-banjo-and-harp.mp3", "title": "Banjo & Harp"}
       ]
+    },
+    {
+      "title": "Ducks on the Millpond",
+      "description": "A classic old-time fiddle tune with deep Appalachian roots, first recorded from fiddler Emmett Lundy in 1941. A staple of the Round Peak style and a jam session favourite. Played here in two octaves on a G harmonica with octave splits and fox chase rhythm. Five-part video series covering low octave, mid/high octave, and 1st position approaches.",
+      "key": "G",
+      "position": "2nd",
+      "difficulty": "Intermediate",
+      "trail": "blue-ridge",
+      "method": "standard",
+      "downloadUrl": "tabs/Ducks_on_the_Millpond.pdf",
+      "image": "gareth-harpshed.jpg",
+      "free": false,
+      "genre": "Old Time",
+      "youtubeUrl": "https://youtu.be/60Xz7uVAR3M",
+      "youtubeVideos": [
+        {"url": "https://youtu.be/60Xz7uVAR3M", "label": "Part 1 — Intro & A Part Low Octave"},
+        {"url": "https://youtu.be/pmc3mwEry28", "label": "Part 2 — B Part Low Octave"},
+        {"url": "https://youtu.be/wYAA0Ls29dA", "label": "Part 3 — A Part Mid/High Octave"},
+        {"url": "https://youtu.be/DfZ7qppW3Aw", "label": "Part 4 — B Part & Mixing Octaves"},
+        {"url": "https://youtu.be/_y3OA1wVCns", "label": "Part 5 — 1st Position Version"}
+      ],
+      "jamTracks": [
+        {"url": "tracks/ducks-a-part-low-octave-loop.mp3", "title": "A Part Low Octave Loop"},
+        {"url": "tracks/ducks-b-part-low-octave-loop.mp3", "title": "B Part Low Octave Loop"},
+        {"url": "tracks/ducks-full-low-octave-jam.mp3", "title": "Full Low Octave Jam"},
+        {"url": "tracks/ducks-a-part-mid-high-octave.mp3", "title": "A Part Mid/High Octave"},
+        {"url": "tracks/ducks-b-part-mid-high-octave-loop.mp3", "title": "B Part Mid/High Octave Loop"},
+        {"url": "tracks/ducks-full-mid-high-octave.mp3", "title": "Full Mid/High Octave"},
+        {"url": "tracks/ducks-full-aaabb-low-and-mid-high.mp3", "title": "Full AAABB Low & Mid/High"}
+      ]
     }
   ],
   "jamTracks": [
@@ -539,7 +569,7 @@ var SITE_CONTENT = {
         {
           "name": "Playing Along",
           "description": "Fitting in with other instruments. Following a fiddle, locking with a banjo, not stepping on toes.",
-          "tunes": "Angeline the Baker, Sandy Boys, June Apple",
+          "tunes": "Angeline the Baker, Sandy Boys, June Apple, Ducks on the Millpond",
           "content": [
             {
               "title": "Angeline the Baker",
@@ -553,6 +583,30 @@ var SITE_CONTENT = {
               "jamTracks": [
                 {"url": "tracks/angeline-banjo-only.mp3", "title": "Banjo Only"},
                 {"url": "tracks/angeline-banjo-and-harp.mp3", "title": "Banjo & Harp"}
+              ],
+              "key": "G",
+              "position": "2nd"
+            },
+            {
+              "title": "Ducks on the Millpond",
+              "youtubeUrl": "https://youtu.be/60Xz7uVAR3M",
+              "youtubeVideos": [
+                {"url": "https://youtu.be/60Xz7uVAR3M", "label": "Part 1 — Intro & A Part Low Octave"},
+                {"url": "https://youtu.be/pmc3mwEry28", "label": "Part 2 — B Part Low Octave"},
+                {"url": "https://youtu.be/wYAA0Ls29dA", "label": "Part 3 — A Part Mid/High Octave"},
+                {"url": "https://youtu.be/DfZ7qppW3Aw", "label": "Part 4 — B Part & Mixing Octaves"},
+                {"url": "https://youtu.be/_y3OA1wVCns", "label": "Part 5 — 1st Position Version"}
+              ],
+              "insight": "A classic old-time fiddle tune first recorded from Emmett Lundy of Grayson County, Virginia by Alan Lomax in 1941. A staple of the Round Peak style, popularised by Tommy Jarrell and The Camp Creek Boys. Played in second position on a G harmonica in the key of D. The low octave sits around holes 1-4 with tongue articulations driving the rhythm. The mid/high octave version moves up to holes 3-9 using octave splits for a fuller, more powerful sound. Follows an AAABB form. Start with the low octave single notes, then graduate to octave splits. There's also a 1st position version on D harmonica for cutting through in larger jams.",
+              "tabPdf": "tabs/Ducks_on_the_Millpond.pdf",
+              "jamTracks": [
+                {"url": "tracks/ducks-a-part-low-octave-loop.mp3", "title": "A Part Low Octave Loop"},
+                {"url": "tracks/ducks-b-part-low-octave-loop.mp3", "title": "B Part Low Octave Loop"},
+                {"url": "tracks/ducks-full-low-octave-jam.mp3", "title": "Full Low Octave Jam"},
+                {"url": "tracks/ducks-a-part-mid-high-octave.mp3", "title": "A Part Mid/High Octave"},
+                {"url": "tracks/ducks-b-part-mid-high-octave-loop.mp3", "title": "B Part Mid/High Octave Loop"},
+                {"url": "tracks/ducks-full-mid-high-octave.mp3", "title": "Full Mid/High Octave"},
+                {"url": "tracks/ducks-full-aaabb-low-and-mid-high.mp3", "title": "Full AAABB Low & Mid/High"}
               ],
               "key": "G",
               "position": "2nd"
