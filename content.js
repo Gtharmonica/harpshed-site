@@ -201,6 +201,23 @@ var SITE_CONTENT = {
         {"url": "tracks/hamburg-b-part-high.mp3", "title": "B Part — High Octave Loop"},
         {"url": "tracks/hamburg-b-part-ghost-octave.mp3", "title": "B Part — Ghost Octave Loop"}
       ]
+    },
+    {
+      "title": "Shootin' Creek",
+      "description": "A Virginia Blue Ridge fiddle tune named after the fast-flowing stream along the Floyd-Franklin County line — moonshine country. Closely related to Cripple Creek, recorded by Charlie Poole in 1928 and Henry Reed for the Library of Congress in 1966. Played here on a Low F harmonica in the fox chase style with low and high register variations.",
+      "key": "Low F",
+      "position": "2nd",
+      "difficulty": "Intermediate",
+      "trail": "blue-ridge",
+      "method": "standard",
+      "downloadUrl": "tabs/Shootin_Creek.pdf",
+      "image": "hero-photo.jpg",
+      "free": false,
+      "genre": "Old Time",
+      "youtubeUrl": "https://youtu.be/nY9WlP7WMBw",
+      "jamTracks": [
+        {"url": "tracks/shootin-creek-play-along.mp3", "title": "Play Along"}
+      ]
     }
   ],
   "jamTracks": [
@@ -520,8 +537,19 @@ var SITE_CONTENT = {
         {
           "name": "Holding It Down",
           "description": "Driving the rhythm. Chords, chugs, and breathing patterns that hold a tune together even without melody.",
-          "tunes": "Sail Away Ladies, Liberty, Cumberland Gap",
+          "tunes": "Sail Away Ladies, Shootin' Creek, Liberty, Cumberland Gap",
           "content": [
+            {
+              "title": "Shootin' Creek",
+              "youtubeUrl": "https://youtu.be/nY9WlP7WMBw",
+              "insight": "A Virginia Blue Ridge fiddle tune named after the fast-flowing creek along the Floyd-Franklin County line — moonshine country. Closely related to Cripple Creek, this local variant was recorded by Charlie Poole in 1928 and Henry Reed for the Library of Congress in 1966. Played here on a Low F harmonica in 2nd position in the key of C with a fox chase rhythm underneath. The structure moves between low and high registers — start with the lower A and B parts to lock in the melody and the fox chase, then take it up to the high end where the tune really opens up. Works beautifully as a solo piece or with mellow instruments like a nylon string banjo. If you're playing with a fuller band, switch to a regular F to cut through.",
+              "tabPdf": "tabs/Shootin_Creek.pdf",
+              "jamTracks": [
+                {"url": "tracks/shootin-creek-play-along.mp3", "title": "Play Along"}
+              ],
+              "key": "Low F",
+              "position": "2nd"
+            },
             {
               "title": "Rain Crow Bill",
               "youtubeUrl": "",
