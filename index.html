@@ -6446,7 +6446,7 @@
       }).join('');
       selectorHtml = '<div class="jam-track-selector">' +
         '<label>Track</label>' +
-        '<select id="' + id + '-track" onchange="var tracks = ' + JSON.stringify(jamTracks) + '; getJamEngine(\'' + id + '\', tracks[this.value].url).loadTrack(tracks[this.value].url)">' + opts + '</select>' +
+        '<select id="' + id + '-track" onchange="var tracks = ' + JSON.stringify(jamTracks).replace(/"/g, '&quot;') + '; getJamEngine(\'' + id + '\', tracks[this.value].url).loadTrack(tracks[this.value].url)">' + opts + '</select>' +
       '</div>';
     }
 
