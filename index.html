@@ -7256,14 +7256,21 @@
       offset: 0,
 
       play: function() {
-        if (Tone.context.state !== 'running') Tone.start();
-        if (!this.playing && player.loaded) {
-          player.start(undefined, this.offset);
-          this.playing = true;
-          this.startTime = Tone.now();
-          this.updateTransport();
-          var btn = document.getElementById(id + '-playbtn');
-          if (btn) btn.textContent = '⏸ Pause';
+        var self = this;
+        function doPlay() {
+          if (!self.playing && player.loaded) {
+            player.start(undefined, self.offset);
+            self.playing = true;
+            self.startTime = Tone.now();
+            self.updateTransport();
+            var btn = document.getElementById(id + '-playbtn');
+            if (btn) btn.textContent = '⏸ Pause';
+          }
+        }
+        if (Tone.context.state !== 'running') {
+          Tone.start().then(doPlay);
+        } else {
+          doPlay();
         }
       },
 
