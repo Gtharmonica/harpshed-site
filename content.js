@@ -167,8 +167,36 @@ var SITE_CONTENT = {
       "image": "gareth-harpshed.jpg",
       "free": false,
       "genre": "Old Time",
-      "youtubeUrl": "",
+      "youtubeUrl": "https://youtu.be/ge_681_fRE0",
+      "youtubeVideos": [
+        {"url": "https://youtu.be/ge_681_fRE0", "label": "A Part"},
+        {"url": "https://youtu.be/7d_qmO7PGeU", "label": "B Part"}
+      ],
       "jamTracks": []
+    },
+    {
+      "title": "Going Up to Hamburg",
+      "description": "A Northern Mississippi tune that evolved from a field holler into a fiddle tune. Played here as a solo piece in the fox chase style, learned from Mark Graham. AABB form with three A part variations and multiple B part octave options including ghost octave splits.",
+      "key": "A",
+      "position": "2nd",
+      "difficulty": "Intermediate",
+      "trail": "solo-harp",
+      "method": "standard",
+      "downloadUrl": "tabs/Going_Up_to_Hamburg.pdf",
+      "image": "gareth-harpshed.jpg",
+      "free": false,
+      "genre": "Old Time",
+      "youtubeUrl": "https://youtu.be/CbaUF8x1ZTQ",
+      "jamTracks": [
+        {"url": "tracks/hamburg-full-basic.mp3", "title": "Full Basic — Single Notes, No Fox"},
+        {"url": "tracks/hamburg-full-fox-120bpm.mp3", "title": "Full — Fox, Adjacent Notes, Mid & High B (120 BPM)"},
+        {"url": "tracks/hamburg-a-part-single-note.mp3", "title": "A Part — Single Note Variations Loop"},
+        {"url": "tracks/hamburg-a-part-adjacent.mp3", "title": "A Part — Adjacent Notes Loop"},
+        {"url": "tracks/hamburg-a-part-fox-chords.mp3", "title": "A Part — Fox Chase Rhythm & Chords Loop"},
+        {"url": "tracks/hamburg-b-part-low-mid.mp3", "title": "B Part — Low/Mid Octave Loop"},
+        {"url": "tracks/hamburg-b-part-high.mp3", "title": "B Part — High Octave Loop"},
+        {"url": "tracks/hamburg-b-part-ghost-octave.mp3", "title": "B Part — Ghost Octave Loop"}
+      ]
     }
   ],
   "jamTracks": [
@@ -506,7 +534,11 @@ var SITE_CONTENT = {
             },
             {
               "title": "Yew Piney Mountain",
-              "youtubeUrl": "https://youtu.be/VI5PQqy3ifY",
+              "youtubeUrl": "https://youtu.be/ge_681_fRE0",
+              "youtubeVideos": [
+                {"url": "https://youtu.be/ge_681_fRE0", "label": "A Part"},
+                {"url": "https://youtu.be/7d_qmO7PGeU", "label": "B Part"}
+              ],
               "insight": "One of the great old time fiddle tunes from the heart of West Virginia, believed to have been composed by Uncle Jack McElwain of Webster County. This version comes from Grant Dermody's 2003 album Crossing That River. Played in the key of A on a Low D harmonica, 2nd position. The A part sits in the upper middle register with a modal, slightly crooked feel. The B part drops into the low register with octave splits and a driving rhythmic pulse. You need to be comfortable with bends and octave splits for this one.",
               "tabPdf": "tabs/Yew_Piney_Mountain.pdf",
               "jamTracks": [],
@@ -558,8 +590,27 @@ var SITE_CONTENT = {
         {
           "name": "Holding It Down",
           "description": "Full self-accompaniment. Train pieces with multiple sections, novelty tunes with showmanship.",
-          "tunes": "DeFord Bailey Fox Chase, La Cucaracha (Big Walter style), freight train pieces",
-          "content": []
+          "tunes": "DeFord Bailey Fox Chase, Going Up to Hamburg, La Cucaracha (Big Walter style), freight train pieces",
+          "content": [
+            {
+              "title": "Going Up to Hamburg",
+              "youtubeUrl": "https://youtu.be/CbaUF8x1ZTQ",
+              "insight": "A Northern Mississippi tune that reportedly evolved from a field holler into a fiddle tune. The earliest known recording was made in 1939 by fiddler John Hatcher of Tishomingo County for the Library of Congress. This solo version was learned from the great harmonica player Mark Graham when he visited the UK. It's played in the fox chase style — AABB form with a brief fox chase intro each time through. The A part sits around holes 1–3 with whole tone bends and scoops giving it a vocal, holler-like quality. The B part opens up into the mid and high registers with two octave options, plus a ghost octave split variation. Build it up one layer at a time — get the basic melody solid, then layer in the variations and the fox chase rhythm underneath.",
+              "tabPdf": "tabs/Going_Up_to_Hamburg.pdf",
+              "jamTracks": [
+                {"url": "tracks/hamburg-full-basic.mp3", "title": "Full Basic — Single Notes, No Fox"},
+                {"url": "tracks/hamburg-full-fox-120bpm.mp3", "title": "Full — Fox, Adjacent Notes, Mid & High B (120 BPM)"},
+                {"url": "tracks/hamburg-a-part-single-note.mp3", "title": "A Part — Single Note Variations Loop"},
+                {"url": "tracks/hamburg-a-part-adjacent.mp3", "title": "A Part — Adjacent Notes Loop"},
+                {"url": "tracks/hamburg-a-part-fox-chords.mp3", "title": "A Part — Fox Chase Rhythm & Chords Loop"},
+                {"url": "tracks/hamburg-b-part-low-mid.mp3", "title": "B Part — Low/Mid Octave Loop"},
+                {"url": "tracks/hamburg-b-part-high.mp3", "title": "B Part — High Octave Loop"},
+                {"url": "tracks/hamburg-b-part-ghost-octave.mp3", "title": "B Part — Ghost Octave Loop"}
+              ],
+              "key": "A",
+              "position": "2nd"
+            }
+          ]
         },
         {
           "name": "Carrying Tunes",

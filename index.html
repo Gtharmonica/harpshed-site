@@ -1252,6 +1252,21 @@
     border: 1px dashed rgba(160,82,45,0.15);
   }
 
+  .tune-card-video-labelled,
+  .trail-tune-video-labelled {
+    margin: 14px 0 8px 0;
+  }
+
+  .tune-card-video-label,
+  .trail-tune-video-label {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--rust);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
   .tune-card-tools {
     display: flex;
     flex-direction: column;
@@ -6357,10 +6372,22 @@
 
     grid.innerHTML = filtered.map(function(tab, idx) {
       var tuneId = 'tune-lib-' + idx;
-      var hasVideo = tab.youtubeUrl && getYouTubeId(tab.youtubeUrl);
-      var videoHtml = hasVideo
-        ? '<div class="tune-card-video"><iframe src="https://www.youtube.com/embed/' + getYouTubeId(tab.youtubeUrl) + '" frameborder="0" allowfullscreen loading="lazy"></iframe></div>'
-        : '<div class="tune-card-video-placeholder">&#9654; Video coming soon</div>';
+      var videoHtml = '';
+      if (tab.youtubeVideos && tab.youtubeVideos.length > 0) {
+        videoHtml = tab.youtubeVideos.map(function(vid) {
+          var vidId = getYouTubeId(vid.url);
+          if (!vidId) return '';
+          return '<div class="tune-card-video-labelled">' +
+            '<div class="tune-card-video-label">' + vid.label + '</div>' +
+            '<div class="tune-card-video"><iframe src="https://www.youtube.com/embed/' + vidId + '" frameborder="0" allowfullscreen loading="lazy"></iframe></div>' +
+          '</div>';
+        }).join('');
+      } else {
+        var hasVideo = tab.youtubeUrl && getYouTubeId(tab.youtubeUrl);
+        videoHtml = hasVideo
+          ? '<div class="tune-card-video"><iframe src="https://www.youtube.com/embed/' + getYouTubeId(tab.youtubeUrl) + '" frameborder="0" allowfullscreen loading="lazy"></iframe></div>'
+          : '<div class="tune-card-video-placeholder">&#9654; Video coming soon</div>';
+      }
 
       var hasPdf = !!tab.downloadUrl;
       var pdfBtn = hasPdf
@@ -6723,10 +6750,22 @@
         stage.content.forEach(function(item) {
           var isComplete = isTuneComplete(trail.id, i, item.title);
           var tuneId = trail.id + '-' + i + '-' + item.title.replace(/[^a-zA-Z0-9]/g, '');
-          var hasVideo = !!getYouTubeId(item.youtubeUrl);
-          var videoEmbed = hasVideo
-            ? '<div class="trail-tune-video"><iframe src="https://www.youtube.com/embed/' + getYouTubeId(item.youtubeUrl) + '" frameborder="0" allowfullscreen loading="lazy"></iframe></div>'
-            : '<div class="trail-tune-video-placeholder">&#9654; Video coming soon</div>';
+          var videoEmbed = '';
+          if (item.youtubeVideos && item.youtubeVideos.length > 0) {
+            videoEmbed = item.youtubeVideos.map(function(vid) {
+              var vidId = getYouTubeId(vid.url);
+              if (!vidId) return '';
+              return '<div class="trail-tune-video-labelled">' +
+                '<div class="trail-tune-video-label">' + vid.label + '</div>' +
+                '<div class="trail-tune-video"><iframe src="https://www.youtube.com/embed/' + vidId + '" frameborder="0" allowfullscreen loading="lazy"></iframe></div>' +
+              '</div>';
+            }).join('');
+          } else {
+            var hasVideo = !!getYouTubeId(item.youtubeUrl);
+            videoEmbed = hasVideo
+              ? '<div class="trail-tune-video"><iframe src="https://www.youtube.com/embed/' + getYouTubeId(item.youtubeUrl) + '" frameborder="0" allowfullscreen loading="lazy"></iframe></div>'
+              : '<div class="trail-tune-video-placeholder">&#9654; Video coming soon</div>';
+          }
           var hasPdf = !!item.tabPdf;
           var pdfBtn = hasPdf
             ? '<button class="tab-download-btn" onclick="event.stopPropagation();window.open(\'' + item.tabPdf + '\',\'_blank\')">&#8615; Download Tab PDF</button>'
