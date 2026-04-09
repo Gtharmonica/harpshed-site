@@ -7232,10 +7232,49 @@
   }
 
   function createJamEngine(id, url) {
+    // ── HTML5 Audio for reliable loading & fallback ──
     var audio = new Audio();
     audio.crossOrigin = 'anonymous';
     audio.preload = 'auto';
+    audio.preservesPitch = true;
+    audio.mozPreservesPitch = true;
+    audio.webkitPreservesPitch = true;
     audio.src = url;
+    var currentUrl = url;
+
+    // ── Tone.js GrainPlayer for smooth time-stretching ──
+    var grain = null;
+    var grainReady = false;
+    var grainOffset = 0;
+    var grainStartTime = 0;
+    var useGrain = false;
+
+    function initGrain(trackUrl) {
+      if (!window.Tone) return;
+      return Tone.start().then(function() {
+        return fetch(trackUrl);
+      }).then(function(resp) {
+        return resp.arrayBuffer();
+      }).then(function(buf) {
+        return Tone.context.decodeAudioData(buf);
+      }).then(function(decoded) {
+        if (grain) { try { grain.stop(); grain.dispose(); } catch(e){} }
+        grain = new Tone.GrainPlayer({
+          url: new Tone.ToneAudioBuffer(decoded),
+          grainSize: 0.2,
+          overlap: 0.1,
+          playbackRate: engine.speed
+        }).toDestination();
+        grain.volume.value = 20 * Math.log10(Math.max(0.001, audio.volume));
+        grainReady = true;
+        useGrain = true;
+        console.log('GrainPlayer ready for ' + id);
+      }).catch(function(e) {
+        console.warn('GrainPlayer init failed, using HTML5 fallback:', e);
+        grainReady = false;
+        useGrain = false;
+      });
+    }
 
     audio.addEventListener('canplaythrough', function() {
       var loadEl = document.getElementById(id + '-status');
@@ -7245,11 +7284,14 @@
     });
 
     audio.addEventListener('timeupdate', function() {
-      var timeEl = document.getElementById(id + '-time');
-      if (timeEl) timeEl.textContent = formatTime(audio.currentTime);
+      if (!useGrain || !engine.playing) {
+        var timeEl = document.getElementById(id + '-time');
+        if (timeEl) timeEl.textContent = formatTime(audio.currentTime);
+      }
     });
 
     audio.addEventListener('ended', function() {
+      engine.playing = false;
       var btn = document.getElementById(id + '-playbtn');
       if (btn) btn.textContent = '▶ Play';
     });
@@ -7264,16 +7306,49 @@
 
       play: function() {
         var self = this;
-        audio.play().then(function() {
-          self.playing = true;
+        if (useGrain && grainReady && grain) {
+          // Play via GrainPlayer
+          if (Tone.context.state !== 'running') {
+            Tone.start().then(function() { self._grainPlay(); });
+          } else {
+            self._grainPlay();
+          }
+        } else {
+          // Play via HTML5 Audio
+          audio.play().then(function() {
+            self.playing = true;
+            var btn = document.getElementById(id + '-playbtn');
+            if (btn) btn.textContent = '⏸ Pause';
+          }).catch(function(e) { console.error('Play failed:', e); });
+        }
+      },
+
+      _grainPlay: function() {
+        if (!this.playing && grain && grain.loaded) {
+          grain.start(undefined, grainOffset);
+          this.playing = true;
+          grainStartTime = Tone.now();
+          this._updateGrainTime();
           var btn = document.getElementById(id + '-playbtn');
           if (btn) btn.textContent = '⏸ Pause';
-        }).catch(function(e) {
-          console.error('Play failed:', e);
-        });
+        }
+      },
+
+      _updateGrainTime: function() {
+        var self = this;
+        if (this.playing && useGrain) {
+          var elapsed = grainOffset + (Tone.now() - grainStartTime) * this.speed;
+          var timeEl = document.getElementById(id + '-time');
+          if (timeEl) timeEl.textContent = formatTime(elapsed);
+          requestAnimationFrame(function() { self._updateGrainTime(); });
+        }
       },
 
       pause: function() {
+        if (useGrain && grain) {
+          grainOffset += (Tone.now() - grainStartTime) * this.speed;
+          try { grain.stop(); } catch(e) {}
+        }
         audio.pause();
         this.playing = false;
         var btn = document.getElementById(id + '-playbtn');
@@ -7285,6 +7360,10 @@
       },
 
       stop: function() {
+        if (useGrain && grain) {
+          try { grain.stop(); } catch(e) {}
+          grainOffset = 0;
+        }
         audio.pause();
         audio.currentTime = 0;
         this.playing = false;
@@ -7293,23 +7372,49 @@
       },
 
       setSpeed: function(val) {
+        var wasPlaying = this.playing;
         this.speed = Math.max(0.5, Math.min(2, parseFloat(val)));
-        audio.playbackRate = this.speed;
         var disp = document.getElementById(id + '-speed-val');
         if (disp) disp.textContent = Math.round(this.speed * 100) + '%';
+
+        if (this.speed === 1 && useGrain && wasPlaying) {
+          // Switch back to HTML5 Audio at normal speed
+          this.pause();
+          useGrain = false;
+          audio.currentTime = grainOffset;
+          audio.playbackRate = 1;
+          this.play();
+          return;
+        }
+
+        if (this.speed !== 1 && !useGrain && !grainReady) {
+          // First speed change: try to init GrainPlayer
+          var self = this;
+          audio.playbackRate = this.speed; // immediate fallback
+          initGrain(currentUrl).then(function() {
+            if (grainReady && wasPlaying) {
+              // Swap from Audio to Grain
+              grainOffset = audio.currentTime;
+              audio.pause();
+              grain.playbackRate = self.speed;
+              self.playing = false;
+              self.play();
+            }
+          });
+          return;
+        }
+
+        if (useGrain && grain) {
+          grain.playbackRate = this.speed;
+        } else {
+          audio.playbackRate = this.speed;
+        }
       },
 
       setPitch: function(semitones, cents) {
         this.semitones = parseInt(semitones) || 0;
         this.cents = parseInt(cents) || 0;
-        // Pitch shifting requires Web Audio API — connect on first use
-        if ((this.semitones !== 0 || this.cents !== 0) && !this._waConnected) {
-          this._connectWebAudio();
-        }
-        if (this._pitchShift) {
-          var speedCompensation = -12 * Math.log2(this.speed);
-          this._pitchShift.pitch = speedCompensation + this.semitones + (this.cents / 100);
-        }
+        // Pitch shift only available via GrainPlayer + PitchShift — future enhancement
         var sDisp = document.getElementById(id + '-semi-val');
         if (sDisp) sDisp.textContent = (this.semitones >= 0 ? '+' : '') + this.semitones;
         var cDisp = document.getElementById(id + '-cents-val');
@@ -7317,46 +7422,38 @@
       },
 
       setVolume: function(val) {
-        audio.volume = Math.max(0, Math.min(1, parseFloat(val)));
+        var v = Math.max(0, Math.min(1, parseFloat(val)));
+        audio.volume = v;
+        if (grain) grain.volume.value = v > 0.001 ? 20 * Math.log10(v) : -60;
         var disp = document.getElementById(id + '-vol-val');
-        if (disp) disp.textContent = Math.round(audio.volume * 100) + '%';
-      },
-
-      _connectWebAudio: function() {
-        if (this._waConnected || !window.Tone) return;
-        try {
-          Tone.start();
-          var source = Tone.context.createMediaElementSource(audio);
-          this._pitchShift = new Tone.PitchShift({ pitch: 0, windowSize: 0.15 });
-          var toneSource = new Tone.ToneAudioNode();
-          toneSource.input = source;
-          toneSource.connect(this._pitchShift);
-          this._pitchShift.toDestination();
-          this._waConnected = true;
-        } catch(e) {
-          console.error('Web Audio pitch shift setup failed:', e);
-        }
+        if (disp) disp.textContent = Math.round(v * 100) + '%';
       },
 
       setLoop: function() {
         var s = parseFloat(document.getElementById(id + '-ls').value) || 0;
         var e = parseFloat(document.getElementById(id + '-le').value) || 0;
         if (e <= s) e = audio.duration || 0;
-        audio.loop = true;
-        // HTML5 audio doesn't support loop points natively, use timeupdate
         this._loopStart = s;
         this._loopEnd = e;
         this.looping = true;
+        audio.loop = true;
         audio.currentTime = s;
         if (document.getElementById(id + '-le')) {
           document.getElementById(id + '-le').value = Math.floor(e);
         }
+        if (grain) {
+          grain.loop = true;
+          grain.loopStart = s;
+          grain.loopEnd = e;
+        }
         var self = this;
-        audio.addEventListener('timeupdate', this._loopHandler = function() {
-          if (self.looping && audio.currentTime >= self._loopEnd) {
-            audio.currentTime = self._loopStart;
-          }
-        });
+        if (!this._loopHandler) {
+          audio.addEventListener('timeupdate', this._loopHandler = function() {
+            if (self.looping && audio.currentTime >= self._loopEnd) {
+              audio.currentTime = self._loopStart;
+            }
+          });
+        }
         var btn = document.getElementById(id + '-loopbtn');
         if (btn) btn.classList.add('active-loop');
       },
@@ -7364,6 +7461,7 @@
       clearLoop: function() {
         audio.loop = false;
         this.looping = false;
+        if (grain) grain.loop = false;
         if (this._loopHandler) {
           audio.removeEventListener('timeupdate', this._loopHandler);
           this._loopHandler = null;
@@ -7373,6 +7471,12 @@
       },
 
       reset: function() {
+        if (useGrain && grain) {
+          try { grain.stop(); } catch(e) {}
+          grainOffset = 0;
+          useGrain = false;
+        }
+        this.playing = false;
         this.setSpeed(1);
         this.setPitch(0, 0);
         this.setVolume(1);
@@ -7390,8 +7494,14 @@
       loadTrack: function(newUrl) {
         this.stop();
         this.clearLoop();
+        currentUrl = newUrl;
         audio.src = newUrl;
         audio.load();
+        // Reset grain for new track
+        if (grain) { try { grain.dispose(); } catch(e) {} grain = null; }
+        grainReady = false;
+        grainOffset = 0;
+        useGrain = false;
         var loadEl = document.getElementById(id + '-status');
         if (loadEl) loadEl.textContent = 'Loading...';
         var durEl = document.getElementById(id + '-duration');
@@ -7403,7 +7513,7 @@
       destroy: function() {
         this.stop();
         audio.src = '';
-        if (this._pitchShift) this._pitchShift.dispose();
+        if (grain) { try { grain.dispose(); } catch(e) {} }
       }
     };
 
