@@ -7788,10 +7788,14 @@
       if (href === '#' + key) a.classList.add('active');
     });
 
-    // Scroll to top of page container
+    // Scroll to top of page content, accounting for fixed nav height
     var container = document.getElementById('page-container');
-    if (container) {
-      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (container && key !== 'home') {
+      var navHeight = document.querySelector('.site-header') ? document.querySelector('.site-header').offsetHeight : 60;
+      var top = container.getBoundingClientRect().top + window.pageYOffset - navHeight;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // Close mobile menu
