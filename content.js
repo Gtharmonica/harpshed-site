@@ -111,7 +111,7 @@ var SITE_CONTENT = {
     },
     {
       "title": "Salt River",
-      "description": "Fiddle tune in the key of A on a D harmonica. AABB form with basic melody and advanced octave variations. Source: The Improbabillies Album.",
+      "description": "A classic Appalachian fiddle tune with roots stretching back to the 1800s, possibly derived from the Irish air Molly Maguire. This version comes from Grant Dermody and The Improbabillies. AABB form with basic melody, advanced octave splits, and a full history covering Clark Kessinger's 1929 Brunswick recording and the tune's journey into bluegrass as Salt Creek.",
       "key": "D",
       "position": "2nd",
       "difficulty": "Intermediate",
@@ -121,8 +121,12 @@ var SITE_CONTENT = {
       "image": "hero-photo.jpg",
       "free": false,
       "genre": "Old Time",
-      "youtubeUrl": "",
-      "jamTracks": []
+      "youtubeUrl": "https://youtu.be/JVoebCCVe6k",
+      "jamTracks": [
+        {"url": "tracks/salt-river-full-120bpm.mp3", "title": "Full Play Along (120 BPM)"},
+        {"url": "tracks/salt-river-a-part-loop.mp3", "title": "A Part Loop"},
+        {"url": "tracks/salt-river-b-part-loop.mp3", "title": "B Part Loop"}
+      ]
     },
     {
       "title": "Tree of Life",
@@ -500,10 +504,14 @@ var SITE_CONTENT = {
           "content": [
             {
               "title": "Salt River",
-              "youtubeUrl": "",
-              "insight": "Fiddle tune in the key of A on a D harmonica, 2nd position. AABB form — the A part is melodic and flowing, the B part drives harder with more rhythmic punch. Source: The Improbabillies Album. The alternate B part adds octave jumps for when you want to push the energy up.",
+              "youtubeUrl": "https://youtu.be/JVoebCCVe6k",
+              "insight": "A classic Appalachian fiddle tune with roots stretching back to the 1800s, possibly Irish in origin. This version comes from Grant Dermody and The Improbabillies — it's the first track on their self-titled 1998 album. Played in second position on a D harmonica in the key of A. The A part sits in the lower register with driving train movements, the -2 +3 root note supporting the rhythm as it ascends. The B part opens up into the upper register with +6/3 octaves and longer melodic phrases. The advanced version adds splits, octaves, and ornamentation throughout. Pre-requisites: you need to be able to bend draw notes, and ideally play octaves. If you're playing this solo, a good fox chase rhythm underneath will hold it together.",
               "tabPdf": "tabs/Salt_River.pdf",
-              "jamTracks": [],
+              "jamTracks": [
+                {"url": "tracks/salt-river-full-120bpm.mp3", "title": "Full Play Along (120 BPM)"},
+                {"url": "tracks/salt-river-a-part-loop.mp3", "title": "A Part Loop"},
+                {"url": "tracks/salt-river-b-part-loop.mp3", "title": "B Part Loop"}
+              ],
               "key": "D",
               "position": "2nd"
             }
