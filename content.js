@@ -218,6 +218,28 @@ var SITE_CONTENT = {
       "jamTracks": [
         {"url": "tracks/shootin-creek-play-along.mp3", "title": "Play Along"}
       ]
+    },
+    {
+      "title": "Angeline the Baker",
+      "description": "One of the essential old-time jam tunes, composed by Stephen Foster in 1850 and evolved from a minstrel song into a fiddle standard. Played here in two octaves on a G harmonica with fox chase rhythm. A must-know for sitting in at any old-time session.",
+      "key": "G",
+      "position": "2nd",
+      "difficulty": "Intermediate",
+      "trail": "blue-ridge",
+      "method": "standard",
+      "downloadUrl": "tabs/Angeline_the_Baker.pdf",
+      "image": "hero-photo.jpg",
+      "free": false,
+      "genre": "Old Time",
+      "youtubeUrl": "https://youtu.be/pElNF8sWQac",
+      "youtubeVideos": [
+        {"url": "https://youtu.be/pElNF8sWQac", "label": "Part 1 — Lower Octave"},
+        {"url": "https://youtu.be/iPq9FgW0Tng", "label": "Part 2 — Mid/High Octave"}
+      ],
+      "jamTracks": [
+        {"url": "tracks/angeline-banjo-only.mp3", "title": "Banjo Only"},
+        {"url": "tracks/angeline-banjo-and-harp.mp3", "title": "Banjo & Harp"}
+      ]
     }
   ],
   "jamTracks": [
@@ -519,6 +541,22 @@ var SITE_CONTENT = {
           "description": "Fitting in with other instruments. Following a fiddle, locking with a banjo, not stepping on toes.",
           "tunes": "Angeline the Baker, Sandy Boys, June Apple",
           "content": [
+            {
+              "title": "Angeline the Baker",
+              "youtubeUrl": "https://youtu.be/pElNF8sWQac",
+              "youtubeVideos": [
+                {"url": "https://youtu.be/pElNF8sWQac", "label": "Part 1 — Lower Octave"},
+                {"url": "https://youtu.be/iPq9FgW0Tng", "label": "Part 2 — Mid/High Octave"}
+              ],
+              "insight": "One of the essential old-time jam tunes, composed by Stephen Foster in 1850 and evolved from a minstrel song into a beloved fiddle standard. Commonly played in D, G, and occasionally C at sessions, this is a must-know tune. This version is played in second position on a G harmonica in the key of D. The lower octave sits around holes 1-4 with tongue articulations and fox chase rhythm driving it forward. The mid/high octave version moves up to holes 4-9 for a brighter, more cutting sound. Start with the lower octave to lock in the melody and rhythm, then move up to the high version. Once you're comfortable with both, try moving between octaves within the same pass — that's where it really comes alive.",
+              "tabPdf": "tabs/Angeline_the_Baker.pdf",
+              "jamTracks": [
+                {"url": "tracks/angeline-banjo-only.mp3", "title": "Banjo Only"},
+                {"url": "tracks/angeline-banjo-and-harp.mp3", "title": "Banjo & Harp"}
+              ],
+              "key": "G",
+              "position": "2nd"
+            },
             {
               "title": "Salt River",
               "youtubeUrl": "https://youtu.be/JVoebCCVe6k",
