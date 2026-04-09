@@ -7227,12 +7227,11 @@
       return null;
     }
 
-    var pitchShift = new Tone.PitchShift({ pitch: 0, windowSize: 0.1 });
-    var player = new Tone.GrainPlayer({
+    var gain = new Tone.Gain(1).toDestination();
+    var pitchShift = new Tone.PitchShift({ pitch: 0, windowSize: 0.15, wet: 1 });
+    pitchShift.connect(gain);
+    var player = new Tone.Player({
       url: url,
-      grainSize: 0.2,
-      overlap: 0.1,
-      playbackRate: 1,
       onload: function() {
         var loadEl = document.getElementById(id + '-status');
         if (loadEl) loadEl.textContent = 'Ready';
@@ -7240,7 +7239,7 @@
         if (durEl && player.buffer) durEl.textContent = formatTime(player.buffer.duration);
       }
     });
-    player.chain(pitchShift, Tone.Destination);
+    player.connect(pitchShift);
 
     var engine = {
       player: player,
@@ -7299,6 +7298,9 @@
       setSpeed: function(val) {
         this.speed = Math.max(0.5, Math.min(2, parseFloat(val)));
         player.playbackRate = this.speed;
+        // Compensate pitch shift for speed change, then add user's pitch offset
+        var speedCompensation = -12 * Math.log2(this.speed);
+        pitchShift.pitch = speedCompensation + this.semitones + (this.cents / 100);
         var disp = document.getElementById(id + '-speed-val');
         if (disp) disp.textContent = Math.round(this.speed * 100) + '%';
       },
@@ -7306,7 +7308,8 @@
       setPitch: function(semitones, cents) {
         this.semitones = parseInt(semitones) || 0;
         this.cents = parseInt(cents) || 0;
-        pitchShift.pitch = this.semitones + (this.cents / 100);
+        var speedCompensation = -12 * Math.log2(this.speed);
+        pitchShift.pitch = speedCompensation + this.semitones + (this.cents / 100);
         var sDisp = document.getElementById(id + '-semi-val');
         if (sDisp) sDisp.textContent = (this.semitones >= 0 ? '+' : '') + this.semitones;
         var cDisp = document.getElementById(id + '-cents-val');
