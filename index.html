@@ -7235,17 +7235,19 @@
     var currentUrl = url;
     var player = null;
     var gain = null;
+    var buffer = null;
     var ready = false;
     var offset = 0;
     var startTime = 0;
     var duration = 0;
+    var userVolume = 1;
 
     function setStatus(text) {
       var el = document.getElementById(id + '-status');
       if (el) el.textContent = text;
     }
 
-    function initPlayer(trackUrl) {
+    function loadBuffer(trackUrl) {
       setStatus('Loading...');
       ready = false;
       return Tone.start().then(function() {
@@ -7255,52 +7257,65 @@
       }).then(function(buf) {
         return Tone.context.decodeAudioData(buf);
       }).then(function(decoded) {
-        // Dispose old nodes
-        if (player) { try { player.stop(); } catch(e) {} player.dispose(); }
-        if (gain) gain.dispose();
-
-        gain = new Tone.Gain(1).toDestination();
-
-        player = new Tone.GrainPlayer({
-          url: new Tone.ToneAudioBuffer(decoded),
-          grainSize: 0.2,
-          overlap: 0.1,
-          playbackRate: engine.speed || 1
-        });
-        player.connect(gain);
-
+        buffer = new Tone.ToneAudioBuffer(decoded);
         duration = decoded.duration;
         ready = true;
-        offset = 0;
         setStatus('Ready');
         var durEl = document.getElementById(id + '-duration');
         if (durEl) durEl.textContent = formatTime(duration);
       }).catch(function(e) {
-        console.error('Jam engine load failed:', e);
+        console.error('Buffer load failed:', e);
         setStatus('Error');
-        ready = false;
       });
+    }
+
+    // Create gain node once
+    function ensureGain() {
+      if (!gain) gain = new Tone.Gain(1).toDestination();
+    }
+
+    // Create a fresh GrainPlayer each time we play
+    function makePlayer() {
+      ensureGain();
+      if (player) {
+        try { player.disconnect(); player.dispose(); } catch(e) {}
+        player = null;
+      }
+      player = new Tone.GrainPlayer({
+        url: buffer,
+        grainSize: 0.2,
+        overlap: 0.1,
+        loop: engine.looping,
+        loopStart: engine._ls || 0,
+        loopEnd: engine._le || 0,
+        playbackRate: engine.speed || 1
+      });
+      player.connect(gain);
     }
 
     var engine = {
       speed: 1,
       semitones: 0,
       cents: 0,
-      looping: false,
       playing: false,
+      looping: false,
+      _ls: 0,
+      _le: 0,
 
       play: function() {
+        if (!ready || !buffer) return;
         var self = this;
-        if (!ready || !player) return;
         if (Tone.context.state !== 'running') {
           Tone.start().then(function() { self._doPlay(); });
         } else {
-          self._doPlay();
+          this._doPlay();
         }
       },
 
       _doPlay: function() {
-        if (this.playing || !ready || !player) return;
+        if (this.playing) return;
+        // Fresh player every time — avoids restart issues
+        makePlayer();
         try {
           player.start(undefined, offset);
           this.playing = true;
@@ -7317,39 +7332,30 @@
         var self = this;
         if (!this.playing) return;
         var elapsed = offset + (Tone.now() - startTime) * this.speed;
-        // Check if track ended
-        if (elapsed >= duration) {
-          if (this.looping) {
-            this.stop();
-            offset = this._loopStart || 0;
-            this.playing = false;
-            this.play();
-            return;
-          }
+        if (elapsed >= duration && !this.looping) {
           this.stop();
           return;
         }
         var timeEl = document.getElementById(id + '-time');
-        if (timeEl) timeEl.textContent = formatTime(elapsed);
+        if (timeEl) timeEl.textContent = formatTime(elapsed % duration);
         requestAnimationFrame(function() { self._tick(); });
       },
 
       pause: function() {
         if (this.playing) {
           offset += (Tone.now() - startTime) * this.speed;
-          try { player.stop(); } catch(e) {}
+          if (offset >= duration) offset = 0;
+          if (player) { try { player.stop(); } catch(e) {} }
           this.playing = false;
         }
         var btn = document.getElementById(id + '-playbtn');
         if (btn) btn.textContent = '▶ Play';
       },
 
-      toggle: function() {
-        if (this.playing) this.pause(); else this.play();
-      },
+      toggle: function() { if (this.playing) this.pause(); else this.play(); },
 
       stop: function() {
-        if (this.playing) { try { player.stop(); } catch(e) {} }
+        if (player) { try { player.stop(); } catch(e) {} }
         this.playing = false;
         offset = 0;
         var btn = document.getElementById(id + '-playbtn');
@@ -7361,42 +7367,39 @@
       setSpeed: function(val) {
         this.speed = Math.max(0.5, Math.min(2, parseFloat(val)));
         if (player) player.playbackRate = this.speed;
-        var disp = document.getElementById(id + '-speed-val');
-        if (disp) disp.textContent = Math.round(this.speed * 100) + '%';
+        var el = document.getElementById(id + '-speed-val');
+        if (el) el.textContent = Math.round(this.speed * 100) + '%';
       },
 
       setPitch: function(semitones, cents) {
         this.semitones = parseInt(semitones) || 0;
         this.cents = parseInt(cents) || 0;
-        // Pitch shift disabled for stability — future enhancement
-        var sDisp = document.getElementById(id + '-semi-val');
-        if (sDisp) sDisp.textContent = (this.semitones >= 0 ? '+' : '') + this.semitones;
-        var cDisp = document.getElementById(id + '-cents-val');
-        if (cDisp) cDisp.textContent = (this.cents >= 0 ? '+' : '') + this.cents;
+        // GrainPlayer preserves pitch naturally; independent pitch shift future work
+        var s = document.getElementById(id + '-semi-val');
+        if (s) s.textContent = (this.semitones >= 0 ? '+' : '') + this.semitones;
+        var c = document.getElementById(id + '-cents-val');
+        if (c) c.textContent = (this.cents >= 0 ? '+' : '') + this.cents;
       },
 
       setVolume: function(val) {
-        var v = Math.max(0, Math.min(1, parseFloat(val)));
-        if (gain) gain.gain.value = v;
-        var disp = document.getElementById(id + '-vol-val');
-        if (disp) disp.textContent = Math.round(v * 100) + '%';
+        userVolume = Math.max(0, Math.min(1, parseFloat(val)));
+        if (gain) gain.gain.value = userVolume;
+        var el = document.getElementById(id + '-vol-val');
+        if (el) el.textContent = Math.round(userVolume * 100) + '%';
       },
 
       setLoop: function() {
         var s = parseFloat(document.getElementById(id + '-ls').value) || 0;
         var e = parseFloat(document.getElementById(id + '-le').value) || 0;
         if (e <= s) e = duration || 0;
-        this._loopStart = s;
-        this._loopEnd = e;
-        this.looping = true;
+        this._ls = s; this._le = e; this.looping = true;
         if (player) {
           player.loop = true;
           player.loopStart = s;
           player.loopEnd = e;
         }
-        if (document.getElementById(id + '-le')) {
+        if (document.getElementById(id + '-le'))
           document.getElementById(id + '-le').value = Math.floor(e);
-        }
         var btn = document.getElementById(id + '-loopbtn');
         if (btn) btn.classList.add('active-loop');
       },
@@ -7410,13 +7413,8 @@
 
       reset: function() {
         this.stop();
-        this.speed = 1;
-        this.semitones = 0;
-        this.cents = 0;
-        this.setSpeed(1);
-        this.setPitch(0, 0);
-        this.setVolume(1);
-        this.clearLoop();
+        this.speed = 1; this.semitones = 0; this.cents = 0;
+        this.setSpeed(1); this.setPitch(0, 0); this.setVolume(1); this.clearLoop();
         var speedEl = document.getElementById(id + '-speed');
         var semiEl = document.getElementById(id + '-semi');
         var centsEl = document.getElementById(id + '-cents');
@@ -7428,10 +7426,12 @@
       },
 
       loadTrack: function(newUrl) {
-        this.stop();
-        this.clearLoop();
+        this.stop(); this.clearLoop();
         currentUrl = newUrl;
-        initPlayer(newUrl);
+        if (player) { try { player.disconnect(); player.dispose(); } catch(e) {} player = null; }
+        loadBuffer(newUrl);
+        var timeEl = document.getElementById(id + '-time');
+        if (timeEl) timeEl.textContent = '0:00';
       },
 
       destroy: function() {
@@ -7441,8 +7441,8 @@
       }
     };
 
-    // Kick off initial load
-    initPlayer(url);
+    // Load buffer on init
+    loadBuffer(url);
 
     jamEngines[id] = engine;
     return engine;
