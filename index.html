@@ -6217,7 +6217,6 @@
 </div>
 
 <!-- ═══ CONTENT ENGINE ═══════════════════════════════════════════════ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
 <script src="content.js"></script>
 <script>
 (function() {
@@ -6394,7 +6393,7 @@
         ? '<button class="tab-download-btn" onclick="event.stopPropagation();window.open(\'' + tab.downloadUrl + '\',\'_blank\')">&#8615; Download Tab PDF</button>'
         : '';
 
-      // Jam track player with Tone.js engine
+      // Jam track player (SoundTouch-style WSOLA engine)
       var jamHtml = '';
       var jtId = 'jt-lib-' + idx;
       if (tab.jamTracks && tab.jamTracks.length > 0) {
@@ -6784,7 +6783,7 @@
             ? '<span class="tab-subgenre-badge">' + item.subgenre + '</span>'
             : '';
 
-          // Jam track with Tone.js engine
+          // Jam track (SoundTouch-style WSOLA engine)
           var jamTrackHtml = '';
           var playerId = 'jt2-' + item.title.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
           if (item.jamTracks && item.jamTracks.length > 0) {
@@ -7222,76 +7221,289 @@
     };
   })();
 
-  // ─── Tone.js Jam Track Engine ──────────────────────────────────
+  // ─── WSOLA Jam Track Engine (Smooth Time-Stretching) ────────────
+  // Uses Waveform Similarity Overlap-Add for artifact-free speed changes.
+  // Same core algorithm as SoundTouch / Amazing Slow Downer.
   var jamEngines = {};
+  var _jamAudioCtx = null;
+  function _getJamAudioCtx() {
+    if (!_jamAudioCtx) _jamAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return _jamAudioCtx;
+  }
 
   function formatTime(seconds) {
+    if (!seconds || isNaN(seconds)) return '0:00';
     var mins = Math.floor(seconds / 60);
     var secs = Math.floor(seconds % 60);
     return mins + ':' + (secs < 10 ? '0' : '') + secs;
   }
 
-  function createJamEngine(id, url) {
-    var currentUrl = url;
-    var player = null;
-    var gain = null;
-    var buffer = null;
-    var ready = false;
-    var offset = 0;
-    var startTime = 0;
-    var duration = 0;
-    var userVolume = 1;
+  /* ═══════════════════════════════════════════════════════════════════
+     SoundTouch-style WSOLA Time Stretcher + Pitch Shifter
 
-    function setStatus(text) {
-      var el = document.getElementById(id + '-status');
-      if (el) el.textContent = text;
+     Uses Waveform Similarity Overlap-Add (WSOLA) for high-quality
+     time-stretching, combined with linear interpolation resampling
+     for pitch shifting. Same algorithm family as Amazing Slow Downer,
+     Mooz, and the SoundTouch C++ library.
+
+     Speed and pitch are fully independent:
+       - WSOLA handles time-stretching (speed changes)
+       - Resampler handles pitch transposition
+       - Internal formula: wsola_tempo = speed / pitchRatio
+                           resampler_rate = pitchRatio
+     ═══════════════════════════════════════════════════════════════════ */
+
+  // ── WSOLA Per-Channel Stretcher ──
+  // SoundTouch-tuned parameters: 82ms sequence, 28ms seek, 12ms overlap
+  function STStretcher(srcData, sampleRate) {
+    this.src = srcData;
+    this.len = srcData.length;
+    this.sr = sampleRate;
+    this.tempo = 1.0;
+    // SoundTouch default parameters for music
+    this.seqLen = Math.round(0.082 * sampleRate);    // 82ms sequence
+    this.seekLen = Math.round(0.028 * sampleRate);   // 28ms seek window
+    this.overlapLen = Math.round(0.012 * sampleRate); // 12ms crossfade
+    this.outputLen = this.seqLen - this.overlapLen;
+    // State
+    this.inputPos = 0;
+    this.prevOverlap = new Float32Array(this.overlapLen);
+    this.isFirst = true;
+    // Output FIFO (large initial allocation)
+    this.fifo = new Float32Array(131072);
+    this.fHead = 0;
+    this.fTail = 0;
+  }
+
+  STStretcher.prototype.avail = function() { return this.fTail - this.fHead; };
+
+  STStretcher.prototype.compact = function() {
+    if (this.fHead > 65536) {
+      var n = this.avail();
+      this.fifo.copyWithin(0, this.fHead, this.fTail);
+      this.fHead = 0;
+      this.fTail = n;
     }
+  };
 
-    function loadBuffer(trackUrl) {
-      setStatus('Loading...');
-      ready = false;
-      return Tone.start().then(function() {
-        return fetch(trackUrl);
-      }).then(function(resp) {
-        return resp.arrayBuffer();
-      }).then(function(buf) {
-        return Tone.context.decodeAudioData(buf);
-      }).then(function(decoded) {
-        buffer = new Tone.ToneAudioBuffer(decoded);
-        duration = decoded.duration;
-        ready = true;
-        setStatus('Ready');
-        var durEl = document.getElementById(id + '-duration');
-        if (durEl) durEl.textContent = formatTime(duration);
-      }).catch(function(e) {
-        console.error('Buffer load failed:', e);
-        setStatus('Error');
-      });
+  // Cross-correlation search for optimal overlap position (quality core)
+  STStretcher.prototype.seekBest = function(nominal) {
+    var center = Math.max(0, Math.min(Math.floor(nominal), this.len - this.seqLen - 1));
+    // Skip search on first frame or at 1x tempo
+    if (this.isFirst || Math.abs(this.tempo - 1.0) < 0.001) return center;
+    var best = center;
+    var bestCorr = -Infinity;
+    var lo = Math.max(0, center - this.seekLen);
+    var hi = Math.min(this.len - this.seqLen - 1, center + this.seekLen);
+    if (hi < lo) return center;
+    var ref = this.prevOverlap;
+    var src = this.src;
+    // Use full overlap length for correlation (max 256 for performance)
+    var cLen = Math.min(this.overlapLen, 256);
+    // Step by 1 for best quality (same as SoundTouch C++ library)
+    for (var p = lo; p <= hi; p++) {
+      var c = 0;
+      for (var i = 0; i < cLen; i++) c += src[p + i] * ref[i];
+      if (c > bestCorr) { bestCorr = c; best = p; }
     }
+    return Math.max(0, best);
+  };
 
-    // Create gain node once
-    function ensureGain() {
-      if (!gain) gain = new Tone.Gain(1).toDestination();
+  STStretcher.prototype.processFrame = function() {
+    if (this.inputPos >= this.len) return false;
+    var pos = this.seekBest(this.inputPos);
+    var src = this.src;
+    var ol = this.overlapLen;
+    var outLen = this.outputLen;
+    // Ensure FIFO space
+    this.compact();
+    if (this.fTail + outLen + ol > this.fifo.length) {
+      var nf = new Float32Array(this.fifo.length * 2);
+      nf.set(this.fifo.subarray(0, this.fTail));
+      this.fifo = nf;
     }
-
-    // Create a fresh GrainPlayer each time we play
-    function makePlayer() {
-      ensureGain();
-      if (player) {
-        try { player.disconnect(); player.dispose(); } catch(e) {}
-        player = null;
+    var wi = this.fTail;
+    // Crossfade overlap region with previous tail
+    if (!this.isFirst) {
+      for (var i = 0; i < ol; i++) {
+        var t = i / ol;
+        var s = (pos + i < this.len) ? src[pos + i] : 0;
+        this.fifo[wi + i] = this.prevOverlap[i] * (1 - t) + s * t;
       }
-      player = new Tone.GrainPlayer({
-        url: buffer,
-        grainSize: 0.2,
-        overlap: 0.1,
-        loop: engine.looping,
-        loopStart: engine._ls || 0,
-        loopEnd: engine._le || 0,
-        playbackRate: engine.speed || 1
-      });
-      player.connect(gain);
+    } else {
+      for (var i = 0; i < ol; i++) {
+        this.fifo[wi + i] = (pos + i < this.len) ? src[pos + i] : 0;
+      }
     }
+    // Copy non-overlap body
+    for (var i = ol; i < outLen; i++) {
+      this.fifo[wi + i] = (pos + i < this.len) ? src[pos + i] : 0;
+    }
+    this.fTail += outLen;
+    // Save tail samples for next crossfade
+    var tp = pos + outLen;
+    for (var i = 0; i < ol; i++) {
+      this.prevOverlap[i] = (tp + i < this.len) ? src[tp + i] : 0;
+    }
+    this.isFirst = false;
+    // Advance source position by tempo-scaled hop
+    this.inputPos += outLen * this.tempo;
+    return true;
+  };
+
+  STStretcher.prototype.generate = function(out, count) {
+    // Fill FIFO until we have enough samples
+    while (this.avail() < count) {
+      if (!this.processFrame()) break;
+    }
+    var n = Math.min(count, this.avail());
+    for (var i = 0; i < n; i++) out[i] = this.fifo[this.fHead + i];
+    for (var i = n; i < count; i++) out[i] = 0;
+    this.fHead += n;
+    return n;
+  };
+
+  STStretcher.prototype.seekTo = function(sec) {
+    this.inputPos = Math.max(0, sec * this.sr);
+    this.fHead = this.fTail = 0;
+    this.isFirst = true;
+  };
+
+  STStretcher.prototype.getTime = function() {
+    return this.inputPos / this.sr;
+  };
+
+  // ── Pitch-Shifting Resampler ──
+  // Linear interpolation resampler that reads from a WSOLA stretcher.
+  // rate > 1 = pitch up (reads more source samples per output sample)
+  // rate < 1 = pitch down (reads fewer source samples per output sample)
+  function STResampler() {
+    this.rate = 1.0;
+    this.ring = new Float32Array(32768);
+    this.rWrite = 0;
+    this.rRead = 0;
+    this.fracPos = 0;
+  }
+
+  STResampler.prototype.ringAvail = function() { return this.rWrite - this.rRead; };
+
+  STResampler.prototype.reset = function() {
+    this.rWrite = this.rRead = 0;
+    this.fracPos = 0;
+  };
+
+  STResampler.prototype.fillRing = function(source, needed) {
+    // Compact if read pointer is far ahead
+    if (this.rRead > 16384) {
+      var a = this.ringAvail();
+      this.ring.copyWithin(0, this.rRead, this.rWrite);
+      this.rRead = 0;
+      this.rWrite = a;
+    }
+    // Grow ring buffer if needed
+    while (this.rWrite + needed > this.ring.length) {
+      var nr = new Float32Array(this.ring.length * 2);
+      nr.set(this.ring.subarray(0, this.rWrite));
+      this.ring = nr;
+    }
+    // Pull samples from WSOLA stretcher into ring
+    var tmp = new Float32Array(needed);
+    var got = source.generate(tmp, needed);
+    for (var i = 0; i < got; i++) this.ring[this.rWrite + i] = tmp[i];
+    this.rWrite += got;
+    return got;
+  };
+
+  STResampler.prototype.process = function(source, output, count) {
+    // Bypass when rate is approximately 1.0 (no pitch change)
+    if (Math.abs(this.rate - 1.0) < 0.001) {
+      return source.generate(output, count);
+    }
+    var written = 0;
+    while (written < count) {
+      // Ensure ring has enough samples for interpolation
+      var samplesNeeded = Math.ceil((count - written) * this.rate) + 4;
+      var buffered = this.ringAvail() - Math.floor(this.fracPos);
+      if (buffered < samplesNeeded) {
+        var got = this.fillRing(source, samplesNeeded - buffered + 512);
+        if (got === 0 && this.ringAvail() - Math.floor(this.fracPos) < 2) break;
+      }
+      // Linear interpolation loop
+      while (written < count) {
+        var absIdx = this.rRead + Math.floor(this.fracPos);
+        if (absIdx + 1 >= this.rWrite) break;
+        var frac = this.fracPos - Math.floor(this.fracPos);
+        output[written] = this.ring[absIdx] * (1 - frac) + this.ring[absIdx + 1] * frac;
+        written++;
+        this.fracPos += this.rate;
+      }
+      // Advance read pointer past consumed whole samples
+      var whole = Math.floor(this.fracPos);
+      this.rRead += whole;
+      this.fracPos -= whole;
+    }
+    return written;
+  };
+
+  /* ── Jam Track Engine (wraps WSOLA + Resampler + Web Audio) ── */
+  function createJamEngine(id, url) {
+    var ctx = _getJamAudioCtx();
+    var audioBuffer = null;
+    var stretcherL = null, stretcherR = null;
+    var resamplerL = null, resamplerR = null;
+    var processorNode = null;
+    var gainNode = null;
+    var timerRAF = null;
+    var ended = false;
+    var numChannels = 1;
+
+    function updateStatus(text) {
+      var el = document.getElementById(id + '-status'); if (el) el.textContent = text;
+    }
+    function updateDuration(dur) {
+      var el = document.getElementById(id + '-duration'); if (el) el.textContent = formatTime(dur);
+    }
+    function updateTime(t) {
+      var el = document.getElementById(id + '-time'); if (el) el.textContent = formatTime(t);
+    }
+
+    function initProcessors() {
+      var pr = engine._pitchRatio();
+      var effectiveTempo = Math.max(0.1, Math.min(8, engine.speed / pr));
+      stretcherL.tempo = effectiveTempo;
+      stretcherR.tempo = effectiveTempo;
+      resamplerL.rate = pr;
+      resamplerR.rate = pr;
+    }
+
+    // Fetch and decode audio into an AudioBuffer
+    function loadAudioBuffer(audioUrl) {
+      updateStatus('Loading...');
+      updateDuration(0); updateTime(0);
+      fetch(audioUrl)
+        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+        .then(function(buf) { return ctx.decodeAudioData(buf); })
+        .then(function(decoded) {
+          audioBuffer = decoded;
+          numChannels = decoded.numberOfChannels;
+          stretcherL = new STStretcher(decoded.getChannelData(0), decoded.sampleRate);
+          stretcherR = new STStretcher(
+            numChannels > 1 ? decoded.getChannelData(1) : decoded.getChannelData(0),
+            decoded.sampleRate
+          );
+          resamplerL = new STResampler();
+          resamplerR = new STResampler();
+          initProcessors();
+          updateStatus('Ready');
+          updateDuration(decoded.duration);
+        })
+        .catch(function(err) {
+          console.error('Audio load failed:', err);
+          updateStatus('Error loading');
+        });
+    }
+
+    loadAudioBuffer(url);
 
     var engine = {
       speed: 1,
@@ -7299,82 +7511,122 @@
       cents: 0,
       playing: false,
       looping: false,
-      _ls: 0,
-      _le: 0,
+      _ls: 0, _le: 0,
+
+      // Convert semitones + cents to a frequency ratio
+      _pitchRatio: function() {
+        return Math.pow(2, (this.semitones + this.cents / 100) / 12);
+      },
+
+      // Update WSOLA tempo and resampler rate for current speed/pitch
+      // Formula: wsola_tempo = speed / pitchRatio, resampler_rate = pitchRatio
+      _updateParams: function() {
+        var pr = this._pitchRatio();
+        var effectiveTempo = Math.max(0.1, Math.min(8, this.speed / pr));
+        if (stretcherL) stretcherL.tempo = effectiveTempo;
+        if (stretcherR) stretcherR.tempo = effectiveTempo;
+        if (resamplerL) resamplerL.rate = pr;
+        if (resamplerR) resamplerR.rate = pr;
+      },
 
       play: function() {
-        if (!ready || !buffer) return;
+        if (!audioBuffer || !stretcherL) { console.warn('Audio not loaded yet'); return; }
+        if (ctx.state === 'suspended') ctx.resume();
         var self = this;
-        if (Tone.context.state !== 'running') {
-          Tone.start().then(function() { self._doPlay(); });
-        } else {
-          this._doPlay();
-        }
-      },
 
-      _doPlay: function() {
-        if (this.playing) return;
-        // Fresh player every time — avoids restart issues
-        makePlayer();
-        try {
-          player.start(undefined, offset);
-          this.playing = true;
-          startTime = Tone.now();
-          this._tick();
-          var btn = document.getElementById(id + '-playbtn');
-          if (btn) btn.textContent = '⏸ Pause';
-        } catch(e) {
-          console.error('Play error:', e);
-        }
-      },
+        // Audio graph: ScriptProcessor(8192) → Gain → Destination
+        // 8192-sample buffer for rock-solid stability (~186ms at 44.1kHz)
+        var outCh = Math.min(numChannels, 2);
+        gainNode = ctx.createGain();
+        gainNode.gain.value = parseFloat((document.getElementById(id + '-vol') || {}).value) || 1;
+        gainNode.connect(ctx.destination);
+        processorNode = ctx.createScriptProcessor(8192, 0, outCh);
+        ended = false;
 
-      _tick: function() {
-        var self = this;
-        if (!this.playing) return;
-        var elapsed = offset + (Tone.now() - startTime) * this.speed;
-        if (elapsed >= duration && !this.looping) {
-          this.stop();
-          return;
+        processorNode.onaudioprocess = function(e) {
+          if (!self.playing) {
+            for (var c = 0; c < outCh; c++) {
+              var d = e.outputBuffer.getChannelData(c);
+              for (var i = 0; i < d.length; i++) d[i] = 0;
+            }
+            return;
+          }
+          // Generate time-stretched + pitch-shifted audio
+          var outL = e.outputBuffer.getChannelData(0);
+          var filledL = resamplerL.process(stretcherL, outL, outL.length);
+          if (outCh > 1) {
+            var outR = e.outputBuffer.getChannelData(1);
+            resamplerR.process(stretcherR, outR, outR.length);
+          }
+          // End of track detection
+          if (filledL < outL.length && !self.looping) {
+            ended = true;
+          }
+          // Seamless loop: jump back when past loop end
+          if (self.looping && stretcherL) {
+            var ct = stretcherL.getTime();
+            if (ct >= self._le) {
+              stretcherL.seekTo(self._ls);
+              stretcherR.seekTo(self._ls);
+              resamplerL.reset();
+              resamplerR.reset();
+            }
+          }
+        };
+
+        processorNode.connect(gainNode);
+        this.playing = true;
+        var btn = document.getElementById(id + '-playbtn');
+        if (btn) btn.textContent = '\u23F8 Pause';
+
+        // Smooth UI time display via requestAnimationFrame
+        function tick() {
+          if (!self.playing) return;
+          if (stretcherL) {
+            updateTime(stretcherL.getTime());
+            if (ended) { ended = false; self.stop(); return; }
+          }
+          timerRAF = requestAnimationFrame(tick);
         }
-        var timeEl = document.getElementById(id + '-time');
-        if (timeEl) timeEl.textContent = formatTime(elapsed % duration);
-        requestAnimationFrame(function() { self._tick(); });
+        timerRAF = requestAnimationFrame(tick);
       },
 
       pause: function() {
-        if (this.playing) {
-          offset += (Tone.now() - startTime) * this.speed;
-          if (offset >= duration) offset = 0;
-          if (player) { try { player.stop(); } catch(e) {} }
-          this.playing = false;
-        }
+        this.playing = false;
+        if (timerRAF) { cancelAnimationFrame(timerRAF); timerRAF = null; }
+        if (processorNode) { processorNode.disconnect(); processorNode = null; }
+        if (gainNode) { gainNode.disconnect(); gainNode = null; }
         var btn = document.getElementById(id + '-playbtn');
-        if (btn) btn.textContent = '▶ Play';
+        if (btn) btn.textContent = '\u25B6 Play';
       },
 
       toggle: function() { if (this.playing) this.pause(); else this.play(); },
 
       stop: function() {
-        if (player) { try { player.stop(); } catch(e) {} }
-        this.playing = false;
-        offset = 0;
-        var btn = document.getElementById(id + '-playbtn');
-        if (btn) btn.textContent = '▶ Play';
-        var timeEl = document.getElementById(id + '-time');
-        if (timeEl) timeEl.textContent = '0:00';
+        this.pause();
+        if (stretcherL) stretcherL.seekTo(0);
+        if (stretcherR) stretcherR.seekTo(0);
+        if (resamplerL) resamplerL.reset();
+        if (resamplerR) resamplerR.reset();
+        updateTime(0);
       },
 
       setSpeed: function(val) {
         this.speed = Math.max(0.5, Math.min(2, parseFloat(val)));
-        if (player) player.playbackRate = this.speed;
+        this._updateParams();
         var el = document.getElementById(id + '-speed-val');
         if (el) el.textContent = Math.round(this.speed * 100) + '%';
+        var slider = document.getElementById(id + '-speed');
+        if (slider) slider.value = this.speed;
       },
 
       setPitch: function(semitones, cents) {
-        this.semitones = parseInt(semitones) || 0;
-        this.cents = parseInt(cents) || 0;
-        // GrainPlayer preserves pitch naturally; independent pitch shift future work
+        this.semitones = Math.max(-12, Math.min(12, parseInt(semitones) || 0));
+        this.cents = Math.max(-50, Math.min(50, parseInt(cents) || 0));
+        this._updateParams();
+        // Reset resampler buffers for clean pitch transition
+        if (resamplerL) resamplerL.reset();
+        if (resamplerR) resamplerR.reset();
         var s = document.getElementById(id + '-semi-val');
         if (s) s.textContent = (this.semitones >= 0 ? '+' : '') + this.semitones;
         var c = document.getElementById(id + '-cents-val');
@@ -7382,22 +7634,21 @@
       },
 
       setVolume: function(val) {
-        userVolume = Math.max(0, Math.min(1, parseFloat(val)));
-        if (gain) gain.gain.value = userVolume;
+        var v = Math.max(0, Math.min(1, parseFloat(val)));
+        if (gainNode) gainNode.gain.value = v;
         var el = document.getElementById(id + '-vol-val');
-        if (el) el.textContent = Math.round(userVolume * 100) + '%';
+        if (el) el.textContent = Math.round(v * 100) + '%';
       },
 
       setLoop: function() {
         var s = parseFloat(document.getElementById(id + '-ls').value) || 0;
         var e = parseFloat(document.getElementById(id + '-le').value) || 0;
-        if (e <= s) e = duration || 0;
+        if (e <= s && audioBuffer) e = audioBuffer.duration;
         this._ls = s; this._le = e; this.looping = true;
-        if (player) {
-          player.loop = true;
-          player.loopStart = s;
-          player.loopEnd = e;
-        }
+        if (stretcherL) stretcherL.seekTo(s);
+        if (stretcherR) stretcherR.seekTo(s);
+        if (resamplerL) resamplerL.reset();
+        if (resamplerR) resamplerR.reset();
         if (document.getElementById(id + '-le'))
           document.getElementById(id + '-le').value = Math.floor(e);
         var btn = document.getElementById(id + '-loopbtn');
@@ -7406,43 +7657,33 @@
 
       clearLoop: function() {
         this.looping = false;
-        if (player) player.loop = false;
         var btn = document.getElementById(id + '-loopbtn');
         if (btn) btn.classList.remove('active-loop');
       },
 
       reset: function() {
-        this.stop();
-        this.speed = 1; this.semitones = 0; this.cents = 0;
         this.setSpeed(1); this.setPitch(0, 0); this.setVolume(1); this.clearLoop();
         var speedEl = document.getElementById(id + '-speed');
-        var semiEl = document.getElementById(id + '-semi');
         var centsEl = document.getElementById(id + '-cents');
         var volEl = document.getElementById(id + '-vol');
         if (speedEl) speedEl.value = 1;
-        if (semiEl) semiEl.value = 0;
         if (centsEl) centsEl.value = 0;
         if (volEl) volEl.value = 1;
       },
 
       loadTrack: function(newUrl) {
         this.stop(); this.clearLoop();
-        currentUrl = newUrl;
-        if (player) { try { player.disconnect(); player.dispose(); } catch(e) {} player = null; }
-        loadBuffer(newUrl);
-        var timeEl = document.getElementById(id + '-time');
-        if (timeEl) timeEl.textContent = '0:00';
+        audioBuffer = null; stretcherL = null; stretcherR = null;
+        resamplerL = null; resamplerR = null;
+        loadAudioBuffer(newUrl);
       },
 
       destroy: function() {
         this.stop();
-        if (player) { try { player.dispose(); } catch(e) {} }
-        if (gain) { try { gain.dispose(); } catch(e) {} }
+        audioBuffer = null; stretcherL = null; stretcherR = null;
+        resamplerL = null; resamplerR = null;
       }
     };
-
-    // Load buffer on init
-    loadBuffer(url);
 
     jamEngines[id] = engine;
     return engine;
