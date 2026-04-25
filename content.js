@@ -270,6 +270,34 @@ var SITE_CONTENT = {
         {"url": "tracks/ducks-full-mid-high-octave.mp3", "title": "Full Mid/High Octave"},
         {"url": "tracks/ducks-full-aaabb-low-and-mid-high.mp3", "title": "Full AAABB Low & Mid/High"}
       ]
+    },
+    {
+      "title": "Beginning 3rd Position Blues",
+      "description": "An introduction to 3rd position on the diatonic harmonica — the moody, minor-leaning blues sound favoured for slow blues, minor numbers and atmospheric playing. Ten audio exercises covering the mid-octave minor pentatonic, the blues scale with bends and 'dirt', the low octave with deep draw bends, and George 'Harmonica' Smith's iconic Telephone Blues intro lick. Includes a slow-blues jam track in B (use an A harp).",
+      "key": "A",
+      "position": "3rd",
+      "difficulty": "Beginner",
+      "trail": "juke-joint",
+      "subgenre": "Country Blues",
+      "method": "standard",
+      "downloadUrl": "tabs/Beginning_3rd_Position_Blues.pdf",
+      "image": "gareth-harpshed.jpg",
+      "free": true,
+      "genre": "Country Blues",
+      "youtubeUrl": "",
+      "jamTracks": [
+        {"url": "tracks/3rd-position-ex1-minor-pent-mid-oct.mp3", "title": "Ex 1 — Minor Pentatonic Mid Oct"},
+        {"url": "tracks/3rd-position-ex2-minor-pent-mid-flow.mp3", "title": "Ex 2 — Minor Pentatonic Flow"},
+        {"url": "tracks/3rd-position-ex3-blues-scale-mid.mp3", "title": "Ex 3 — Blues Scale Mid Oct"},
+        {"url": "tracks/3rd-position-ex4-blues-scale-mid-flow.mp3", "title": "Ex 4 — Blues Scale Mid Flow"},
+        {"url": "tracks/3rd-position-ex5-blues-mid-dirt.mp3", "title": "Ex 5 — Blues with Dirt"},
+        {"url": "tracks/3rd-position-ex6-blues-mid-dirt-flow.mp3", "title": "Ex 6 — Blues with Dirt Flow"},
+        {"url": "tracks/3rd-position-ex7-low-octave-movement.mp3", "title": "Ex 7 — Low Octave Movement"},
+        {"url": "tracks/3rd-position-ex8-blues-low-full.mp3", "title": "Ex 8 — Full Blues Low Oct"},
+        {"url": "tracks/3rd-position-ex9-blues-low-and-mid.mp3", "title": "Ex 9 — Blues Low & Mid Combined"},
+        {"url": "tracks/3rd-position-ex10-telephone-blues-intro.mp3", "title": "Ex 10 — Telephone Blues Intro (G. H. Smith)"},
+        {"url": "tracks/3rd-position-telephone-blues-jam-b.mp3", "title": "Telephone Blues Jam (B, A harp)"}
+      ]
     }
   ],
   "jamTracks": [
@@ -765,9 +793,32 @@ var SITE_CONTENT = {
       "stages": [
         {
           "name": "Getting Started",
-          "description": "Basic 2nd position playing. Finding the blues notes, learning to bend with intention.",
-          "tunes": "Simple 12-bar blues, basic riffs",
-          "content": []
+          "description": "Basic 2nd position playing, plus your first taste of 3rd position. Finding the blues notes, learning to bend with intention.",
+          "tunes": "Simple 12-bar blues, basic riffs, Beginning 3rd Position Blues",
+          "content": [
+            {
+              "title": "Beginning 3rd Position Blues",
+              "subgenre": "Country Blues",
+              "youtubeUrl": "",
+              "insight": "Third position is the home of the moody, minor-leaning blues sound on the diatonic harmonica. On a standard Richter-tuned harp, 3rd position sits a whole tone above the key of the harp — an A harp in 3rd position plays in B minor, which is what we use for the Telephone Blues jam track in this lesson. The root note lives on draw 1, draw 4 and draw 8, and the natural mode you'll hear is Dorian: dark, hollow, slightly lonesome, and right at home over a slow blues. Where 2nd position is built around the dominant, draw-heavy, shouting blues sound, 3rd position leans into something more vocal and brooding — superb for slow blues, minor blues, train numbers and atmospheric instrumental playing. Most of the bending work moves onto the middle and upper draw bends, particularly draw 6, which is why we spend real time on those exercises. Famous 3rd position to listen to: Telephone Blues by George 'Harmonica' Smith (the classic slow-blues template — we use Smith's iconic intro lick as Ex 10), Cristo Redentor by Charlie Musselwhite (a masterclass in 3rd position phrasing and dynamics), and Blowin' the Family Jewels (George Smith / William Clarke-style tour de force, full of octave work and tongue-blocked attack). The lesson runs ten audio exercises across two octaves: mid octave first (holes 4–8, friendliest place to start) covering the minor pentatonic, blues scale, and 'dirt' bends; then the low octave (holes 1–4) where 3rd position really starts to growl with the deep draw bends on 2 and 3. Ex 9 stitches both octaves together; Ex 10 is the Telephone Blues intro. Then put it all over the jam track — start sparse, long tones, draw 4 as home, and build from there.",
+              "tabPdf": "tabs/Beginning_3rd_Position_Blues.pdf",
+              "jamTracks": [
+                {"url": "tracks/3rd-position-ex1-minor-pent-mid-oct.mp3", "title": "Ex 1 — Minor Pentatonic Mid Oct"},
+                {"url": "tracks/3rd-position-ex2-minor-pent-mid-flow.mp3", "title": "Ex 2 — Minor Pentatonic Flow"},
+                {"url": "tracks/3rd-position-ex3-blues-scale-mid.mp3", "title": "Ex 3 — Blues Scale Mid Oct"},
+                {"url": "tracks/3rd-position-ex4-blues-scale-mid-flow.mp3", "title": "Ex 4 — Blues Scale Mid Flow"},
+                {"url": "tracks/3rd-position-ex5-blues-mid-dirt.mp3", "title": "Ex 5 — Blues with Dirt"},
+                {"url": "tracks/3rd-position-ex6-blues-mid-dirt-flow.mp3", "title": "Ex 6 — Blues with Dirt Flow"},
+                {"url": "tracks/3rd-position-ex7-low-octave-movement.mp3", "title": "Ex 7 — Low Octave Movement"},
+                {"url": "tracks/3rd-position-ex8-blues-low-full.mp3", "title": "Ex 8 — Full Blues Low Oct"},
+                {"url": "tracks/3rd-position-ex9-blues-low-and-mid.mp3", "title": "Ex 9 — Blues Low & Mid Combined"},
+                {"url": "tracks/3rd-position-ex10-telephone-blues-intro.mp3", "title": "Ex 10 — Telephone Blues Intro (G. H. Smith)"},
+                {"url": "tracks/3rd-position-telephone-blues-jam-b.mp3", "title": "Telephone Blues Jam (B, A harp)"}
+              ],
+              "key": "A",
+              "position": "3rd"
+            }
+          ]
         },
         {
           "name": "Getting a Sound",
