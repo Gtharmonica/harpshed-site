@@ -2340,6 +2340,113 @@
     margin-bottom: 16px;
   }
 
+  /* ====== Inline lesson article layout ====== */
+  .lesson-article {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+  }
+  .lesson-article p {
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 14px;
+    line-height: 1.75;
+  }
+  .lesson-article h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: var(--wood-dark);
+    margin: 28px 0 6px;
+    font-size: 22px;
+    border-bottom: 2px solid var(--parchment-dark);
+    padding-bottom: 6px;
+  }
+  .lesson-article h4 {
+    color: var(--rust);
+    margin: 18px 0 6px;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+  }
+  .lesson-article em.lesson-section-intro {
+    display: block;
+    font-style: italic;
+    color: var(--wood-mid);
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+  .lesson-callout {
+    background: var(--parchment);
+    border-left: 4px solid var(--rust);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 16px 0 22px;
+  }
+  .lesson-callout h4 {
+    margin-top: 0;
+    color: var(--wood-dark);
+  }
+  .lesson-callout ul {
+    margin: 6px 0 0 18px;
+    padding: 0;
+  }
+  .lesson-callout li {
+    margin: 6px 0;
+    color: var(--ink);
+    font-size: 14.5px;
+  }
+  .lesson-callout li strong {
+    color: var(--rust);
+  }
+  .lesson-exercise {
+    background: var(--cream);
+    border: 1px solid var(--parchment-dark);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 12px 0 18px;
+    box-shadow: 0 2px 6px rgba(40, 25, 10, 0.04);
+  }
+  .lesson-exercise-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .lesson-ex-num {
+    font-weight: 700;
+    color: var(--rust);
+    font-size: 15.5px;
+    letter-spacing: 0.4px;
+  }
+  .lesson-ex-name {
+    color: var(--wood-mid);
+    font-style: italic;
+    font-size: 15px;
+  }
+  pre.lesson-tab {
+    background: #fff7e3;
+    border: 1px dashed var(--parchment-dark);
+    border-radius: 6px;
+    padding: 9px 12px;
+    overflow-x: auto;
+    font-family: 'Menlo', 'Consolas', monospace;
+    font-size: 14px;
+    color: var(--ink);
+    white-space: pre-wrap;
+    margin: 6px 0 10px;
+    line-height: 1.5;
+  }
+  .lesson-exercise audio {
+    width: 100%;
+    height: 36px;
+    margin-top: 4px;
+  }
+  .lesson-exercise-note {
+    color: var(--wood-mid);
+    font-style: italic;
+    font-size: 13.5px;
+    margin: 4px 0 8px;
+  }
+
   .trail-tune-video {
     position: relative;
     padding-bottom: 56.25%;
@@ -6796,6 +6903,13 @@
           var metId = 'met2-' + item.title.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
           var metronomeHtml = buildMetronomeHtml(metId);
 
+          // If a rich lessonBody is provided, render that as the main article
+          // (replaces the basic insight paragraph). The jam track player still
+          // renders below for any backing tracks listed in jamTracks.
+          var bodyContentHtml = item.lessonBody
+            ? '<div class="lesson-article">' + item.lessonBody + '</div>'
+            : '<p>' + item.insight + '</p>';
+
           contentHtml += '<div class="trail-tune-card" id="tune-' + tuneId + '">' +
             '<div class="trail-tune-card-header" onclick="toggleTuneCard(this.parentElement)">' +
               '<div class="trail-tune-checkbox' + (isComplete ? ' checked' : '') + '" onclick="event.stopPropagation();handleTuneCheck(this,\'' + trail.id + '\',' + i + ',\'' + item.title.replace(/'/g, "\\\\'") + '\')">' +
@@ -6809,7 +6923,7 @@
             '</div>' +
             '<div class="trail-tune-card-body"><div class="trail-tune-card-body-inner">' +
               videoEmbed +
-              '<p>' + item.insight + '</p>' +
+              bodyContentHtml +
               jamTrackHtml +
               metronomeHtml +
               '<div class="trail-tune-actions">' + pdfBtn + '</div>' +
