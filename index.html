@@ -6904,11 +6904,24 @@
           var metronomeHtml = buildMetronomeHtml(metId);
 
           // If a rich lessonBody is provided, render that as the main article
-          // (replaces the basic insight paragraph). The jam track player still
-          // renders below for any backing tracks listed in jamTracks.
-          var bodyContentHtml = item.lessonBody
-            ? '<div class="lesson-article">' + item.lessonBody + '</div>'
-            : '<p>' + item.insight + '</p>';
+          // (replaces the basic insight paragraph). If the lessonBody contains
+          // the placeholder __JAMTRACK_PLAYER__, swap in the jam track player
+          // there inline and skip the standalone player below to avoid duplication.
+          var bodyContentHtml;
+          var inlineJamTrack = false;
+          if (item.lessonBody) {
+            if (item.lessonBody.indexOf('__JAMTRACK_PLAYER__') !== -1) {
+              bodyContentHtml = '<div class="lesson-article">' +
+                item.lessonBody.replace('__JAMTRACK_PLAYER__', jamTrackHtml) +
+                '</div>';
+              inlineJamTrack = true;
+            } else {
+              bodyContentHtml = '<div class="lesson-article">' + item.lessonBody + '</div>';
+            }
+          } else {
+            bodyContentHtml = '<p>' + item.insight + '</p>';
+          }
+          var jamTrackBlock = inlineJamTrack ? '' : jamTrackHtml;
 
           contentHtml += '<div class="trail-tune-card" id="tune-' + tuneId + '">' +
             '<div class="trail-tune-card-header" onclick="toggleTuneCard(this.parentElement)">' +
@@ -6924,7 +6937,7 @@
             '<div class="trail-tune-card-body"><div class="trail-tune-card-body-inner">' +
               videoEmbed +
               bodyContentHtml +
-              jamTrackHtml +
+              jamTrackBlock +
               metronomeHtml +
               '<div class="trail-tune-actions">' + pdfBtn + '</div>' +
             '</div></div>' +
