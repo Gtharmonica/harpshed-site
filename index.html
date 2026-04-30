@@ -5325,6 +5325,8 @@
     </div>
 
     <p style="margin-bottom: 0;">
+      <a href="#" id="student-login-link" style="color: rgba(244,236,224,0.35); font-size: 12px; text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s;" onmouseover="this.style.color='#c4724a'" onmouseout="this.style.color='rgba(244,236,224,0.35)'">Students</a>
+      <span style="color: rgba(244,236,224,0.2); font-size: 12px; margin: 0 10px;">·</span>
       <a href="#" id="admin-login-link" style="color: rgba(244,236,224,0.15); font-size: 11px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='rgba(244,236,224,0.3)'" onmouseout="this.style.color='rgba(244,236,224,0.15)'">Admin</a>
     </p>
   </div>
@@ -5334,7 +5336,7 @@
     <div style="font-family: 'Special Elite', monospace; color: #f4ece0; font-size: 28px; margin-bottom: 4px;">
       The Harp<span style="color: #c4724a;">Shed</span>
     </div>
-    <p style="color: rgba(244,236,224,0.5); font-size: 13px; margin-bottom: 28px; letter-spacing: 1px;">
+    <p id="gate-heading" style="color: rgba(244,236,224,0.5); font-size: 13px; margin-bottom: 28px; letter-spacing: 1px;">
       ADMIN ACCESS
     </p>
     <input id="gate-input" type="password" placeholder="Enter password"
@@ -5363,7 +5365,16 @@
 (function() {
   // Password is stored as SHA-256 hash — not visible in source code
   var PASS_HASH = '9cfc34783c94fbf10cc3ee54201876cf5f8a26626b2f8f696baadcf00f1149a8';
+  // Per-student passwords — separate from admin. Anyone matching one of these
+  // bypasses the gate as a viewer (no admin rights). Edit this list to add a
+  // student or revoke one (delete their entry and they're locked out instantly).
+  var STUDENT_HASHES = [
+    { name: 'Darren', hash: '0e0f48ad53a9e57527abf61d64b0e7a11fffc07c64b203f8bb0a4bf5e971f953' },
+    { name: 'Dennis', hash: '676998d1c33c83a1b1f3493cd8cdaa870fe3f25ea0438379a8cc71960fd183ac' },
+    { name: 'Kamel',  hash: '8afa51b9a8a03bdc5e59c4d808af4c7df5dfbf5fe77c49cb0e567a9db1b7355a' }
+  ];
   var KEY = 'harpshed_access';
+  var ROLE_KEY = 'harpshed_role';
   var MAX_ATTEMPTS = 5;
   var LOCKOUT_KEY = 'harpshed_lockout';
 
@@ -5445,12 +5456,33 @@
     document.body.style.overflow = 'hidden';
   }
 
-  // Toggle between coming soon and admin login
-  document.getElementById('admin-login-link').addEventListener('click', function(e) {
-    e.preventDefault();
+  // Toggle between coming soon and the password form. Heading + placeholder
+  // change depending on whether the user clicked Admin or Students — but the
+  // form itself is the same and accepts either type of password.
+  function openLogin(role) {
+    var heading = document.getElementById('gate-heading');
+    var input = document.getElementById('gate-input');
+    if (role === 'student') {
+      heading.textContent = 'STUDENT ACCESS';
+      input.placeholder = 'Enter your student password';
+    } else {
+      heading.textContent = 'ADMIN ACCESS';
+      input.placeholder = 'Enter password';
+    }
     document.getElementById('coming-soon-public').style.display = 'none';
     document.getElementById('admin-login').style.display = 'block';
-    document.getElementById('gate-input').focus();
+    document.getElementById('gate-error').style.opacity = '0';
+    input.value = '';
+    input.focus();
+  }
+
+  document.getElementById('admin-login-link').addEventListener('click', function(e) {
+    e.preventDefault();
+    openLogin('admin');
+  });
+  document.getElementById('student-login-link').addEventListener('click', function(e) {
+    e.preventDefault();
+    openLogin('student');
   });
 
   document.getElementById('back-to-coming-soon').addEventListener('click', function(e) {
@@ -5459,7 +5491,8 @@
     document.getElementById('coming-soon-public').style.display = 'block';
   });
 
-  // Admin password check (hashed comparison + brute force protection)
+  // Password check — admin OR any per-student password.
+  // Hashed comparison + brute force protection.
   function tryAccess() {
     if (isLockedOut()) {
       var err = document.getElementById('gate-error');
@@ -5471,8 +5504,21 @@
     var val = document.getElementById('gate-input').value;
     var hash = sha256(val);
 
+    var role = null;
     if (hash === PASS_HASH) {
+      role = 'admin';
+    } else {
+      for (var i = 0; i < STUDENT_HASHES.length; i++) {
+        if (hash === STUDENT_HASHES[i].hash) {
+          role = 'student:' + STUDENT_HASHES[i].name.toLowerCase();
+          break;
+        }
+      }
+    }
+
+    if (role) {
       localStorage.setItem(KEY, 'granted');
+      localStorage.setItem(ROLE_KEY, role);
       localStorage.removeItem(LOCKOUT_KEY);
       document.getElementById('coming-soon-gate').style.display = 'none';
       document.body.style.overflow = '';
