@@ -3621,6 +3621,16 @@
     color: var(--parchment);
     margin: 0 0 18px;
   }
+  .article-detail-hero {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    margin: 4px 0 24px;
+    border: 1px solid rgba(244,236,224,0.08);
+  }
   .article-detail-body {
     font-size: 16px;
     line-height: 1.7;
@@ -7209,20 +7219,26 @@
     if (!grid || !SITE_CONTENT.articles) return;
 
     grid.innerHTML = SITE_CONTENT.articles.map(function(article, i) {
-      var ytId = firstYouTubeIdInHtml(article.content);
       var thumbHtml;
-      if (ytId) {
-        var thumbUrl = 'https://img.youtube.com/vi/' + ytId + '/mqdefault.jpg';
+      // Priority: article-specific image > YouTube thumbnail > icon fallback
+      if (article.image) {
         thumbHtml =
-          '<div class="article-thumb" style="background-image:url(\'' + thumbUrl + '\');">' +
-            '<div class="article-thumb-play">&#9654;</div>' +
-          '</div>';
+          '<div class="article-thumb" style="background-image:url(\'' + article.image + '\');"></div>';
       } else {
-        var icon = articleIcons[i % articleIcons.length];
-        thumbHtml =
-          '<div class="article-thumb">' +
-            '<div class="article-thumb-empty">' + icon + '</div>' +
-          '</div>';
+        var ytId = firstYouTubeIdInHtml(article.content);
+        if (ytId) {
+          var thumbUrl = 'https://img.youtube.com/vi/' + ytId + '/mqdefault.jpg';
+          thumbHtml =
+            '<div class="article-thumb" style="background-image:url(\'' + thumbUrl + '\');">' +
+              '<div class="article-thumb-play">&#9654;</div>' +
+            '</div>';
+        } else {
+          var icon = articleIcons[i % articleIcons.length];
+          thumbHtml =
+            '<div class="article-thumb">' +
+              '<div class="article-thumb-empty">' + icon + '</div>' +
+            '</div>';
+        }
       }
       return '<div class="article-card" onclick="openArticle(' + i + ')">' +
         thumbHtml +
@@ -7247,11 +7263,16 @@
     var view = document.getElementById('article-detail-view');
     if (!page || !view) return;
 
+    var heroHtml = article.image
+      ? '<div class="article-detail-hero" style="background-image:url(\'' + article.image + '\');"></div>'
+      : '';
+
     view.innerHTML =
       '<div class="article-detail-meta">' +
         formatDate(article.date) + ' &middot; ' + article.readTime + ' read' +
       '</div>' +
       '<h1 class="article-detail-title">' + article.title + '</h1>' +
+      heroHtml +
       '<div class="article-detail-body">' + article.content + '</div>' +
       '<div style="margin-top:32px; padding-top:18px; border-top:1px solid rgba(160,82,45,0.25);">' +
         '<button class="article-back-btn" onclick="closeArticle()">&larr; Back to all Articles</button>' +
