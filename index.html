@@ -1210,38 +1210,68 @@
     max-height: 4000px;
   }
 
-  /* When any tune card is open, fade the others so the open one commands focus */
-  .tunes-grid.has-open .tune-card:not(.open) {
-    opacity: 0.35;
-    transform: scale(0.98);
-    transition: opacity 0.3s, transform 0.3s;
+  /* Tune Detail Mode — when a tune is opened, hide the rest of the Tunes
+     page so the lesson takes the whole screen. Back button returns to grid. */
+  #page-tunes.tune-detail-mode .section-label,
+  #page-tunes.tune-detail-mode .section-title,
+  #page-tunes.tune-detail-mode .section-subtitle,
+  #page-tunes.tune-detail-mode .ornament,
+  #page-tunes.tune-detail-mode .tunes-filter-bar,
+  #page-tunes.tune-detail-mode #tunes-count,
+  #page-tunes.tune-detail-mode .tune-card:not(.open) {
+    display: none !important;
   }
-  .tunes-grid.has-open .tune-card:not(.open):hover {
-    opacity: 0.7;
+  #page-tunes.tune-detail-mode .tunes-grid {
+    grid-template-columns: 1fr;
+    max-width: 920px;
+    margin: 0 auto;
   }
-  .tune-card.open {
-    border-color: rgba(160,82,45,0.55);
-    box-shadow: 0 4px 30px rgba(160,82,45,0.18);
+  #page-tunes.tune-detail-mode .tune-card.open {
+    border-color: rgba(160,82,45,0.5);
+    box-shadow: 0 6px 40px rgba(0,0,0,0.25);
+  }
+  #page-tunes.tune-detail-mode .tune-card.open .tune-card-header {
+    cursor: default;
+  }
+  #page-tunes.tune-detail-mode .tune-card.open .tune-card-expand {
+    display: none;
+  }
+
+  /* Sticky "Back to all Tunes" bar shown above the open card while in detail
+     mode — guarantees the user can always get back without scrolling around. */
+  .tune-detail-topbar {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 14px 0 12px;
+    margin-bottom: 18px;
+    background: linear-gradient(to bottom, var(--wood-dark) 80%, transparent 100%);
+  }
+  #page-tunes.tune-detail-mode .tune-detail-topbar {
+    display: block;
   }
 
   .tune-card-back {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(160,82,45,0.12);
+    background: rgba(160,82,45,0.18);
     color: var(--rust-light);
-    border: 1px solid rgba(160,82,45,0.3);
+    border: 1px solid rgba(160,82,45,0.45);
     border-radius: 6px;
-    padding: 8px 14px;
-    margin-top: 14px;
+    padding: 9px 16px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.3px;
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    text-transform: uppercase;
   }
   .tune-card-back:hover {
-    background: rgba(160,82,45,0.22);
-    border-color: rgba(160,82,45,0.55);
+    background: rgba(160,82,45,0.32);
+    border-color: rgba(160,82,45,0.7);
+    color: #f4ece0;
   }
 
   .tune-card-body-inner {
@@ -5975,6 +6005,9 @@
         Every tune in one place. Tabs, jam tracks, videos, and practice tools. Filter by genre, key, or position and dig in.
       </p>
       <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div class="tune-detail-topbar">
+        <button class="tune-card-back" onclick="closeTuneCard()">&larr; Back to all Tunes</button>
+      </div>
       <div class="tunes-filter-bar" id="tunes-filter-bar"></div>
       <div class="tunes-grid" id="tunes-grid"></div>
     </section>
@@ -6458,43 +6491,44 @@
     renderTunes();
   };
 
-  // Open a single tune card. Closes any other open card so only one is ever
-  // expanded — keeps the page focused. Smooth-scrolls the open card to the
-  // top of the viewport (allowing for the sticky nav).
+  // Open a tune in full-screen detail mode. The Tunes page is switched into
+  // tune-detail-mode which hides the heading, filters and other cards — only
+  // the opened lesson is visible. Click the "Back to all Tunes" button to
+  // return to the grid (filter state is preserved).
   window.openTuneCard = function(cardEl) {
+    var page = document.getElementById('page-tunes');
     var grid = document.getElementById('tunes-grid');
-    if (!grid || !cardEl) return;
-    var wasOpen = cardEl.classList.contains('open');
+    if (!page || !grid || !cardEl) return;
+
+    // Close any currently open card before opening the new one
     var openCards = grid.querySelectorAll('.tune-card.open');
     for (var i = 0; i < openCards.length; i++) openCards[i].classList.remove('open');
-    if (wasOpen) {
-      grid.classList.remove('has-open');
-      return;
-    }
+
     cardEl.classList.add('open');
-    grid.classList.add('has-open');
-    // Wait a frame so the layout has expanded before scrolling.
+    page.classList.add('tune-detail-mode');
+
+    // Scroll to the top of the page so the "Back to all Tunes" bar is visible
+    // and the lesson begins right under the nav.
     setTimeout(function() {
-      var rect = cardEl.getBoundingClientRect();
       var nav = document.querySelector('nav');
       var navH = nav ? nav.offsetHeight : 0;
-      window.scrollTo({ top: rect.top + window.scrollY - navH - 16, behavior: 'smooth' });
-    }, 60);
+      var rect = page.getBoundingClientRect();
+      window.scrollTo({ top: rect.top + window.scrollY - navH - 8, behavior: 'smooth' });
+    }, 30);
   };
 
   window.closeTuneCard = function() {
+    var page = document.getElementById('page-tunes');
     var grid = document.getElementById('tunes-grid');
-    if (!grid) return;
+    if (!page || !grid) return;
     var openCard = grid.querySelector('.tune-card.open');
-    if (!openCard) return;
-    openCard.classList.remove('open');
-    grid.classList.remove('has-open');
-    // Scroll back to the filter bar so the user can pick another tune.
-    var filters = document.querySelector('.tune-filters') || grid;
-    var rect = filters.getBoundingClientRect();
+    if (openCard) openCard.classList.remove('open');
+    page.classList.remove('tune-detail-mode');
+    // Scroll back to the top of the Tunes page so the filter bar is visible.
     var nav = document.querySelector('nav');
     var navH = nav ? nav.offsetHeight : 0;
-    window.scrollTo({ top: rect.top + window.scrollY - navH - 16, behavior: 'smooth' });
+    var rect = page.getBoundingClientRect();
+    window.scrollTo({ top: rect.top + window.scrollY - navH - 8, behavior: 'smooth' });
   };
 
   window.renderTunes = function() {
