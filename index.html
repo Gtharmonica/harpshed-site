@@ -8255,11 +8255,16 @@
     }, { passive: true });
   })();
 
-  // ─── Service Worker Registration ──────────────────────────────
+  // ─── Service Worker — disabled ─────────────────────────────────
+  // We intentionally don't register a service worker. The site is a small
+  // static GitHub Pages site and the SW caused too much "why isn't my new
+  // version showing up?" pain during active development. If you visit with
+  // an old SW already installed, sw.js itself is now a kill-switch that
+  // unregisters the old worker and reloads the page.
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/sw.js').catch(function() {});
-    });
+    navigator.serviceWorker.getRegistrations().then(function(regs) {
+      regs.forEach(function(r) { r.unregister(); });
+    }).catch(function() {});
   }
 
   // ─── Email Signup Handler ─────────────────────────────────────
