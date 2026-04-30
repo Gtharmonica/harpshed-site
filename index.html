@@ -3463,60 +3463,95 @@
   /* ─── Articles Section ─────────────────────────────────────────── */
   .articles-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
     gap: 24px;
     max-width: 1100px;
     position: relative;
     z-index: 2;
+    margin: 0 auto;
   }
 
   .article-card {
     display: flex;
-    gap: 16px;
-    padding: 20px;
-    background: rgba(244,236,224,0.06);
-    border: 1px solid rgba(244,236,224,0.06);
-    border-radius: 8px;
+    flex-direction: column;
+    background: rgba(244,236,224,0.05);
+    border: 1px solid rgba(244,236,224,0.08);
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
   }
 
   .article-card:hover {
-    background: rgba(244,236,224,0.1);
-    border-color: rgba(160,82,45,0.2);
+    transform: translateY(-2px);
+    border-color: rgba(160,82,45,0.4);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
   }
 
-  .article-icon {
-    flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-    background: rgba(160,82,45,0.12);
-    border-radius: 8px;
+  .article-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, rgba(160,82,45,0.18), rgba(60,40,30,0.55));
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-bottom: 1px solid rgba(244,236,224,0.05);
+  }
+
+  .article-thumb-empty {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 48px;
+    color: rgba(244,236,224,0.18);
+    height: 100%;
+  }
+
+  .article-thumb-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    color: #f4ece0;
+    opacity: 0;
+    background: rgba(0,0,0,0.25);
+    transition: opacity 0.2s;
+  }
+  .article-card:hover .article-thumb-play {
+    opacity: 1;
+  }
+
+  .article-card-body {
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .article-card h4 {
     font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    margin-bottom: 4px;
+    font-size: 19px;
+    line-height: 1.25;
+    margin: 0 0 10px;
     color: var(--parchment);
   }
 
   .article-card p {
-    font-size: 13px;
-    opacity: 0.6;
-    line-height: 1.4;
-    color: var(--parchment);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: rgba(244,236,224,0.62);
+    margin: 0 0 14px;
+    flex: 1;
   }
 
   .article-card-meta {
     font-size: 11px;
-    opacity: 0.4;
-    margin-top: 6px;
-    color: var(--parchment);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--rust-light);
+    opacity: 0.7;
   }
 
   /* ─── Article Detail (full-screen reading view) ───────────────── */
@@ -7156,19 +7191,46 @@
   };
 
   // ─── Render Articles ───────────────────────────────────────────
+  // Pull the first YouTube video id out of an article's HTML body so we can
+  // use the YouTube thumbnail as the card image. Falls back to '' if none.
+  function firstYouTubeIdInHtml(html) {
+    if (!html) return '';
+    var m = html.match(/youtu\.be\/([A-Za-z0-9_-]{11})/);
+    if (m) return m[1];
+    m = html.match(/youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})/);
+    if (m) return m[1];
+    m = html.match(/youtube\.com\/embed\/([A-Za-z0-9_-]{11})/);
+    if (m) return m[1];
+    return '';
+  }
+
   function renderArticles() {
     var grid = document.getElementById('articles-grid');
     if (!grid || !SITE_CONTENT.articles) return;
 
     grid.innerHTML = SITE_CONTENT.articles.map(function(article, i) {
-      var icon = articleIcons[i % articleIcons.length];
+      var ytId = firstYouTubeIdInHtml(article.content);
+      var thumbHtml;
+      if (ytId) {
+        var thumbUrl = 'https://img.youtube.com/vi/' + ytId + '/mqdefault.jpg';
+        thumbHtml =
+          '<div class="article-thumb" style="background-image:url(\'' + thumbUrl + '\');">' +
+            '<div class="article-thumb-play">&#9654;</div>' +
+          '</div>';
+      } else {
+        var icon = articleIcons[i % articleIcons.length];
+        thumbHtml =
+          '<div class="article-thumb">' +
+            '<div class="article-thumb-empty">' + icon + '</div>' +
+          '</div>';
+      }
       return '<div class="article-card" onclick="openArticle(' + i + ')">' +
-        '<div class="article-icon">' + icon + '</div>' +
-        '<div>' +
+        thumbHtml +
+        '<div class="article-card-body">' +
           '<h4>' + article.title + '</h4>' +
           '<p>' + article.excerpt + '</p>' +
           '<div class="article-card-meta">' +
-            article.category + ' &middot; ' + formatDate(article.date) + ' &middot; ' + article.readTime + ' read' +
+            formatDate(article.date) + ' &middot; ' + article.readTime + ' read' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -7187,7 +7249,7 @@
 
     view.innerHTML =
       '<div class="article-detail-meta">' +
-        article.category + ' &middot; ' + formatDate(article.date) + ' &middot; ' + article.readTime + ' read' +
+        formatDate(article.date) + ' &middot; ' + article.readTime + ' read' +
       '</div>' +
       '<h1 class="article-detail-title">' + article.title + '</h1>' +
       '<div class="article-detail-body">' + article.content + '</div>' +

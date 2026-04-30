@@ -1,4 +1,4 @@
-var CACHE_NAME = 'harpshed-v1';
+var CACHE_NAME = 'harpshed-v2';
 var ASSETS = [
   '/',
   '/index.html',
