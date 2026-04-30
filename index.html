@@ -6225,11 +6225,6 @@
   </div>
 
   <!-- PAGE: Lesson Detail (dynamically filled) -->
-  <div class="page" id="page-lesson-detail">
-    <section class="section lessons-section">
-      <div class="lesson-detail" id="lesson-detail-content"></div>
-    </section>
-  </div>
 
 </div>
 <!-- ═══ END PAGE CONTAINER ═══════════════════════════════════════════ -->
@@ -6396,40 +6391,6 @@
 
   var articleIcons = ['&#127963;', '&#128214;', '&#127911;', '&#127926;', '&#128220;', '&#127932;'];
 
-  // ─── Render Video Lessons ───────────────────────────────────────
-  function renderLessons() {
-    var grid = document.getElementById('lessons-grid');
-    if (!grid || !SITE_CONTENT.lessons) return;
-
-    grid.innerHTML = SITE_CONTENT.lessons.map(function(lesson, idx) {
-      var thumb = getYouTubeThumbnail(lesson.youtubeUrl);
-      var thumbStyle = thumb
-        ? '<img src="' + thumb + '" alt="' + lesson.title + '" loading="lazy" onerror="this.style.display=\'none\'">'
-        : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;opacity:0.4;">&#127909;</div>';
-
-      var hasVideo = !!getYouTubeId(lesson.youtubeUrl);
-
-      return '<div class="lesson-card" onclick="showLessonDetail(' + idx + ')" style="cursor:pointer;">' +
-        '<div class="lesson-thumb">' +
-          thumbStyle +
-          (hasVideo ? '<div class="lesson-play-btn"></div>' : '') +
-          '<span class="lesson-badge ' + (lesson.free ? 'free' : 'members') + '">' +
-            (lesson.free ? 'Free Preview' : 'Members') +
-          '</span>' +
-          '<span class="lesson-level">' + lesson.level + '</span>' +
-        '</div>' +
-        '<div class="lesson-body">' +
-          '<h3>' + lesson.title + '</h3>' +
-          '<p>' + lesson.description + '</p>' +
-          '<div class="lesson-meta">' +
-            '<span>&#9202; ' + lesson.duration + '</span>' +
-            '<span>&#127932; ' + lesson.level + '</span>' +
-          '</div>' +
-          '<span class="lesson-category">' + lesson.category.replace('-', ' ') + '</span>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-  }
 
   // ─── Trail name lookup ──────────────────────────────────────────
   var trailNames = {
@@ -6757,53 +6718,6 @@
     renderTunes();
   };
 
-  // ─── Render Fundamentals ────────────────────────────────────────
-  function renderFundamentals() {
-    var container = document.getElementById('fundamentals-pillars');
-    if (!container || !SITE_CONTENT.fundamentals) return;
-
-    container.innerHTML = SITE_CONTENT.fundamentals.map(function(pillar) {
-      var items = (pillar.items || []).map(function(item) {
-        var levelClass = item.level.toLowerCase().replace(/\s+/g, '-');
-        var hasVideo = !!getYouTubeId(item.youtubeUrl);
-        var clickAttr = hasVideo
-          ? ' onclick="openVideoModal(\'' + item.youtubeUrl + '\')"'
-          : '';
-        var playIcon = hasVideo ? '&#9654;' : '&#128274;';
-
-        return '<div class="fundamental-item"' + clickAttr + '>' +
-          '<span class="fundamental-item-level ' + levelClass + '">' + item.level + '</span>' +
-          '<div class="fundamental-item-text">' +
-            '<h4>' + item.title + '</h4>' +
-            '<p>' + item.description + '</p>' +
-          '</div>' +
-          '<span class="fundamental-item-play">' + playIcon + '</span>' +
-        '</div>';
-      }).join('');
-
-      return '<div class="fundamental-pillar" data-pillar="' + pillar.id + '">' +
-        '<div class="fundamental-pillar-header" role="button" tabindex="0" aria-expanded="false" onclick="togglePillar(this)" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();togglePillar(this)}">' +
-          '<div class="fundamental-pillar-icon">' + pillar.icon + '</div>' +
-          '<div class="fundamental-pillar-info">' +
-            '<h3>' + pillar.title + '</h3>' +
-            '<div class="pillar-subtitle">' + pillar.subtitle + '</div>' +
-            '<p>' + pillar.description + '</p>' +
-          '</div>' +
-          '<span class="fundamental-pillar-toggle">&#9660;</span>' +
-        '</div>' +
-        '<div class="fundamental-pillar-items">' +
-          '<div class="fundamental-pillar-items-inner">' + items + '</div>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-  }
-
-  window.togglePillar = function(header) {
-    var pillar = header.parentElement;
-    pillar.classList.toggle('open');
-    var isOpen = pillar.classList.contains('open');
-    header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  };
 
   // ─── Trail Progress (localStorage) ──────────────────────────────
   var TRAIL_PROGRESS_KEY = 'harpshed_trail_progress';
@@ -7226,68 +7140,6 @@
   });
 
   // ─── Render Lesson Detail ──────────────────────────────────────
-  window.showLessonDetail = function(index) {
-    var lesson = SITE_CONTENT.lessons[index];
-    if (!lesson) return;
-
-    var container = document.getElementById('lesson-detail-content');
-    var videoId = getYouTubeId(lesson.youtubeUrl);
-    var videoHtml = videoId
-      ? '<iframe src="https://www.youtube.com/embed/' + videoId + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>'
-      : '<div class="lesson-detail-video-placeholder">&#127909; Video coming soon</div>';
-
-    // Find related lessons (same category, different index)
-    var related = SITE_CONTENT.lessons
-      .map(function(l, i) { return { lesson: l, index: i }; })
-      .filter(function(item) { return item.lesson.category === lesson.category && item.index !== index; })
-      .slice(0, 3);
-
-    var relatedHtml = '';
-    if (related.length > 0) {
-      relatedHtml = '<div class="lesson-detail-related">' +
-        '<h3>More like this</h3>' +
-        '<div class="lesson-detail-related-grid">' +
-          related.map(function(item) {
-            var thumb = getYouTubeThumbnail(item.lesson.youtubeUrl);
-            var thumbEl = thumb
-              ? '<img src="' + thumb + '" alt="' + item.lesson.title + '" loading="lazy">'
-              : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;opacity:0.3;">&#127909;</div>';
-            return '<div class="lesson-card" onclick="showLessonDetail(' + item.index + ')" style="cursor:pointer;">' +
-              '<div class="lesson-thumb">' + thumbEl + '</div>' +
-              '<div class="lesson-body">' +
-                '<h3>' + item.lesson.title + '</h3>' +
-                '<p>' + item.lesson.description.substring(0, 80) + '...</p>' +
-              '</div>' +
-            '</div>';
-          }).join('') +
-        '</div>' +
-      '</div>';
-    }
-
-    container.innerHTML =
-      '<button class="lesson-detail-back" onclick="showPage(\'lessons\')">&#8592; Back to Lessons</button>' +
-      '<div class="lesson-detail-video">' + videoHtml + '</div>' +
-      '<div class="lesson-detail-header">' +
-        '<h2>' + lesson.title + '</h2>' +
-        '<div class="lesson-detail-badges">' +
-          '<span class="lesson-detail-badge level">' + lesson.level + '</span>' +
-          '<span class="lesson-detail-badge category">' + lesson.category.replace('-', ' ') + '</span>' +
-          '<span class="lesson-detail-badge ' + (lesson.free ? 'free' : 'members') + '">' +
-            (lesson.free ? 'Free' : 'Members Only') +
-          '</span>' +
-        '</div>' +
-      '</div>' +
-      '<p class="lesson-detail-description">' + lesson.description + '</p>' +
-      '<div class="lesson-detail-meta">' +
-        '<span>&#9202; ' + lesson.duration + '</span>' +
-        '<span>&#127932; ' + lesson.level + '</span>' +
-        '<span>&#127925; ' + lesson.category.replace('-', ' ') + '</span>' +
-      '</div>' +
-      relatedHtml;
-
-    showPage('lesson-detail');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   // ─── Video Modal ───────────────────────────────────────────────
   window.openVideoModal = function(url) {
@@ -7959,7 +7811,6 @@
     'community': 'page-community',
     'zoom-lessons': 'page-zoom-lessons',
     'whats-new': 'page-whats-new',
-    'lesson-detail': 'page-lesson-detail',
     'home': 'page-home',
     'pricing': null  // pricing scrolls, not a page
   };
