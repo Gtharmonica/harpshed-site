@@ -1210,6 +1210,40 @@
     max-height: 4000px;
   }
 
+  /* When any tune card is open, fade the others so the open one commands focus */
+  .tunes-grid.has-open .tune-card:not(.open) {
+    opacity: 0.35;
+    transform: scale(0.98);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .tunes-grid.has-open .tune-card:not(.open):hover {
+    opacity: 0.7;
+  }
+  .tune-card.open {
+    border-color: rgba(160,82,45,0.55);
+    box-shadow: 0 4px 30px rgba(160,82,45,0.18);
+  }
+
+  .tune-card-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(160,82,45,0.12);
+    color: var(--rust-light);
+    border: 1px solid rgba(160,82,45,0.3);
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .tune-card-back:hover {
+    background: rgba(160,82,45,0.22);
+    border-color: rgba(160,82,45,0.55);
+  }
+
   .tune-card-body-inner {
     padding: 0 18px 18px;
     border-top: 1px solid rgba(160,82,45,0.1);
@@ -5569,9 +5603,7 @@
     <span></span><span></span><span></span>
   </button>
   <ul class="nav-links">
-    <li><a href="#lessons">Lessons</a></li>
     <li><a href="#tunes">Tunes</a></li>
-    <li><a href="#fundamentals">Fundamentals</a></li>
     <li><a href="#trails">Trails</a></li>
     <li><a href="#articles">Articles</a></li>
     <li><a href="#gallery">Gallery</a></li>
@@ -5597,7 +5629,7 @@
     </p>
     <div class="hero-buttons">
       <a href="#pricing" class="btn-primary">&#9834; Join The Shed</a>
-      <a href="#lessons" class="btn-secondary">&#9654; Browse Lessons</a>
+      <a href="#tunes" class="btn-secondary">&#9654; Browse Tunes</a>
     </div>
     <!-- Hero video intro — replace the empty URL below with your YouTube intro video URL -->
     <div class="hero-video-teaser" id="hero-video-teaser" style="margin-top:24px; display:none;">
@@ -5649,20 +5681,10 @@
       </p>
       <div class="ornament">&#10022; &#10022; &#10022;</div>
       <div class="features-grid">
-        <div class="feature-card" onclick="showPage('lessons')" style="cursor:pointer;">
-          <div class="feature-icon">&#127909;</div>
-          <h3>Video Lessons</h3>
-          <p>Old time fiddle tunes, pre-war solo harp, country blues, and beyond. Structured courses that start with the tradition and build from there.</p>
-        </div>
         <div class="feature-card" onclick="showPage('tunes')" style="cursor:pointer;">
           <div class="feature-icon">&#127932;</div>
           <h3>Tunes</h3>
           <p>Tabs, jam tracks, videos, and practice tools all in one place. Filter by genre, key, or position. Everything you need to learn and master every tune.</p>
-        </div>
-        <div class="feature-card" onclick="showPage('fundamentals')" style="cursor:pointer;">
-          <div class="feature-icon">&#128170;</div>
-          <h3>Fundamentals</h3>
-          <p>Five pillars of harmonica playing. Breathing, bending, scales, rhythm, and greasing the greens. Master these and everything else falls into place.</p>
         </div>
         <div class="feature-card" onclick="showPage('trails')" style="cursor:pointer;">
           <div class="feature-icon">&#127956;</div>
@@ -5781,7 +5803,7 @@
         </div>
       </div>
       <div class="taster-cta">
-        <a href="#lessons" class="btn-primary" onclick="showPage('lessons')">&#9654; See All Lessons</a>
+        <a href="#tunes" class="btn-primary" onclick="showPage('tunes')">&#9654; Explore the Tunes</a>
       </div>
     </section>
 
@@ -5944,18 +5966,6 @@
   </div>
 
   <!-- PAGE: Video Lessons -->
-  <div class="page" id="page-lessons">
-    <section class="section lessons-section">
-      <div class="section-label">Video Lessons</div>
-      <h2 class="section-title">Learn from the tradition.</h2>
-      <p class="section-subtitle">
-        Structured lessons from Appalachian reels to pre-war blues. Each one breaks down the technique, the history, and the feel.
-      </p>
-      <div class="ornament">&#10022; &#10022; &#10022;</div>
-      <div class="lessons-grid" id="lessons-grid"></div>
-    </section>
-  </div>
-
   <!-- PAGE: Tunes (Unified Library) -->
   <div class="page" id="page-tunes">
     <section class="section section-dark">
@@ -5970,18 +5980,6 @@
     </section>
   </div>
 
-  <!-- PAGE: Fundamentals -->
-  <div class="page" id="page-fundamentals">
-    <section class="section section-dark">
-      <div class="section-label">The Foundation</div>
-      <h2 class="section-title">Fundamentals.</h2>
-      <p class="section-subtitle">
-        Five pillars of harmonica playing. Master these and everything else falls into place.
-      </p>
-      <div class="ornament">&#10022; &#10022; &#10022;</div>
-      <div class="fundamentals-pillars" id="fundamentals-pillars"></div>
-    </section>
-  </div>
 
   <!-- PAGE: Trails -->
   <div class="page" id="page-trails">
@@ -6072,7 +6070,7 @@
       </p>
       <div class="ornament">&#10022; &#10022; &#10022;</div>
       <div class="whats-new-feed">
-        <div class="whats-new-item" onclick="showPage('lessons')">
+        <div class="whats-new-item" onclick="showPage('tunes')">
           <div class="whats-new-date-col">
             <div class="whats-new-month">Mar</div>
             <div class="whats-new-day">31</div>
@@ -6083,7 +6081,7 @@
             <span class="whats-new-type lesson">Lesson</span>
           </div>
         </div>
-        <div class="whats-new-item" onclick="showPage('lessons')">
+        <div class="whats-new-item" onclick="showPage('tunes')">
           <div class="whats-new-date-col">
             <div class="whats-new-month">Mar</div>
             <div class="whats-new-day">31</div>
@@ -6319,9 +6317,7 @@
     </div>
     <div class="footer-links">
       <h4>Learn</h4>
-      <a href="#lessons">Video Lessons</a>
       <a href="#tunes">Tunes</a>
-      <a href="#fundamentals">Fundamentals</a>
       <a href="#trails">The Trails</a>
       <a href="#articles">Articles</a>
       <a href="#gallery">Gallery</a>
@@ -6501,6 +6497,45 @@
     renderTunes();
   };
 
+  // Open a single tune card. Closes any other open card so only one is ever
+  // expanded — keeps the page focused. Smooth-scrolls the open card to the
+  // top of the viewport (allowing for the sticky nav).
+  window.openTuneCard = function(cardEl) {
+    var grid = document.getElementById('tunes-grid');
+    if (!grid || !cardEl) return;
+    var wasOpen = cardEl.classList.contains('open');
+    var openCards = grid.querySelectorAll('.tune-card.open');
+    for (var i = 0; i < openCards.length; i++) openCards[i].classList.remove('open');
+    if (wasOpen) {
+      grid.classList.remove('has-open');
+      return;
+    }
+    cardEl.classList.add('open');
+    grid.classList.add('has-open');
+    // Wait a frame so the layout has expanded before scrolling.
+    setTimeout(function() {
+      var rect = cardEl.getBoundingClientRect();
+      var nav = document.querySelector('nav');
+      var navH = nav ? nav.offsetHeight : 0;
+      window.scrollTo({ top: rect.top + window.scrollY - navH - 16, behavior: 'smooth' });
+    }, 60);
+  };
+
+  window.closeTuneCard = function() {
+    var grid = document.getElementById('tunes-grid');
+    if (!grid) return;
+    var openCard = grid.querySelector('.tune-card.open');
+    if (!openCard) return;
+    openCard.classList.remove('open');
+    grid.classList.remove('has-open');
+    // Scroll back to the filter bar so the user can pick another tune.
+    var filters = document.querySelector('.tune-filters') || grid;
+    var rect = filters.getBoundingClientRect();
+    var nav = document.querySelector('nav');
+    var navH = nav ? nav.offsetHeight : 0;
+    window.scrollTo({ top: rect.top + window.scrollY - navH - 16, behavior: 'smooth' });
+  };
+
   window.renderTunes = function() {
     var grid = document.getElementById('tunes-grid');
     if (!grid || !SITE_CONTENT.tabs) return;
@@ -6560,7 +6595,7 @@
       var metHtml = buildMetronomeHtml(metId);
 
       return '<div class="tune-card" id="' + tuneId + '">' +
-        '<div class="tune-card-header" onclick="this.parentElement.classList.toggle(\'open\')">' +
+        '<div class="tune-card-header" onclick="openTuneCard(this.parentElement)">' +
           '<div>' +
             '<h3>' + tab.title + '</h3>' +
             '<div class="tune-card-meta">' +
@@ -6574,6 +6609,7 @@
           '<span class="tune-card-expand">&#9660;</span>' +
         '</div>' +
         '<div class="tune-card-body"><div class="tune-card-body-inner">' +
+          '<button class="tune-card-back" onclick="closeTuneCard()">&larr; Back to all tunes</button>' +
           '<p class="tune-desc">' + tab.description + '</p>' +
           videoHtml +
           '<div class="tune-card-tools">' +
@@ -7915,9 +7951,7 @@
 
   // ─── Page Navigation ─────────────────────────────────────────
   var pageMap = {
-    'lessons': 'page-lessons',
     'tunes': 'page-tunes',
-    'fundamentals': 'page-fundamentals',
     'trails': 'page-trails',
     'trail-detail': 'page-trail-detail',
     'articles': 'page-articles',
@@ -8161,10 +8195,8 @@
 
   // ─── Init ──────────────────────────────────────────────────────
   if (typeof SITE_CONTENT !== 'undefined') {
-    renderLessons();
     renderTuneFilters();
     renderTunes();
-    renderFundamentals();
     renderTrails();
     renderArticles();
     renderGallery();
