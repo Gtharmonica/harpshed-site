@@ -5522,15 +5522,26 @@
       Traditional Roots, Boundless Creativity
     </p>
     <p style="color: rgba(244,236,224,0.7); font-size: 18px; line-height: 1.7; margin-bottom: 12px; font-weight: 300;">
-      Harmonica lessons rooted in old time, Appalachian, and pre-war traditions.
+      Private 1-to-1 harmonica lessons rooted in old time, Appalachian, and pre-war traditions.
     </p>
-    <p style="color: rgba(244,236,224,0.5); font-size: 16px; line-height: 1.6; margin-bottom: 36px;">
-      Video lessons, tablature, jam tracks, and a community of players called The Fox Chasers.
-      We're building something special &mdash; and it's nearly ready.
+    <p style="color: rgba(244,236,224,0.5); font-size: 16px; line-height: 1.6; margin-bottom: 32px;">
+      HarpShed is in private beta with current 1-to-1 students. A full public library &mdash; video lessons, tabs,
+      jam tracks and a community of players &mdash; opens once the catalogue is deep enough to do it justice.
     </p>
 
-    <p style="color: rgba(244,236,224,0.6); font-size: 14px; margin-bottom: 12px; font-weight: 600; letter-spacing: 0.5px;">
-      Be first to know when we open the doors:
+    <!-- Primary CTA: Book a Lesson (Calendly) -->
+    <a href="#" id="book-lesson-link" onclick="openBookingModal(); return false;" style="
+      display: inline-block; padding: 14px 28px;
+      background: #a0522d; color: #faf6ee;
+      border: 1px solid #a0522d; border-radius: 6px;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.4px;
+      text-decoration: none; cursor: pointer;
+      font-family: 'Source Sans 3', sans-serif;
+      margin-bottom: 32px;
+    ">&#127911; Book a 1-to-1 Lesson</a>
+
+    <p style="color: rgba(244,236,224,0.55); font-size: 13px; margin-bottom: 12px; font-weight: 600; letter-spacing: 0.5px;">
+      Or join the waitlist for the public library:
     </p>
     <form id="gate-signup-form" style="display: flex; gap: 0; max-width: 400px; margin: 0 auto 28px;" onsubmit="return handleGateSignup(event)">
       <input id="gate-signup-email" type="email" placeholder="Your email address" required style="
@@ -5540,8 +5551,8 @@
         font-family: 'Source Sans 3', sans-serif;
       ">
       <button type="submit" style="
-        padding: 14px 20px; background: #a0522d; color: #faf6ee; border: 1px solid #a0522d;
-        border-radius: 0 6px 6px 0; font-size: 14px; font-weight: 700; cursor: pointer;
+        padding: 14px 20px; background: rgba(244,236,224,0.08); color: #f4ece0; border: 1px solid rgba(244,236,224,0.2);
+        border-radius: 0 6px 6px 0; font-size: 14px; font-weight: 600; cursor: pointer;
         font-family: 'Source Sans 3', sans-serif; white-space: nowrap;
       ">Notify Me</button>
     </form>
@@ -5592,6 +5603,104 @@
     </p>
   </div>
 </div>
+
+<!-- ─── Book a Lesson Modal (Calendly) ──────────────────────────────────── -->
+<!--
+  TODO (Gareth): Replace the CALENDLY_URL constant in the script below with your
+  real Calendly link once you've created an event (e.g. 'https://calendly.com/gtharmonica/intro-lesson').
+  Until then, the button will show a "we're getting bookings set up — drop your
+  email and I'll be in touch" message instead of an embedded scheduler.
+-->
+<div id="booking-modal" style="
+  display: none; position: fixed; inset: 0; z-index: 10000;
+  background: rgba(20, 14, 8, 0.92);
+  align-items: center; justify-content: center;
+  font-family: 'Source Sans 3', sans-serif;
+  padding: 24px;
+">
+  <div style="
+    position: relative; background: #f4ece0; color: #3b2f20;
+    width: 100%; max-width: 900px; max-height: 90vh;
+    border-radius: 12px; overflow: hidden;
+    display: flex; flex-direction: column;
+  ">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid #d6c8a8;">
+      <h3 style="margin: 0; font-family: 'Special Elite', monospace; font-size: 22px; color: #5C3A1E;">Book a 1-to-1 Lesson</h3>
+      <button onclick="closeBookingModal()" aria-label="Close" style="background: none; border: none; font-size: 26px; color: #5C3A1E; cursor: pointer; padding: 0 4px;">&times;</button>
+    </div>
+    <div id="booking-modal-body" style="overflow-y: auto; flex: 1; min-height: 420px;">
+      <!-- Calendly inline widget will mount here, OR the fallback form -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // ⚠️  TODO: Replace with your real Calendly URL once you've made the event.
+  //    e.g. 'https://calendly.com/gtharmonica/intro-lesson'
+  //    Leave as '' to show the fallback "email me" form instead.
+  var CALENDLY_URL = '';
+
+  function openBookingModal() {
+    var modal = document.getElementById('booking-modal');
+    var body = document.getElementById('booking-modal-body');
+    modal.style.display = 'flex';
+    if (CALENDLY_URL) {
+      // Calendly inline embed
+      body.innerHTML = '<div class="calendly-inline-widget" data-url="' + CALENDLY_URL + '" style="min-width:320px;height:680px;"></div>';
+      // Load Calendly script on demand
+      if (!document.getElementById('calendly-script')) {
+        var s = document.createElement('script');
+        s.id = 'calendly-script';
+        s.src = 'https://assets.calendly.com/assets/external/widget.js';
+        s.async = true;
+        document.body.appendChild(s);
+      }
+    } else {
+      // Fallback while Calendly isn't set up yet — capture name/email + send to Formspree
+      body.innerHTML = '<div style="padding: 28px;">' +
+        '<p style="margin-bottom: 16px;">Booking is being set up. In the meantime, drop your details and what you\'d like to work on, and I\'ll be in touch to arrange a slot.</p>' +
+        '<form id="booking-fallback-form" onsubmit="return submitBookingFallback(event)">' +
+        '<input type="text" name="name" placeholder="Your name" required style="width:100%;padding:12px;margin-bottom:10px;border:1px solid #c4a882;border-radius:6px;font-size:15px;font-family:inherit;">' +
+        '<input type="email" name="email" placeholder="Your email" required style="width:100%;padding:12px;margin-bottom:10px;border:1px solid #c4a882;border-radius:6px;font-size:15px;font-family:inherit;">' +
+        '<textarea name="notes" placeholder="What you\'d like to work on, your level, any preferred days/times…" rows="4" style="width:100%;padding:12px;margin-bottom:10px;border:1px solid #c4a882;border-radius:6px;font-size:15px;font-family:inherit;"></textarea>' +
+        '<button type="submit" style="padding:12px 24px;background:#a0522d;color:#faf6ee;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:15px;">Send Request</button>' +
+        '<p id="booking-fallback-success" style="display:none;margin-top:14px;color:#4a7e3a;font-weight:600;">Got it — I\'ll be in touch.</p>' +
+        '</form></div>';
+    }
+  }
+
+  function closeBookingModal() {
+    document.getElementById('booking-modal').style.display = 'none';
+  }
+
+  window.submitBookingFallback = function(e) {
+    e.preventDefault();
+    var form = e.target;
+    var payload = {
+      name: form.name.value, email: form.email.value, notes: form.notes.value,
+      _subject: 'HarpShed - 1-to-1 lesson request', source: 'coming-soon-booking'
+    };
+    fetch('https://formspree.io/f/xgopabae', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(function(){});
+    form.style.display = 'none';
+    document.getElementById('booking-fallback-success').style.display = 'block';
+    document.getElementById('booking-fallback-success').style.marginTop = '0';
+    return false;
+  };
+
+  // Close modal on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeBookingModal();
+  });
+  // Close modal when clicking outside content
+  document.getElementById('booking-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeBookingModal();
+  });
+</script>
+
 <script>
 (function() {
   // Password is stored as SHA-256 hash — not visible in source code
@@ -5683,6 +5792,15 @@
   // If already authenticated, skip the gate entirely
   if (localStorage.getItem(KEY) === 'granted') {
     document.getElementById('coming-soon-gate').style.display = 'none';
+    // Returning student → go straight to their dashboard (unless they're admin)
+    var existingRole = localStorage.getItem(ROLE_KEY) || '';
+    if (existingRole.indexOf('student:') === 0) {
+      // Wait for the later page-nav script to load
+      setTimeout(function() {
+        if (typeof window.applyRoleToNav === 'function') window.applyRoleToNav();
+        if (typeof window.showPage === 'function') window.showPage('my-lessons');
+      }, 100);
+    }
   } else {
     document.body.style.overflow = 'hidden';
   }
@@ -5753,6 +5871,20 @@
       localStorage.removeItem(LOCKOUT_KEY);
       document.getElementById('coming-soon-gate').style.display = 'none';
       document.body.style.overflow = '';
+
+      // Role-aware post-login routing.
+      //   Student → straight to their private dashboard.
+      //   Admin   → land on home (default).
+      try {
+        if (role.indexOf('student:') === 0 && typeof window.showPage === 'function') {
+          // applyRoleToNav + showPage may not be ready yet because they're in a later <script> —
+          // defer one tick so the DOM/JS is fully primed.
+          setTimeout(function() {
+            if (typeof window.applyRoleToNav === 'function') window.applyRoleToNav();
+            window.showPage('my-lessons');
+          }, 50);
+        }
+      } catch (err) { /* fail open — they'll still see admin home if anything goes wrong */ }
     } else {
       recordFailedAttempt();
       var err = document.getElementById('gate-error');
@@ -6424,6 +6556,20 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══ PAGE: My Lessons (per-student private dashboard) ═══════════════ -->
+  <div class="page" id="page-my-lessons">
+    <section class="section" style="background: var(--cream);">
+      <div class="section-label" id="my-lessons-label">Your Lessons</div>
+      <h2 class="section-title" id="my-lessons-title">My Lessons.</h2>
+      <p class="section-subtitle" id="my-lessons-welcome" style="max-width:640px;margin-left:auto;margin-right:auto;"></p>
+      <div class="ornament">&#10022; &#10022; &#10022;</div>
+      <div id="my-lessons-content" style="max-width:880px;margin:0 auto;padding:0 24px;"></div>
+      <div style="text-align:center;margin-top:36px;padding-bottom:40px;">
+        <button onclick="openBookingModal()" style="padding:12px 24px;background:#a0522d;color:#faf6ee;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:14px;">&#127911; Book your next lesson</button>
       </div>
     </section>
   </div>
@@ -8094,10 +8240,127 @@
     'zoom-lessons': 'page-zoom-lessons',
     'whats-new': 'page-whats-new',
     'home': 'page-home',
+    'my-lessons': 'page-my-lessons',
     'pricing': null  // pricing scrolls, not a page
   };
 
+  // ─── Role-aware page access ──────────────────────────────────
+  // Pages a student is NOT allowed to see (admin-only until library launches).
+  var STUDENT_HIDDEN_PAGES = ['tunes', 'trails', 'trail-detail', 'articles', 'gallery', 'community', 'whats-new'];
+
+  // Returns the active role from localStorage. Possible values:
+  //   - 'admin'
+  //   - 'student:darren', 'student:dennis', etc.
+  //   - null (gated)
+  function getRole() { return localStorage.getItem('harpshed_role'); }
+  function isAdmin()  { return getRole() === 'admin'; }
+  function isStudent(){ var r = getRole(); return r && r.indexOf('student:') === 0; }
+  function getStudentSlug() { var r = getRole(); return isStudent() ? r.slice('student:'.length) : null; }
+
+  // Look up the logged-in student's profile (from SITE_CONTENT.students)
+  function getStudentProfile() {
+    var slug = getStudentSlug();
+    if (!slug || !SITE_CONTENT.students) return null;
+    for (var i = 0; i < SITE_CONTENT.students.length; i++) {
+      if (SITE_CONTENT.students[i].slug.toLowerCase() === slug.toLowerCase()) return SITE_CONTENT.students[i];
+    }
+    return null;
+  }
+
+  // Render the per-student dashboard (called when a student lands on my-lessons)
+  window.renderStudentDashboard = function() {
+    var prof = getStudentProfile();
+    if (!prof) return;
+    document.getElementById('my-lessons-label').textContent = prof.name.toUpperCase();
+    document.getElementById('my-lessons-title').textContent = "Your Lessons.";
+    document.getElementById('my-lessons-welcome').textContent = prof.welcome || '';
+
+    var html = '';
+    if (!prof.lessons || prof.lessons.length === 0) {
+      html += '<div style="padding:32px;background:#f5efe3;border:1px solid #d6c8a8;border-radius:8px;text-align:center;">' +
+              '<p style="margin:0;color:#5C3A1E;font-size:16px;"><strong>No lessons published yet.</strong></p>' +
+              '<p style="margin-top:10px;color:#5C3A1E;opacity:0.8;">Once we\'ve had a session, your notes, tabs, and audio will appear here.</p>' +
+              '</div>';
+    } else {
+      // sort newest first
+      var sorted = prof.lessons.slice().sort(function(a,b){ return (b.date||'').localeCompare(a.date||''); });
+      sorted.forEach(function(L, idx) {
+        var collapsedAttr = (idx === 0) ? ' open' : '';
+        html += '<details' + collapsedAttr + ' style="margin-bottom:16px;background:#fff;border:1px solid #d6c8a8;border-radius:8px;overflow:hidden;">' +
+                '<summary style="padding:16px 20px;cursor:pointer;background:#f5efe3;font-weight:700;color:#5C3A1E;list-style:none;">' +
+                '<span style="font-size:12px;letter-spacing:1px;color:#8B6914;display:block;margin-bottom:4px;">' + (L.date || '') + '</span>' +
+                '<span style="font-size:17px;">' + L.title + '</span>' +
+                (L.summary ? '<div style="font-weight:400;font-size:14px;color:#5C3A1E;opacity:0.75;margin-top:6px;">' + L.summary + '</div>' : '') +
+                '</summary>' +
+                '<div style="padding:24px;">';
+        html += L.lessonBody || '';
+        if (L.tabPdf) {
+          html += '<div style="margin-top:20px;padding-top:16px;border-top:1px dashed #c4a882;">' +
+                  '<a href="' + L.tabPdf + '" target="_blank" rel="noopener" style="display:inline-block;padding:10px 18px;background:#8B6914;color:#faf6ee;text-decoration:none;border-radius:6px;font-weight:700;font-size:14px;">&#128196; Download tab PDF</a>' +
+                  '</div>';
+        }
+        html += '</div></details>';
+      });
+    }
+    document.getElementById('my-lessons-content').innerHTML = html;
+  };
+
+  // Hide admin-only nav items when role is a student
+  window.applyRoleToNav = function() {
+    var navLinks = document.querySelectorAll('.nav-links a');
+    var student = isStudent();
+    navLinks.forEach(function(a) {
+      var href = a.getAttribute('href') || '';
+      var pageKey = href.replace(/^#/, '');
+      var li = a.closest('li');
+      if (!li) return;
+      if (student && STUDENT_HIDDEN_PAGES.indexOf(pageKey) !== -1) {
+        li.style.display = 'none';
+      } else if (student && pageKey === 'pricing') {
+        // hide "Join the Shed" CTA for students
+        li.style.display = 'none';
+      } else {
+        li.style.display = '';
+      }
+    });
+    // If student and no "My Lessons" link exists yet, inject one
+    var navUl = document.querySelector('.nav-links');
+    if (student && navUl && !document.getElementById('nav-my-lessons-link')) {
+      var li = document.createElement('li');
+      li.innerHTML = '<a href="#my-lessons" id="nav-my-lessons-link">My Lessons</a>';
+      navUl.insertBefore(li, navUl.firstChild);
+      li.querySelector('a').addEventListener('click', function(e){ e.preventDefault(); showPage('my-lessons'); });
+    }
+    // Inject a Sign Out link (for any logged-in user — student or admin)
+    if (getRole() && navUl && !document.getElementById('nav-signout-link')) {
+      var liOut = document.createElement('li');
+      liOut.innerHTML = '<a href="#" id="nav-signout-link" style="color:rgba(244,236,224,0.5);">Sign Out</a>';
+      navUl.appendChild(liOut);
+      liOut.querySelector('a').addEventListener('click', function(e){
+        e.preventDefault();
+        localStorage.removeItem('harpshed_access');
+        localStorage.removeItem('harpshed_role');
+        window.location.reload();
+      });
+    }
+  }
+  // Run when DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', window.applyRoleToNav);
+  } else {
+    window.applyRoleToNav();
+  }
+
   window.showPage = function(key) {
+    // Role gate: students can only see their dashboard. Anything else → bounce to my-lessons.
+    if (isStudent() && STUDENT_HIDDEN_PAGES.indexOf(key) !== -1) {
+      key = 'my-lessons';
+    }
+    // Students don't see pricing or the public home page either — send to dashboard
+    if (isStudent() && (key === 'pricing' || key === 'home')) {
+      key = 'my-lessons';
+    }
+
     if (key === 'pricing') {
       // Show home page then scroll to pricing
       showPage('home');
@@ -8105,6 +8368,11 @@
         document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
       }, 100);
       return;
+    }
+
+    // Render the student dashboard when entering it
+    if (key === 'my-lessons' && typeof renderStudentDashboard === 'function') {
+      renderStudentDashboard();
     }
 
     var targetId = pageMap[key];
