@@ -58,10 +58,10 @@ var SITE_CONTENT = {
     },
     {
       "title": "Rain Crow Bill",
-      "description": "Traditional fox chase style piece. Rhythm, melody, and raincrow riffs — the full toolkit of solo harp showmanship.",
+      "description": "Traditional fox-chase number from the Henry Whitter tradition, taught from the ground up — rhythm engine first, then melody layer by layer, then octave texture. C harp, 2nd position, with a play-along for every stage.",
       "key": "C",
-      "position": "1st",
-      "difficulty": "Intermediate",
+      "position": "2nd",
+      "difficulty": "Beginner",
       "trail": "blue-ridge",
       "method": "standard",
       "downloadUrl": "tabs/Rain_Crow_Bill.pdf",
@@ -69,7 +69,14 @@ var SITE_CONTENT = {
       "free": true,
       "genre": "Old Time",
       "youtubeUrl": "",
-      "jamTracks": []
+      "jamTracks": [
+        {"url": "tracks/rain-crow-bill-rhythm-1.mp3", "title": "Rhythm 1 — The Engine"},
+        {"url": "tracks/rain-crow-bill-melody-1.mp3", "title": "Melody Level 1"},
+        {"url": "tracks/rain-crow-bill-melody-2.mp3", "title": "Melody Level 2"},
+        {"url": "tracks/rain-crow-bill-octaves.mp3", "title": "Selective Octaves"},
+        {"url": "tracks/rain-crow-bill-lifts-splits.mp3", "title": "Octave Lifts & Splits"},
+        {"url": "tracks/rain-crow-bill-full.mp3", "title": "Full Play-Along — Melody 2 over Rhythm 1"}
+      ]
     },
     {
       "title": "Salt River",
@@ -537,11 +544,19 @@ var SITE_CONTENT = {
             {
               "title": "Rain Crow Bill",
               "youtubeUrl": "",
-              "insight": "A traditional fox chase style piece — rhythm, melody, and raincrow riffs all woven together. This is the full toolkit of solo harp showmanship in the old-time tradition. The rhythm section is your foundation — get that locked in before you layer the melody and riffs on top. The raincrow riffs slot in after specific phrases in the fox chase pattern.",
+              "insight": "A traditional fox-chase number from the Henry Whitter tradition, taught from the ground up: lock the chugging rhythm engine first, then build the melody a layer at a time, then add octave texture. C harp, 2nd position. Every stage has a play-along track.",
+              "lessonBody": "<h3>Rain Crow Bill</h3><div class=\"lesson-callout\"><h4>About the tune</h4><p style=\"margin-bottom:0;color:var(--ink);\">A traditional fox-chase number in the Henry Whitter tradition. Whitter (1892&ndash;1941) of Grayson County, Virginia, was one of the first old-time Appalachian musicians to record commercially, cutting <em>Rain Crow Bill Blues</em> at the OKeh sessions on December 10, 1923 and again in 1927 at the legendary Bristol Sessions. The &ldquo;rain crow&rdquo; is the old country name for the yellow-billed cuckoo, whose call was said to foretell rain &mdash; the melody &ldquo;calls&rdquo; out over a chugging fox-chase rhythm.</p></div><div class=\"lesson-callout\" style=\"border-left-color:var(--delta-blue);background:#eef3f9;\"><h4 style=\"color:var(--delta-blue);\">What you&rsquo;ll need</h4><p style=\"margin-bottom:0;color:var(--ink);\">A <strong>C harmonica</strong>. We&rsquo;re in <strong>2nd position</strong>, fox-chase style. <br><span style=\"font-size:0.95em;\">Reading the tab: <code>+N</code> blow &middot; <code>-N</code> draw &middot; <code>-N&quot;</code> whole-step bend &middot; <code>-123</code> draw chord (holes 1&middot;2&middot;3) &middot; <code>X/X</code> octave split (e.g. <code>+3/6</code> = holes 3 and 6 together) &middot; a lone <code>-</code> = lift the tongue and play 2 notes inhaling from where you are &middot; <code>...</code> hold.</span></p></div><p>Don&rsquo;t skip the rhythm. The whole tune sits on a chugging fox-chase engine &mdash; lock it in slow and steady before you touch the melody, then build the melody up a layer at a time.</p><h3>Foundation</h3><div class=\"lesson-exercise\"><div class=\"lesson-exercise-head\"><span class=\"lesson-ex-num\">1.</span><span class=\"lesson-ex-name\">Rhythm 1 &mdash; the engine</span></div><pre class=\"lesson-tab\">+3 -123 +2 -123 -\"3-3-\"3 -123 +2 -123\n+3 -123 +2 -123 -\"3-3-\"3 -123 +2 -123\n+3 -123 +2 -123 -\"3-3-\"3 -123 +2 -123\n+3 -123 +2 -123 -\"3-3-\"3 -123 +2 -123</pre><audio controls preload=\"none\" src=\"tracks/rain-crow-bill-rhythm-1.mp3\"></audio></div><div class=\"lesson-exercise\"><div class=\"lesson-exercise-head\"><span class=\"lesson-ex-num\">2.</span><span class=\"lesson-ex-name\">Melody &mdash; Level 1</span></div><pre class=\"lesson-tab\">+6 -6 +6 +5 -4\n+6 -6 +6 +5 -4\n+6 -6 -7 -6 +6 +5 -4 +5 -5 +5 -4\n-4 +5 -5 +5 -4\n-4 +5+5 -5 +5 -4\n\"3-3-\"3+3 +2 -123</pre><audio controls preload=\"none\" src=\"tracks/rain-crow-bill-melody-1.mp3\"></audio></div><div class=\"lesson-exercise\"><div class=\"lesson-exercise-head\"><span class=\"lesson-ex-num\">3.</span><span class=\"lesson-ex-name\">Melody &mdash; Level 2 (adds -34)</span></div><pre class=\"lesson-tab\">+6 -6 +6 +5 -4\n+6 -6 +6 +5 -4\n+6 -6 -7 -6 +6 +5 -4 +5 -5 +5 -4\n-34 +5 -5 +5 -4\n-34 +5+5 -5 +5 -4\n\"3-3-\"3+3 +2 -123</pre><audio controls preload=\"none\" src=\"tracks/rain-crow-bill-melody-2.mp3\"></audio></div><h3>Intermediate (added texture)</h3><p class=\"lesson-exercise-note\">Once and only once Level 2 is timed and comfortable. X/X = octave split &middot; a lone - = lift the tongue and play 2 notes inhaling from where you are.</p><div class=\"lesson-exercise\"><div class=\"lesson-exercise-head\"><span class=\"lesson-ex-num\">4.</span><span class=\"lesson-ex-name\">Selective Octaves</span></div><pre class=\"lesson-tab\">+3/6 -6 +3/6 +2/5 -1/4\n+3/6 -6 +3/6 +2/5 -1/4\n+3/6 -6 -7 -6 +3/6 +2/5 -1/4 +2/5 -5 +2/5 -1/4\n-34 +2/5 -5 +2/5 -1/4\n-34 +2/5+2/5 -5 +2/5 -1/4\n\"3-3-\"3+3 +2 -123</pre><audio controls preload=\"none\" src=\"tracks/rain-crow-bill-octaves.mp3\"></audio></div><div class=\"lesson-exercise\"><div class=\"lesson-exercise-head\"><span class=\"lesson-ex-num\">5.</span><span class=\"lesson-ex-name\">Octave Note Lifts &amp; Splits</span></div><pre class=\"lesson-tab\">+3/6 - +3/6 +2/5 -1/4\n+3/6 - +3/6 +2/5 -1/4\n+3/6 - -3/7 - +3/6 +2/5 -1/4 +2/5 -2/5 +2/5 -1/4\n-34 +2/5 -2/5 +2/5 -1/4\n-34 +2/5+2/5 -2/5 +2/5 -1/4\n\"3-3-\"3+3 +2 -123</pre><audio controls preload=\"none\" src=\"tracks/rain-crow-bill-lifts-splits.mp3\"></audio></div><h3>Putting It Together</h3><div class=\"lesson-exercise\"><div class=\"lesson-exercise-head\"><span class=\"lesson-ex-name\">Melody 2 over Rhythm 1 &mdash; full play-along</span></div><audio controls preload=\"none\" src=\"tracks/rain-crow-bill-full.mp3\"></audio></div><div class=\"lesson-callout\"><h4>Versions worth hearing</h4><ul style=\"margin-bottom:0;\"><li><a href=\"https://youtu.be/rx_gDDMOltI\" target=\"_blank\" rel=\"noopener\">Henry Whitter</a></li><li><a href=\"https://youtu.be/wNMTFOredjk\" target=\"_blank\" rel=\"noopener\">Doc Watson</a></li><li><a href=\"https://youtu.be/9cM_kaKLfyU\" target=\"_blank\" rel=\"noopener\">Grant Dermody and Mark Graham</a></li><li><a href=\"https://youtu.be/xXRUh_0Q8d0\" target=\"_blank\" rel=\"noopener\">Teilhard Frost</a></li></ul></div>",
               "tabPdf": "tabs/Rain_Crow_Bill.pdf",
-              "jamTracks": [],
+              "jamTracks": [
+                {"url": "tracks/rain-crow-bill-rhythm-1.mp3", "title": "Rhythm 1 \u2014 The Engine"},
+                {"url": "tracks/rain-crow-bill-melody-1.mp3", "title": "Melody Level 1"},
+                {"url": "tracks/rain-crow-bill-melody-2.mp3", "title": "Melody Level 2"},
+                {"url": "tracks/rain-crow-bill-octaves.mp3", "title": "Selective Octaves"},
+                {"url": "tracks/rain-crow-bill-lifts-splits.mp3", "title": "Octave Lifts \u0026 Splits"},
+                {"url": "tracks/rain-crow-bill-full.mp3", "title": "Full Play-Along \u2014 Melody 2 over Rhythm 1"}
+              ],
               "key": "C",
-              "position": "1st"
+              "position": "2nd"
             },
             {
               "title": "Tree of Life",
